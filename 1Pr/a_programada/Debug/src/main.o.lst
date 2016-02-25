@@ -1,0 +1,215 @@
+   1              		.cpu arm7tdmi
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 18, 4
+  11              		.file	"main.c"
+  21              	.Ltext0:
+  22              		.file 1 "../src/main.c"
+ 2948              		.align	2
+ 2949              		.global	Main
+ 2951              	Main:
+ 2952              	.LFB0:
+   1:../src/main.c **** /*--- ficheros de cabecera ---*/
+   2:../src/main.c **** #include "44blib.h"
+   3:../src/main.c **** #include "44b.h"
+   4:../src/main.c **** #include "def.h"
+   5:../src/main.c **** #include "stdio.h"
+   6:../src/main.c **** /*--- funciones externas ---*/
+   7:../src/main.c **** extern void leds_off();
+   8:../src/main.c **** extern void led1_on();
+   9:../src/main.c **** extern void leds_switch();
+  10:../src/main.c **** extern void Eint4567_init(void);
+  11:../src/main.c **** /*--- funciones ---*/
+  12:../src/main.c **** void button_init();
+  13:../src/main.c **** int button_no_pressed();
+  14:../src/main.c **** 
+  15:../src/main.c **** //extern void sys_init();
+  16:../src/main.c **** /*--- declaracion de funciones ---*/
+  17:../src/main.c **** //void Main(void);
+  18:../src/main.c **** /*--- codigo de funciones ---*/
+  19:../src/main.c **** void Main(void)
+  20:../src/main.c **** {
+ 2953              		.loc 1 20 0
+ 2954              		.cfi_startproc
+ 2955              		@ Function supports interworking.
+ 2956              		@ args = 0, pretend = 0, frame = 0
+ 2957              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2958 0000 0DC0A0E1 		mov	ip, sp
+ 2959              	.LCFI0:
+ 2960              		.cfi_def_cfa_register 12
+ 2961 0004 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 2962 0008 04B04CE2 		sub	fp, ip, #4
+ 2963              		.cfi_offset 14, -8
+ 2964              		.cfi_offset 13, -12
+ 2965              		.cfi_offset 11, -16
+ 2966              	.LCFI1:
+ 2967              		.cfi_def_cfa 11, 4
+  21:../src/main.c **** 	/* Inicializar controladores */
+  22:../src/main.c **** 	sys_init(); // Inicializacion de la placa, interrupciones y puertos
+ 2968              		.loc 1 22 0
+ 2969 000c FEFFFFEB 		bl	sys_init
+  23:../src/main.c **** 	button_init();
+ 2970              		.loc 1 23 0
+ 2971 0010 FEFFFFEB 		bl	button_init
+  24:../src/main.c **** 	/* Establecer valor inicial de los LEDs */
+  25:../src/main.c **** 	leds_off();
+ 2972              		.loc 1 25 0
+ 2973 0014 FEFFFFEB 		bl	leds_off
+  26:../src/main.c **** 	led1_on();
+ 2974              		.loc 1 26 0
+ 2975 0018 FEFFFFEB 		bl	led1_on
+  27:../src/main.c **** 	while (1){
+  28:../src/main.c **** 		while(button_no_pressed() == 0);
+ 2976              		.loc 1 28 0
+ 2977 001c 0000A0E1 		mov	r0, r0	@ nop
+ 2978              	.L2:
+ 2979              		.loc 1 28 0 is_stmt 0 discriminator 1
+ 2980 0020 FEFFFFEB 		bl	button_no_pressed
+ 2981 0024 0030A0E1 		mov	r3, r0
+ 2982 0028 000053E3 		cmp	r3, #0
+ 2983 002c FBFFFF0A 		beq	.L2
+  29:../src/main.c **** 		while(button_no_pressed() != 0);
+ 2984              		.loc 1 29 0 is_stmt 1
+ 2985 0030 0000A0E1 		mov	r0, r0	@ nop
+ 2986              	.L3:
+ 2987              		.loc 1 29 0 is_stmt 0 discriminator 1
+ 2988 0034 FEFFFFEB 		bl	button_no_pressed
+ 2989 0038 0030A0E1 		mov	r3, r0
+ 2990 003c 000053E3 		cmp	r3, #0
+ 2991 0040 FBFFFF1A 		bne	.L3
+  30:../src/main.c **** 		leds_switch();
+ 2992              		.loc 1 30 0 is_stmt 1
+ 2993 0044 FEFFFFEB 		bl	leds_switch
+  31:../src/main.c **** 		//DelayMs(1000);
+  32:../src/main.c **** 	}
+ 2994              		.loc 1 32 0
+ 2995 0048 0000A0E1 		mov	r0, r0	@ nop
+  28:../src/main.c **** 		while(button_no_pressed() == 0);
+ 2996              		.loc 1 28 0
+ 2997 004c F3FFFFEA 		b	.L2
+ 2998              		.cfi_endproc
+ 2999              	.LFE0:
+ 3001              		.align	2
+ 3002              		.global	button_init
+ 3004              	button_init:
+ 3005              	.LFB1:
+  33:../src/main.c **** }
+  34:../src/main.c **** 
+  35:../src/main.c **** void button_init(){
+ 3006              		.loc 1 35 0
+ 3007              		.cfi_startproc
+ 3008              		@ Function supports interworking.
+ 3009              		@ args = 0, pretend = 0, frame = 0
+ 3010              		@ frame_needed = 1, uses_anonymous_args = 0
+ 3011 0050 0DC0A0E1 		mov	ip, sp
+ 3012              	.LCFI2:
+ 3013              		.cfi_def_cfa_register 12
+ 3014 0054 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 3015 0058 04B04CE2 		sub	fp, ip, #4
+ 3016              		.cfi_offset 14, -8
+ 3017              		.cfi_offset 13, -12
+ 3018              		.cfi_offset 11, -16
+ 3019              	.LCFI3:
+ 3020              		.cfi_def_cfa 11, 4
+  36:../src/main.c **** 	/* Set 0 bits 6 and 7*/
+  37:../src/main.c **** 	rPCONG = rPCONG & (~0xC0);
+ 3021              		.loc 1 37 0
+ 3022 005c 24309FE5 		ldr	r3, .L6
+ 3023 0060 20209FE5 		ldr	r2, .L6
+ 3024 0064 002092E5 		ldr	r2, [r2, #0]
+ 3025 0068 C020C2E3 		bic	r2, r2, #192
+ 3026 006c 002083E5 		str	r2, [r3, #0]
+  38:../src/main.c **** 	/* rPUPG to 0's */
+  39:../src/main.c **** 	rPUPG = 0x0;
+ 3027              		.loc 1 39 0
+ 3028 0070 14309FE5 		ldr	r3, .L6+4
+ 3029 0074 0020A0E3 		mov	r2, #0
+ 3030 0078 002083E5 		str	r2, [r3, #0]
+  40:../src/main.c **** 
+  41:../src/main.c **** }
+ 3031              		.loc 1 41 0
+ 3032 007c 0CD04BE2 		sub	sp, fp, #12
+ 3033 0080 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 3034 0084 1EFF2FE1 		bx	lr
+ 3035              	.L7:
+ 3036              		.align	2
+ 3037              	.L6:
+ 3038 0088 4000D201 		.word	30539840
+ 3039 008c 4800D201 		.word	30539848
+ 3040              		.cfi_endproc
+ 3041              	.LFE1:
+ 3043              		.align	2
+ 3044              		.global	button_no_pressed
+ 3046              	button_no_pressed:
+ 3047              	.LFB2:
+  42:../src/main.c **** 
+  43:../src/main.c **** int button_no_pressed(){
+ 3048              		.loc 1 43 0
+ 3049              		.cfi_startproc
+ 3050              		@ Function supports interworking.
+ 3051              		@ args = 0, pretend = 0, frame = 8
+ 3052              		@ frame_needed = 1, uses_anonymous_args = 0
+ 3053 0090 0DC0A0E1 		mov	ip, sp
+ 3054              	.LCFI4:
+ 3055              		.cfi_def_cfa_register 12
+ 3056 0094 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 3057 0098 04B04CE2 		sub	fp, ip, #4
+ 3058              		.cfi_offset 14, -8
+ 3059              		.cfi_offset 13, -12
+ 3060              		.cfi_offset 11, -16
+ 3061              	.LCFI5:
+ 3062              		.cfi_def_cfa 11, 4
+ 3063 009c 08D04DE2 		sub	sp, sp, #8
+  44:../src/main.c **** 	UINT r = ~ ( rPDATG | ~ 0xC0 );
+ 3064              		.loc 1 44 0
+ 3065 00a0 30309FE5 		ldr	r3, .L9
+ 3066 00a4 003093E5 		ldr	r3, [r3, #0]
+ 3067 00a8 0330E0E1 		mvn	r3, r3
+ 3068 00ac C03003E2 		and	r3, r3, #192
+ 3069 00b0 0330E0E1 		mvn	r3, r3
+ 3070 00b4 0330E0E1 		mvn	r3, r3
+ 3071 00b8 10300BE5 		str	r3, [fp, #-16]
+  45:../src/main.c **** 	DelayMs(100);
+ 3072              		.loc 1 45 0
+ 3073 00bc 6400A0E3 		mov	r0, #100
+ 3074 00c0 FEFFFFEB 		bl	DelayMs
+  46:../src/main.c **** 	return r;
+ 3075              		.loc 1 46 0
+ 3076 00c4 10301BE5 		ldr	r3, [fp, #-16]
+  47:../src/main.c **** 
+  48:../src/main.c **** }
+ 3077              		.loc 1 48 0
+ 3078 00c8 0300A0E1 		mov	r0, r3
+ 3079 00cc 0CD04BE2 		sub	sp, fp, #12
+ 3080 00d0 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 3081 00d4 1EFF2FE1 		bx	lr
+ 3082              	.L10:
+ 3083              		.align	2
+ 3084              	.L9:
+ 3085 00d8 4400D201 		.word	30539844
+ 3086              		.cfi_endproc
+ 3087              	.LFE2:
+ 3089              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+C:\Users\USUARI~1\AppData\Local\Temp\ccY13Gt1.s:2948   .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccY13Gt1.s:2951   .text:00000000 Main
+C:\Users\USUARI~1\AppData\Local\Temp\ccY13Gt1.s:3004   .text:00000050 button_init
+C:\Users\USUARI~1\AppData\Local\Temp\ccY13Gt1.s:3046   .text:00000090 button_no_pressed
+C:\Users\USUARI~1\AppData\Local\Temp\ccY13Gt1.s:3038   .text:00000088 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccY13Gt1.s:3043   .text:00000090 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccY13Gt1.s:3085   .text:000000d8 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+sys_init
+leds_off
+led1_on
+leds_switch
+DelayMs
