@@ -29,47 +29,47 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 SECONDARY_FLASH += \
-pr1.hex \
+b_interrLeds.hex \
 
 SECONDARY_LIST += \
-pr1.lst \
+b_interrLeds.lst \
 
 SECONDARY_SIZE += \
-pr1.siz \
+b_interrLeds.siz \
 
 
 # All Target
-all: pr1.elf secondary-outputs
+all: b_interrLeds.elf secondary-outputs
 
 # Tool invocations
-pr1.elf: $(OBJS) $(USER_OBJS)
+b_interrLeds.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Sourcery Windows GCC C Linker'
-	arm-none-eabi-gcc -T"C:\hlocal\EclipseARMwspace\pr1\commonEclipse\ram_ice.ld" -nostartfiles -Wl,-Map,pr1.map -mcpu=arm7tdmi -g3 -gdwarf-2 -o "pr1.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -T"C:\hlocal\EclipseARMwspace\b_interrLeds\commonEclipse\ram_ice.ld" -nostartfiles -Wl,-Map,b_interrLeds.map -mcpu=arm7tdmi -g3 -gdwarf-2 -o "b_interrLeds.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-pr1.hex: pr1.elf
+b_interrLeds.hex: b_interrLeds.elf
 	@echo 'Invoking: ARM Sourcery Windows GNU Create Flash Image'
-	arm-none-eabi-objcopy -O binary pr1.elf  "pr1.hex"
+	arm-none-eabi-objcopy -O binary b_interrLeds.elf  "b_interrLeds.hex"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-pr1.lst: pr1.elf
+b_interrLeds.lst: b_interrLeds.elf
 	@echo 'Invoking: ARM Sourcery Windows GNU Create Listing'
-	arm-none-eabi-objdump -h -S pr1.elf > "pr1.lst"
+	arm-none-eabi-objdump -h -S b_interrLeds.elf > "b_interrLeds.lst"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-pr1.siz: pr1.elf
+b_interrLeds.siz: b_interrLeds.elf
 	@echo 'Invoking: ARM Sourcery Windows GNU Print Size'
-	arm-none-eabi-size  --format=berkeley pr1.elf
+	arm-none-eabi-size  --format=berkeley b_interrLeds.elf
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(SECONDARY_SIZE)$(OBJS)$(C_DEPS)$(ASM_DEPS)$(SECONDARY_FLASH)$(EXECUTABLES)$(SECONDARY_LIST)$(S_UPPER_DEPS) pr1.elf
+	-$(RM) $(SECONDARY_SIZE)$(OBJS)$(C_DEPS)$(ASM_DEPS)$(SECONDARY_FLASH)$(EXECUTABLES)$(SECONDARY_LIST)$(S_UPPER_DEPS) b_interrLeds.elf
 	-@echo ' '
 
 secondary-outputs: $(SECONDARY_FLASH) $(SECONDARY_LIST) $(SECONDARY_SIZE)

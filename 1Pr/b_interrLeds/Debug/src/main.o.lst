@@ -177,13 +177,13 @@
  3070              	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\USUARI~1\AppData\Local\Temp\ccyIjhTd.s:2948   .text:00000000 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccyIjhTd.s:2951   .text:00000000 Main
-C:\Users\USUARI~1\AppData\Local\Temp\ccyIjhTd.s:2985   .text:00000020 button_init
-C:\Users\USUARI~1\AppData\Local\Temp\ccyIjhTd.s:3019   .text:00000058 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccyIjhTd.s:3024   .text:00000060 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccyIjhTd.s:3027   .text:00000060 button_no_pressed
-C:\Users\USUARI~1\AppData\Local\Temp\ccyIjhTd.s:3066   .text:000000a8 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccHllPHz.s:2948   .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccHllPHz.s:2951   .text:00000000 Main
+C:\Users\USUARI~1\AppData\Local\Temp\ccHllPHz.s:2985   .text:00000020 button_init
+C:\Users\USUARI~1\AppData\Local\Temp\ccHllPHz.s:3019   .text:00000058 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccHllPHz.s:3024   .text:00000060 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccHllPHz.s:3027   .text:00000060 button_no_pressed
+C:\Users\USUARI~1\AppData\Local\Temp\ccHllPHz.s:3066   .text:000000a8 $d
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS
