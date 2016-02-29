@@ -8,6 +8,7 @@ extern void leds_off();
 extern void led1_on();
 extern void leds_switch();
 extern void Eint4567_init(void);
+extern void Eint4567_ISR(void);
 /*--- funciones ---*/
 void button_init();
 int button_no_pressed();
