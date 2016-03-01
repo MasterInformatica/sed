@@ -73,6 +73,7 @@ COMENTAR PARA LA PRIMERA PARTE CON INTERRUPCIONES */
 int which_int;
 void Eint4567_ISR(void)
 {
+	while(button_no_pressed() != 0);
 	/*Identificar la interrupcion*/
 	which_int = rEXTINTPND;
 	unsigned short borrar;
