@@ -1,0 +1,196 @@
+   1              		.cpu arm7tdmi
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 18, 4
+  11              		.file	"main.c"
+  21              	.Ltext0:
+  22              		.file 1 "../main.c"
+ 2871              		.align	2
+ 2872              		.global	Main
+ 2874              	Main:
+ 2875              	.LFB0:
+   1:../main.c     **** /*--- ficheros de cabecera ---*/
+   2:../main.c     **** #include "44blib.h"
+   3:../main.c     **** #include "44b.h"
+   4:../main.c     **** #include "stdio.h"
+   5:../main.c     **** 
+   6:../main.c     **** /*--- funciones externas ---*/
+   7:../main.c     **** extern void leds_off();
+   8:../main.c     **** extern void led1_on();
+   9:../main.c     **** 
+  10:../main.c     **** /*--- declaracion de funciones ---*/
+  11:../main.c     **** void Main(void);
+  12:../main.c     **** void game_init(void);
+  13:../main.c     **** 
+  14:../main.c     **** void Main(void)
+  15:../main.c     **** {
+ 2876              		.loc 1 15 0
+ 2877              		.cfi_startproc
+ 2878              		@ Function supports interworking.
+ 2879              		@ args = 0, pretend = 0, frame = 0
+ 2880              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2881 0000 0DC0A0E1 		mov	ip, sp
+ 2882              	.LCFI0:
+ 2883              		.cfi_def_cfa_register 12
+ 2884 0004 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 2885 0008 04B04CE2 		sub	fp, ip, #4
+ 2886              		.cfi_offset 14, -8
+ 2887              		.cfi_offset 13, -12
+ 2888              		.cfi_offset 11, -16
+ 2889              	.LCFI1:
+ 2890              		.cfi_def_cfa 11, 4
+  16:../main.c     **** 	/* Inicializar controladores */
+  17:../main.c     **** 
+  18:../main.c     **** 	sys_init(); // Inicializacion de la placa, interrupciones y puertos
+ 2891              		.loc 1 18 0
+ 2892 000c FEFFFFEB 		bl	sys_init
+  19:../main.c     **** 	game_init();
+ 2893              		.loc 1 19 0
+ 2894 0010 FEFFFFEB 		bl	game_init
+  20:../main.c     **** 
+  21:../main.c     **** 	led1_on();
+ 2895              		.loc 1 21 0
+ 2896 0014 FEFFFFEB 		bl	led1_on
+  22:../main.c     **** 	timer1_init();
+ 2897              		.loc 1 22 0
+ 2898 0018 FEFFFFEB 		bl	timer1_init
+  23:../main.c     **** 	timer23_init();
+ 2899              		.loc 1 23 0
+ 2900 001c FEFFFFEB 		bl	timer23_init
+  24:../main.c     **** 	timer4_init();
+ 2901              		.loc 1 24 0
+ 2902 0020 FEFFFFEB 		bl	timer4_init
+  25:../main.c     **** 
+  26:../main.c     **** 	timer1_activar();
+ 2903              		.loc 1 26 0
+ 2904 0024 FEFFFFEB 		bl	timer1_activar
+  27:../main.c     **** 	timer1_desactivar();
+ 2905              		.loc 1 27 0
+ 2906 0028 FEFFFFEB 		bl	timer1_desactivar
+  28:../main.c     **** 	//timer2_activar();
+  29:../main.c     **** 	timer4_activar();
+ 2907              		.loc 1 29 0
+ 2908 002c FEFFFFEB 		bl	timer4_activar
+ 2909              	.L2:
+  30:../main.c     **** 
+  31:../main.c     **** 	while (1){};
+ 2910              		.loc 1 31 0 discriminator 1
+ 2911 0030 FEFFFFEA 		b	.L2
+ 2912              		.cfi_endproc
+ 2913              	.LFE0:
+ 2915              		.align	2
+ 2916              		.global	game_init
+ 2918              	game_init:
+ 2919              	.LFB1:
+  32:../main.c     **** }
+  33:../main.c     **** 
+  34:../main.c     **** 
+  35:../main.c     **** 
+  36:../main.c     **** void game_init(void){
+ 2920              		.loc 1 36 0
+ 2921              		.cfi_startproc
+ 2922              		@ Function supports interworking.
+ 2923              		@ args = 0, pretend = 0, frame = 0
+ 2924              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2925 0034 0DC0A0E1 		mov	ip, sp
+ 2926              	.LCFI2:
+ 2927              		.cfi_def_cfa_register 12
+ 2928 0038 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 2929 003c 04B04CE2 		sub	fp, ip, #4
+ 2930              		.cfi_offset 14, -8
+ 2931              		.cfi_offset 13, -12
+ 2932              		.cfi_offset 11, -16
+ 2933              	.LCFI3:
+ 2934              		.cfi_def_cfa 11, 4
+  37:../main.c     **** 	rI_ISPC = 0x3ffffff; //borrar interrupciones pendientes
+ 2935              		.loc 1 37 0
+ 2936 0040 54309FE5 		ldr	r3, .L4
+ 2937 0044 3F23E0E3 		mvn	r2, #-67108864
+ 2938 0048 002083E5 		str	r2, [r3, #0]
+  38:../main.c     **** 
+  39:../main.c     **** 	// Configura las lineas como de tipo IRQ mediante INTMOD
+  40:../main.c     **** 	rINTMOD = 0x0;
+ 2939              		.loc 1 40 0
+ 2940 004c 4C309FE5 		ldr	r3, .L4+4
+ 2941 0050 0020A0E3 		mov	r2, #0
+ 2942 0054 002083E5 		str	r2, [r3, #0]
+  41:../main.c     **** 	// Habilita int. vectorizadas y la linea IRQ (FIQ no) mediante INTCON
+  42:../main.c     **** 	rINTCON = 0x1;
+ 2943              		.loc 1 42 0
+ 2944 0058 1E36A0E3 		mov	r3, #31457280
+ 2945 005c 0120A0E3 		mov	r2, #1
+ 2946 0060 002083E5 		str	r2, [r3, #0]
+  43:../main.c     **** 
+  44:../main.c     **** 	// Enmascara todas las lineas excepto Eint4567 y el bit global (INTMSK)
+  45:../main.c     **** 	rINTMSK = ~( BIT_GLOBAL );
+ 2947              		.loc 1 45 0
+ 2948 0064 38309FE5 		ldr	r3, .L4+8
+ 2949 0068 0123E0E3 		mvn	r2, #67108864
+ 2950 006c 002083E5 		str	r2, [r3, #0]
+  46:../main.c     **** 
+  47:../main.c     **** 	//Iniciamos los distintos componentes
+  48:../main.c     **** 	Eint4567_init();
+ 2951              		.loc 1 48 0
+ 2952 0070 FEFFFFEB 		bl	Eint4567_init
+  49:../main.c     **** 	keyboard_init();
+ 2953              		.loc 1 49 0
+ 2954 0074 FEFFFFEB 		bl	keyboard_init
+  50:../main.c     **** 
+  51:../main.c     **** 	//Apagamos todos los leds y 8 segmentos
+  52:../main.c     **** 	leds_off();
+ 2955              		.loc 1 52 0
+ 2956 0078 FEFFFFEB 		bl	leds_off
+  53:../main.c     **** 	led1_on();
+ 2957              		.loc 1 53 0
+ 2958 007c FEFFFFEB 		bl	led1_on
+  54:../main.c     **** 	D8Led_init();
+ 2959              		.loc 1 54 0
+ 2960 0080 FEFFFFEB 		bl	D8Led_init
+  55:../main.c     **** 
+  56:../main.c     **** 	/* Por precaucion, se vuelven a borrar los bits de INTPND y EXTINTPND */
+  57:../main.c     **** 	rI_ISPC = 0x3ffffff;
+ 2961              		.loc 1 57 0
+ 2962 0084 10309FE5 		ldr	r3, .L4
+ 2963 0088 3F23E0E3 		mvn	r2, #-67108864
+ 2964 008c 002083E5 		str	r2, [r3, #0]
+  58:../main.c     **** }
+ 2965              		.loc 1 58 0
+ 2966 0090 0CD04BE2 		sub	sp, fp, #12
+ 2967 0094 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2968 0098 1EFF2FE1 		bx	lr
+ 2969              	.L5:
+ 2970              		.align	2
+ 2971              	.L4:
+ 2972 009c 2400E001 		.word	31457316
+ 2973 00a0 0800E001 		.word	31457288
+ 2974 00a4 0C00E001 		.word	31457292
+ 2975              		.cfi_endproc
+ 2976              	.LFE1:
+ 2978              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+C:\Users\USUARI~1\AppData\Local\Temp\ccflq98b.s:2871   .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccflq98b.s:2874   .text:00000000 Main
+C:\Users\USUARI~1\AppData\Local\Temp\ccflq98b.s:2918   .text:00000034 game_init
+C:\Users\USUARI~1\AppData\Local\Temp\ccflq98b.s:2972   .text:0000009c $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+sys_init
+led1_on
+timer1_init
+timer23_init
+timer4_init
+timer1_activar
+timer1_desactivar
+timer4_activar
+Eint4567_init
+keyboard_init
+leds_off
+D8Led_init
