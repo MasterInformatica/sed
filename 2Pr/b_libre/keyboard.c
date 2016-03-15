@@ -15,7 +15,11 @@ void D8Led_symbol(int value);
 
 /*--- Declaracion de funciones ---*/
 void keyboard_init();
-void KeyboardInt(void) __attribute__ ((interrupt ("IRQ")));
+void Keyboard_ISR(void) __attribute__ ((interrupt ("IRQ")));
+
+
+extern luz;
+extern st;
 
 /*--- Codigo de las funciones ---*/
 void keyboard_init()
@@ -31,7 +35,7 @@ void keyboard_init()
 		rEXTINT = rEXTINT | 0x00000030;
 
 		/* Establece la rutina de servicio para EINT1 */
-		pISR_EINT1 = (unsigned) KeyboardInt;
+		pISR_EINT1 = (unsigned) Keyboard_ISR;
 
 		// Borra INTPND escribiendo 1s en I_ISPC
 		rI_ISPC = BIT_EINT1;
@@ -58,50 +62,57 @@ void keyboard_desactivar(){
 }
 
 
-void KeyboardInt(void)
+void Keyboard_ISR(void)
 {
 	/* Esperar trp mediante la funcion DelayMs()*/
 	DelayMs(20);//trp=20ms
 
 	/* Identificar la tecla */
-	int key = key_read();
-	/* Si la tecla se ha identificado, visualizarla en el 8SEG*/
-	if(key > -1)
-	{
-		D8Led_symbol(key);
+	int pulsado = key_read();
+
+	if((pulsado == 0 && luz == 1) || //izq
+	   (pulsado == 1 && luz == 2)) { //dcha
+
+		st = 5;
+		timer1_desactivar();
+
+		Eint4567_desactivar();
+		keyboard_desactivar();
+		led2_on(); 					//Indicamos que ha ganado el jugador 2.
+		timer2_activar();
+
 	}
 
 	/* Esperar a se libere la tecla: consultar bit 1 del registro de datos del puerto G */
-	while (!(rPDATG & 0x2)){
-		//NOTHING
-	}
-	//D8Led_symbol(14);
+	while (!(rPDATG & 0x2)){}
+
 	/* Esperar trd mediante la funcion Delay() */
 	DelayMs(100);//trd=100ms
 	/* Borrar interrupción de teclado */
 	rI_ISPC = BIT_EINT1;
 }
+
 int key_read()
 {
-	short int i;
+	short int i=0;
 
 	int value= -1;
 	char temp;
 	// Identificar la tecla mediante ''scanning''
-	// Si la identificación falla la función debe devolver -1
+	// Para el juego solo es necesario detectar las dos primeras teclas.
 
 	unsigned int offset[4] = {0xFD,0xFB,0xF7,0xEF};
 
-	for(i=0; i<4; i++){
-		temp = *(keyboard_base + (offset[i])) & KEY_VALUE_MASK;
+	//for(i=0; i<1; i++){
+	temp = *(keyboard_base + (offset[i])) & KEY_VALUE_MASK;
 
-		switch (temp) {
-			case 0x7:  value = 0 + (i*4); break;
-			case 0xB:  value = 1 + (i*4); break;
-			case 0xD:  value = 2 + (i*4); break;
-			case 0xE:  value = 3 + (i*4); break;
-		}
+	switch (temp) {
+		case 0x7:  value = 0 + (i*4); break;
+		case 0xB:  value = 1 + (i*4); break;
+		case 0xD:  value = 2 + (i*4); break;
+		case 0xE:  value = 3 + (i*4); break;
 	}
+	//}
 
 	return value;
 

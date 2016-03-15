@@ -3,29 +3,27 @@
 #include "44b.h"
 #include "stdio.h"
 
+
 /*--- funciones externas ---*/
-extern void leds_off();
-extern void led1_on();
+//TODO
 
 /*--- declaracion de funciones ---*/
 void Main(void);
 void game_init(void);
 
+/*--- Variables globales del juego ---*/
+int st; //Estado actual del juego.
+int luz; //1 = izq, 2 = dcha
+int cuenta;
+
 void Main(void)
 {
-	/* Inicializar controladores */
-
-	sys_init(); // Inicializacion de la placa, interrupciones y puertos
+	/* Inicializacion */
+	sys_init();
 	game_init();
 
-	led1_on();
-	timer1_init();
-	timer23_init();
-	timer4_init();
-
-	timer1_activar();
-	timer1_desactivar();
-	//timer2_activar();
+	//Inicio de la ejecucion
+	st = 1;
 	timer4_activar();
 
 	while (1){};
@@ -48,9 +46,14 @@ void game_init(void){
 	Eint4567_init();
 	keyboard_init();
 
+	//Inicializamos los timers
+	timer1_init();
+	timer23_init();
+	timer4_init();
+
+
 	//Apagamos todos los leds y 8 segmentos
 	leds_off();
-	led1_on();
 	D8Led_init();
 
 	/* Por precaucion, se vuelven a borrar los bits de INTPND y EXTINTPND */

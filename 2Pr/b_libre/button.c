@@ -6,6 +6,9 @@ void Eint4567_ISR(void) __attribute__ ((interrupt ("IRQ")));
 void Eint4567_init(void);
 extern int button_no_pressed();
 
+extern luz;
+extern st;
+
 
 void Eint4567_init(void) {
 	/* Configuracion del controlador de interrupciones */
@@ -36,8 +39,21 @@ void Eint4567_ISR(void)
 {
 	while(button_no_pressed() != 0);
 
-	//Conmutamos LEDs
-	leds_switch();
+	int pulsado = rEXTINTPND & 0xC;
+
+	if((pulsado == 4 && luz == 1) || //izq
+	   (pulsado == 8 && luz == 2)) { //dcha
+
+		st = 5;
+		timer1_desactivar();
+
+		Eint4567_desactivar();
+		keyboard_desactivar();
+		led1_on(); 					//Indicamos que ha ganado el jugador 1.
+		timer2_activar();
+
+
+	}
 
 	//Delay para eliminar rebotes
 	DelayMs(100);

@@ -28,47 +28,47 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 SECONDARY_FLASH += \
-a_teclado8seg.hex \
+b_libre.hex \
 
 SECONDARY_LIST += \
-a_teclado8seg.lst \
+b_libre.lst \
 
 SECONDARY_SIZE += \
-a_teclado8seg.siz \
+b_libre.siz \
 
 
 # All Target
-all: a_teclado8seg.elf secondary-outputs
+all: b_libre.elf secondary-outputs
 
 # Tool invocations
-a_teclado8seg.elf: $(OBJS) $(USER_OBJS)
+b_libre.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Sourcery Windows GCC C Linker'
-	arm-none-eabi-gcc -T"C:\hlocal\EclipseARMwspace\a_teclado8seg\commonEclipse\ram_ice.ld" -nostartfiles -Wl,-Map,a_teclado8seg.map -mcpu=arm7tdmi -g3 -gdwarf-2 -o "a_teclado8seg.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -T"C:\hlocal\EclipseARMwspace\b_libre\commonEclipse\ram_ice.ld" -nostartfiles -Wl,-Map,b_libre.map -mcpu=arm7tdmi -g3 -gdwarf-2 -o "b_libre.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-a_teclado8seg.hex: a_teclado8seg.elf
+b_libre.hex: b_libre.elf
 	@echo 'Invoking: ARM Sourcery Windows GNU Create Flash Image'
-	arm-none-eabi-objcopy -O binary a_teclado8seg.elf  "a_teclado8seg.hex"
+	arm-none-eabi-objcopy -O binary b_libre.elf  "b_libre.hex"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-a_teclado8seg.lst: a_teclado8seg.elf
+b_libre.lst: b_libre.elf
 	@echo 'Invoking: ARM Sourcery Windows GNU Create Listing'
-	arm-none-eabi-objdump -h -S a_teclado8seg.elf > "a_teclado8seg.lst"
+	arm-none-eabi-objdump -h -S b_libre.elf > "b_libre.lst"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-a_teclado8seg.siz: a_teclado8seg.elf
+b_libre.siz: b_libre.elf
 	@echo 'Invoking: ARM Sourcery Windows GNU Print Size'
-	arm-none-eabi-size  --format=berkeley a_teclado8seg.elf
+	arm-none-eabi-size  --format=berkeley b_libre.elf
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(SECONDARY_SIZE)$(OBJS)$(C_DEPS)$(ASM_DEPS)$(SECONDARY_FLASH)$(EXECUTABLES)$(SECONDARY_LIST)$(S_UPPER_DEPS) a_teclado8seg.elf
+	-$(RM) $(SECONDARY_SIZE)$(OBJS)$(C_DEPS)$(ASM_DEPS)$(SECONDARY_FLASH)$(EXECUTABLES)$(SECONDARY_LIST)$(S_UPPER_DEPS) b_libre.elf
 	-@echo ' '
 
 secondary-outputs: $(SECONDARY_FLASH) $(SECONDARY_LIST) $(SECONDARY_SIZE)

@@ -1,6 +1,18 @@
 /*--- ficheros de cabecera ---*/
 #include "44b.h"
 #include "44blib.h"
+#include "stdlib.h"
+
+
+extern cuenta;
+extern st;
+extern luz;
+extern D8Led_symbol(int);
+extern led1_on(void);
+extern led2_on(void);
+extern leds_off(void);
+
+
 
 
 //----------------------------------------------------------
@@ -68,6 +80,9 @@ void timer1_activar(void){
 
 	/* Borrarmos las interrupciones pendientes */
 	rI_ISPC = BIT_TIMER1;
+
+	cuenta = 0xf;
+	D8Led_symbol(cuenta);
 }
 
 void timer1_desactivar(void){
@@ -81,7 +96,17 @@ void timer1_desactivar(void){
 }
 
 void timer1_ISR(void){
-	leds_switch();
+	cuenta --;
+	D8Led_symbol(cuenta);
+
+	if(cuenta==0){ //La cuenta ha llegado a 0. Mostramos que no hay ganador
+		st = 4;
+		timer1_desactivar();
+		led1_on();
+		led2_on();
+		timer2_activar();
+	}
+
 	rI_ISPC = BIT_TIMER1;
 }
 
@@ -163,16 +188,36 @@ void timer3_desactivar(void){
 
 	/* Borrarmos las interrupciones pendientes */
 	rI_ISPC = BIT_TIMER3;
+
 }
 
 void timer2_ISR(void){
-	leds_switch();
+	timer2_desactivar();
+
+	st = 6;							//Cambiar al siguiente estado.
+
+	leds_off(); 					//Apagamos todas las luces para empezar la siguiente ronda.
+	//D8Led_symbol(-1);
+	timer3_activar();
+
 	rI_ISPC = BIT_TIMER2;
 }
 
 void timer3_ISR(void){
-	leds_switch();
+	D8Led_symbol(3);
+	timer3_desactivar();
+
+	st = 2;                 //Cambiar al siguiente estado
+
+	luz = (rand() % 2) + 1; //Encender una luz aleatoria.
+	if(luz==1)
+		led1_on();
+	else
+		led2_on();
+	timer4_activar();       //iniciar el temporizador 4
+
 	rI_ISPC = BIT_TIMER3;
+
 }
 
 //--------------------------------------------------------------------------------------------------------------------------
@@ -225,6 +270,27 @@ void timer4_desactivar(void){
 }
 
 void timer4_ISR(void){
-	leds_switch();
+	timer4_desactivar();
+
+	if(st == 1){
+		st = 2;                 //Cambiar al siguiente estado
+
+		luz = (rand() % 2) + 1; //Encender una luz aleatoria.
+		if(luz==1)
+			led1_on();
+		else
+			led2_on();
+		timer4_activar();       //iniciar el temporizador 4
+	}
+	else if(st == 2){
+		st = 3;					//Cambiar al siguiente estado
+
+		leds_off();				//apagar las luces
+		timer1_activar();		//iniciar el temporizador 1
+
+		Eint4567_activar();
+		keyboard_activar();
+	}
+
 	rI_ISPC = BIT_TIMER4;
 }
