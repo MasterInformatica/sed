@@ -20,6 +20,7 @@
 
 #include "common_types.h"
 
+
 #define S3C44B0X_SLAVE_ADDRESS (0x08)
 
 #define	RxACK		(1)
