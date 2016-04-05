@@ -1,0 +1,507 @@
+   1              		.cpu arm7tdmi
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 18, 4
+  11              		.file	"main.c"
+  21              	.Ltext0:
+  22              		.file 1 "../main.c"
+ 2012              		.align	2
+ 2013              		.global	practica_init
+ 2015              	practica_init:
+ 2016              	.LFB0:
+   1:../main.c     **** #include "s3cev40.h"
+   2:../main.c     **** #include "common_types.h"
+   3:../main.c     **** #include "at24c04.h"
+   4:../main.c     **** #include "44b.h"
+   5:../main.c     **** #include "def.h"
+   6:../main.c     **** 
+   7:../main.c     **** extern void DelayMs(int ms_time);
+   8:../main.c     **** extern void sys_init();
+   9:../main.c     **** extern void iic_init();
+  10:../main.c     **** extern void Eint4567_init();
+  11:../main.c     **** extern void Eint4567_activar();
+  12:../main.c     **** extern void keyboard_init();
+  13:../main.c     **** extern void D8Led_symbol(int value);
+  14:../main.c     **** extern void at24c04_bytewrite( uint16 addr, uint8 data );
+  15:../main.c     **** extern void at24c04_byteread( uint16 addr, uint8 *data );
+  16:../main.c     **** 
+  17:../main.c     **** int val;
+  18:../main.c     **** int st;
+  19:../main.c     **** 
+  20:../main.c     **** uint8 dir;
+  21:../main.c     **** uint8 dato;
+  22:../main.c     **** int kread;
+  23:../main.c     **** 
+  24:../main.c     **** 
+  25:../main.c     **** void practica_init(void){
+ 2017              		.loc 1 25 0
+ 2018              		.cfi_startproc
+ 2019              		@ Function supports interworking.
+ 2020              		@ args = 0, pretend = 0, frame = 0
+ 2021              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2022 0000 0DC0A0E1 		mov	ip, sp
+ 2023              	.LCFI0:
+ 2024              		.cfi_def_cfa_register 12
+ 2025 0004 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 2026 0008 04B04CE2 		sub	fp, ip, #4
+ 2027              		.cfi_offset 14, -8
+ 2028              		.cfi_offset 13, -12
+ 2029              		.cfi_offset 11, -16
+ 2030              	.LCFI1:
+ 2031              		.cfi_def_cfa 11, 4
+  26:../main.c     **** 	rI_ISPC = 0x3ffffff; //borrar interrupciones pendientes
+ 2032              		.loc 1 26 0
+ 2033 000c 60309FE5 		ldr	r3, .L2
+ 2034 0010 3F23E0E3 		mvn	r2, #-67108864
+ 2035 0014 002083E5 		str	r2, [r3, #0]
+  27:../main.c     **** 
+  28:../main.c     **** 	// Configura las lineas como de tipo IRQ mediante INTMOD
+  29:../main.c     **** 	rINTMOD = 0x0;
+ 2036              		.loc 1 29 0
+ 2037 0018 58309FE5 		ldr	r3, .L2+4
+ 2038 001c 0020A0E3 		mov	r2, #0
+ 2039 0020 002083E5 		str	r2, [r3, #0]
+  30:../main.c     **** 	// Habilita int. vectorizadas y la linea IRQ (FIQ no) mediante INTCON
+  31:../main.c     **** 	rINTCON = 0x1;
+ 2040              		.loc 1 31 0
+ 2041 0024 1E36A0E3 		mov	r3, #31457280
+ 2042 0028 0120A0E3 		mov	r2, #1
+ 2043 002c 002083E5 		str	r2, [r3, #0]
+  32:../main.c     **** 
+  33:../main.c     **** 	// Enmascara todas las lineas excepto Eint4567 y el bit global (INTMSK)
+  34:../main.c     **** 	rINTMSK = ~( BIT_GLOBAL );
+ 2044              		.loc 1 34 0
+ 2045 0030 44309FE5 		ldr	r3, .L2+8
+ 2046 0034 0123E0E3 		mvn	r2, #67108864
+ 2047 0038 002083E5 		str	r2, [r3, #0]
+  35:../main.c     **** 
+  36:../main.c     **** 	//Iniciamos los distintos componentes
+  37:../main.c     **** 
+  38:../main.c     **** 	Eint4567_init();
+ 2048              		.loc 1 38 0
+ 2049 003c FEFFFFEB 		bl	Eint4567_init
+  39:../main.c     **** 	Eint4567_activar();
+ 2050              		.loc 1 39 0
+ 2051 0040 FEFFFFEB 		bl	Eint4567_activar
+  40:../main.c     **** 	keyboard_init();
+ 2052              		.loc 1 40 0
+ 2053 0044 FEFFFFEB 		bl	keyboard_init
+  41:../main.c     **** 
+  42:../main.c     **** 	keyboard_activar();
+ 2054              		.loc 1 42 0
+ 2055 0048 FEFFFFEB 		bl	keyboard_activar
+  43:../main.c     **** 
+  44:../main.c     **** 	//Inicializamos los timers
+  45:../main.c     **** 	//timer1_init();
+  46:../main.c     **** 	//timer23_init();
+  47:../main.c     **** 	//timer4_init();
+  48:../main.c     **** 
+  49:../main.c     **** 
+  50:../main.c     **** 	//Apagamos todos los leds y 8 segmentos
+  51:../main.c     **** 	//leds_off();
+  52:../main.c     **** 	D8Led_init();
+ 2056              		.loc 1 52 0
+ 2057 004c FEFFFFEB 		bl	D8Led_init
+  53:../main.c     **** 
+  54:../main.c     **** 	/* Por precaucion, se vuelven a borrar los bits de INTPND y EXTINTPND */
+  55:../main.c     **** 	rI_ISPC = 0x3ffffff;
+ 2058              		.loc 1 55 0
+ 2059 0050 1C309FE5 		ldr	r3, .L2
+ 2060 0054 3F23E0E3 		mvn	r2, #-67108864
+ 2061 0058 002083E5 		str	r2, [r3, #0]
+  56:../main.c     **** 
+  57:../main.c     **** 	st = 5;
+ 2062              		.loc 1 57 0
+ 2063 005c 1C309FE5 		ldr	r3, .L2+12
+ 2064 0060 0520A0E3 		mov	r2, #5
+ 2065 0064 002083E5 		str	r2, [r3, #0]
+  58:../main.c     **** 
+  59:../main.c     **** }
+ 2066              		.loc 1 59 0
+ 2067 0068 0CD04BE2 		sub	sp, fp, #12
+ 2068 006c 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2069 0070 1EFF2FE1 		bx	lr
+ 2070              	.L3:
+ 2071              		.align	2
+ 2072              	.L2:
+ 2073 0074 2400E001 		.word	31457316
+ 2074 0078 0800E001 		.word	31457288
+ 2075 007c 0C00E001 		.word	31457292
+ 2076 0080 00000000 		.word	st
+ 2077              		.cfi_endproc
+ 2078              	.LFE0:
+ 2080              		.align	2
+ 2081              		.global	Main
+ 2083              	Main:
+ 2084              	.LFB1:
+  60:../main.c     **** 
+  61:../main.c     **** void Main( void )
+  62:../main.c     **** {
+ 2085              		.loc 1 62 0
+ 2086              		.cfi_startproc
+ 2087              		@ Function supports interworking.
+ 2088              		@ args = 0, pretend = 0, frame = 528
+ 2089              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2090 0084 0DC0A0E1 		mov	ip, sp
+ 2091              	.LCFI2:
+ 2092              		.cfi_def_cfa_register 12
+ 2093 0088 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 2094 008c 04B04CE2 		sub	fp, ip, #4
+ 2095              		.cfi_offset 14, -8
+ 2096              		.cfi_offset 13, -12
+ 2097              		.cfi_offset 11, -16
+ 2098              	.LCFI3:
+ 2099              		.cfi_def_cfa 11, 4
+ 2100 0090 21DE4DE2 		sub	sp, sp, #528
+  63:../main.c     ****     uint8 buffer[AT24C04_DEPTH];
+  64:../main.c     ****     uint16 i;
+  65:../main.c     ****     
+  66:../main.c     **** 	sys_init();
+ 2101              		.loc 1 66 0
+ 2102 0094 FEFFFFEB 		bl	sys_init
+  67:../main.c     **** 	iic_init();
+ 2103              		.loc 1 67 0
+ 2104 0098 FEFFFFEB 		bl	iic_init
+  68:../main.c     ****     practica_init();
+ 2105              		.loc 1 68 0
+ 2106 009c FEFFFFEB 		bl	practica_init
+  69:../main.c     **** 
+  70:../main.c     **** 
+  71:../main.c     ****     //Inicializamos la EEPROM
+  72:../main.c     ****     for( i=0; i<AT24C04_DEPTH; i++ ){
+ 2107              		.loc 1 72 0
+ 2108 00a0 0030A0E3 		mov	r3, #0
+ 2109 00a4 BE304BE1 		strh	r3, [fp, #-14]	@ movhi
+ 2110 00a8 0E0000EA 		b	.L5
+ 2111              	.L6:
+  73:../main.c     ****       val = (uint8)i%16;
+ 2112              		.loc 1 73 0 discriminator 2
+ 2113 00ac BE305BE1 		ldrh	r3, [fp, #-14]	@ movhi
+ 2114 00b0 FF3003E2 		and	r3, r3, #255
+ 2115 00b4 0F2003E2 		and	r2, r3, #15
+ 2116 00b8 78329FE5 		ldr	r3, .L21
+ 2117 00bc 002083E5 		str	r2, [r3, #0]
+  74:../main.c     ****       at24c04_bytewrite( i, val );
+ 2118              		.loc 1 74 0 discriminator 2
+ 2119 00c0 70329FE5 		ldr	r3, .L21
+ 2120 00c4 003093E5 		ldr	r3, [r3, #0]
+ 2121 00c8 FF3003E2 		and	r3, r3, #255
+ 2122 00cc BE205BE1 		ldrh	r2, [fp, #-14]
+ 2123 00d0 0200A0E1 		mov	r0, r2
+ 2124 00d4 0310A0E1 		mov	r1, r3
+ 2125 00d8 FEFFFFEB 		bl	at24c04_bytewrite
+  72:../main.c     ****     for( i=0; i<AT24C04_DEPTH; i++ ){
+ 2126              		.loc 1 72 0 discriminator 2
+ 2127 00dc BE305BE1 		ldrh	r3, [fp, #-14]	@ movhi
+ 2128 00e0 013083E2 		add	r3, r3, #1
+ 2129 00e4 BE304BE1 		strh	r3, [fp, #-14]	@ movhi
+ 2130              	.L5:
+  72:../main.c     ****     for( i=0; i<AT24C04_DEPTH; i++ ){
+ 2131              		.loc 1 72 0 is_stmt 0 discriminator 1
+ 2132 00e8 BE205BE1 		ldrh	r2, [fp, #-14]
+ 2133 00ec 48329FE5 		ldr	r3, .L21+4
+ 2134 00f0 030052E1 		cmp	r2, r3
+ 2135 00f4 ECFFFF9A 		bls	.L6
+  75:../main.c     ****     }
+  76:../main.c     **** 
+  77:../main.c     ****     for( i=0; i<AT24C04_DEPTH; i++ ){
+ 2136              		.loc 1 77 0 is_stmt 1
+ 2137 00f8 0030A0E3 		mov	r3, #0
+ 2138 00fc BE304BE1 		strh	r3, [fp, #-14]	@ movhi
+ 2139 0100 090000EA 		b	.L7
+ 2140              	.L8:
+  78:../main.c     ****       at24c04_byteread( i, &buffer[i] );
+ 2141              		.loc 1 78 0 discriminator 2
+ 2142 0104 BE305BE1 		ldrh	r3, [fp, #-14]
+ 2143 0108 872F4BE2 		sub	r2, fp, #540
+ 2144 010c 033082E0 		add	r3, r2, r3
+ 2145 0110 BE205BE1 		ldrh	r2, [fp, #-14]
+ 2146 0114 0200A0E1 		mov	r0, r2
+ 2147 0118 0310A0E1 		mov	r1, r3
+ 2148 011c FEFFFFEB 		bl	at24c04_byteread
+  77:../main.c     ****     for( i=0; i<AT24C04_DEPTH; i++ ){
+ 2149              		.loc 1 77 0 discriminator 2
+ 2150 0120 BE305BE1 		ldrh	r3, [fp, #-14]	@ movhi
+ 2151 0124 013083E2 		add	r3, r3, #1
+ 2152 0128 BE304BE1 		strh	r3, [fp, #-14]	@ movhi
+ 2153              	.L7:
+  77:../main.c     ****     for( i=0; i<AT24C04_DEPTH; i++ ){
+ 2154              		.loc 1 77 0 is_stmt 0 discriminator 1
+ 2155 012c BE205BE1 		ldrh	r2, [fp, #-14]
+ 2156 0130 04329FE5 		ldr	r3, .L21+4
+ 2157 0134 030052E1 		cmp	r2, r3
+ 2158 0138 F1FFFF9A 		bls	.L8
+  79:../main.c     ****     }
+  80:../main.c     **** 
+  81:../main.c     ****     DelayMs(100);
+ 2159              		.loc 1 81 0 is_stmt 1
+ 2160 013c 6400A0E3 		mov	r0, #100
+ 2161 0140 FEFFFFEB 		bl	DelayMs
+  82:../main.c     **** /*
+  83:../main.c     ****     for( i=0; i<AT24C04_DEPTH; i++ ){
+  84:../main.c     ****       at24c04_byteread( i, &buffer[i] );
+  85:../main.c     ****       val = buffer[i] & 0xF;
+  86:../main.c     ****       D8Led_symbol(val);
+  87:../main.c     ****       DelayMs(100);
+  88:../main.c     ****     }*/
+  89:../main.c     ****     int anterior = st;
+ 2162              		.loc 1 89 0
+ 2163 0144 F4319FE5 		ldr	r3, .L21+8
+ 2164 0148 003093E5 		ldr	r3, [r3, #0]
+ 2165 014c 14300BE5 		str	r3, [fp, #-20]
+  90:../main.c     ****     uint8 dirtmp;
+  91:../main.c     ****     while( 1 ){
+  92:../main.c     ****     	while(anterior == st);
+ 2166              		.loc 1 92 0
+ 2167 0150 0000A0E1 		mov	r0, r0	@ nop
+ 2168              	.L9:
+ 2169              		.loc 1 92 0 is_stmt 0 discriminator 1
+ 2170 0154 E4319FE5 		ldr	r3, .L21+8
+ 2171 0158 003093E5 		ldr	r3, [r3, #0]
+ 2172 015c 14201BE5 		ldr	r2, [fp, #-20]
+ 2173 0160 030052E1 		cmp	r2, r3
+ 2174 0164 FAFFFF0A 		beq	.L9
+  93:../main.c     ****     	switch(st){
+ 2175              		.loc 1 93 0 is_stmt 1
+ 2176 0168 D0319FE5 		ldr	r3, .L21+8
+ 2177 016c 003093E5 		ldr	r3, [r3, #0]
+ 2178 0170 060053E3 		cmp	r3, #6
+ 2179 0174 03F19F97 		ldrls	pc, [pc, r3, asl #2]
+ 2180 0178 680000EA 		b	.L20
+ 2181              	.L17:
+ 2182 017c 98010000 		.word	.L11
+ 2183 0180 A8010000 		.word	.L12
+ 2184 0184 E4010000 		.word	.L13
+ 2185 0188 2C020000 		.word	.L14
+ 2186 018c 2C020000 		.word	.L14
+ 2187 0190 74020000 		.word	.L15
+ 2188 0194 A4020000 		.word	.L16
+ 2189              	.L11:
+ 2190              	.LBB2:
+  94:../main.c     **** 		case 0:
+  95:../main.c     **** 			kread=-1;
+ 2191              		.loc 1 95 0
+ 2192 0198 A4319FE5 		ldr	r3, .L21+12
+ 2193 019c 0020E0E3 		mvn	r2, #0
+ 2194 01a0 002083E5 		str	r2, [r3, #0]
+  96:../main.c     **** 			break;
+ 2195              		.loc 1 96 0
+ 2196 01a4 5E0000EA 		b	.L18
+ 2197              	.L12:
+  97:../main.c     **** 		case 1:  // leer mas significativa direccion
+  98:../main.c     **** 			dirtmp = (dirtmp << 4) | (kread & 0xf);
+ 2198              		.loc 1 98 0
+ 2199 01a8 15305BE5 		ldrb	r3, [fp, #-21]	@ zero_extendqisi2
+ 2200 01ac 0332A0E1 		mov	r3, r3, asl #4
+ 2201 01b0 FF2003E2 		and	r2, r3, #255
+ 2202 01b4 88319FE5 		ldr	r3, .L21+12
+ 2203 01b8 003093E5 		ldr	r3, [r3, #0]
+ 2204 01bc FF3003E2 		and	r3, r3, #255
+ 2205 01c0 0F3003E2 		and	r3, r3, #15
+ 2206 01c4 FF3003E2 		and	r3, r3, #255
+ 2207 01c8 033082E1 		orr	r3, r2, r3
+ 2208 01cc FF3003E2 		and	r3, r3, #255
+ 2209 01d0 15304BE5 		strb	r3, [fp, #-21]
+  99:../main.c     **** 			kread=-1;
+ 2210              		.loc 1 99 0
+ 2211 01d4 68319FE5 		ldr	r3, .L21+12
+ 2212 01d8 0020E0E3 		mvn	r2, #0
+ 2213 01dc 002083E5 		str	r2, [r3, #0]
+ 100:../main.c     **** 			break;
+ 2214              		.loc 1 100 0
+ 2215 01e0 4F0000EA 		b	.L18
+ 2216              	.L13:
+ 101:../main.c     **** 		case 2:  // leer menos significativa direccion
+ 102:../main.c     **** 			dirtmp = (dirtmp << 4) | (kread & 0xf);
+ 2217              		.loc 1 102 0
+ 2218 01e4 15305BE5 		ldrb	r3, [fp, #-21]	@ zero_extendqisi2
+ 2219 01e8 0332A0E1 		mov	r3, r3, asl #4
+ 2220 01ec FF2003E2 		and	r2, r3, #255
+ 2221 01f0 4C319FE5 		ldr	r3, .L21+12
+ 2222 01f4 003093E5 		ldr	r3, [r3, #0]
+ 2223 01f8 FF3003E2 		and	r3, r3, #255
+ 2224 01fc 0F3003E2 		and	r3, r3, #15
+ 2225 0200 FF3003E2 		and	r3, r3, #255
+ 2226 0204 033082E1 		orr	r3, r2, r3
+ 2227 0208 FF3003E2 		and	r3, r3, #255
+ 2228 020c 15304BE5 		strb	r3, [fp, #-21]
+ 103:../main.c     **** 			kread = -1;
+ 2229              		.loc 1 103 0
+ 2230 0210 2C319FE5 		ldr	r3, .L21+12
+ 2231 0214 0020E0E3 		mvn	r2, #0
+ 2232 0218 002083E5 		str	r2, [r3, #0]
+ 104:../main.c     **** 
+ 105:../main.c     **** 			dir = dirtmp;
+ 2233              		.loc 1 105 0
+ 2234 021c 24319FE5 		ldr	r3, .L21+16
+ 2235 0220 15205BE5 		ldrb	r2, [fp, #-21]
+ 2236 0224 0020C3E5 		strb	r2, [r3, #0]
+ 106:../main.c     **** 			break;
+ 2237              		.loc 1 106 0
+ 2238 0228 3D0000EA 		b	.L18
+ 2239              	.L14:
+ 107:../main.c     **** 		case 3:  // leer mas significativa dato
+ 108:../main.c     **** 		case 4:  // leer menos significativa dato
+ 109:../main.c     **** 			dato = (dato << 4) | (kread & 0xf);
+ 2240              		.loc 1 109 0
+ 2241 022c 18319FE5 		ldr	r3, .L21+20
+ 2242 0230 0030D3E5 		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 2243 0234 0332A0E1 		mov	r3, r3, asl #4
+ 2244 0238 FF2003E2 		and	r2, r3, #255
+ 2245 023c 00319FE5 		ldr	r3, .L21+12
+ 2246 0240 003093E5 		ldr	r3, [r3, #0]
+ 2247 0244 FF3003E2 		and	r3, r3, #255
+ 2248 0248 0F3003E2 		and	r3, r3, #15
+ 2249 024c FF3003E2 		and	r3, r3, #255
+ 2250 0250 033082E1 		orr	r3, r2, r3
+ 2251 0254 FF3003E2 		and	r3, r3, #255
+ 2252 0258 FF2003E2 		and	r2, r3, #255
+ 2253 025c E8309FE5 		ldr	r3, .L21+20
+ 2254 0260 0020C3E5 		strb	r2, [r3, #0]
+ 110:../main.c     **** 			kread = -1;
+ 2255              		.loc 1 110 0
+ 2256 0264 D8309FE5 		ldr	r3, .L21+12
+ 2257 0268 0020E0E3 		mvn	r2, #0
+ 2258 026c 002083E5 		str	r2, [r3, #0]
+ 111:../main.c     **** 			break;
+ 2259              		.loc 1 111 0
+ 2260 0270 2B0000EA 		b	.L18
+ 2261              	.L15:
+ 112:../main.c     **** 		case 5:  // escribir dato
+ 113:../main.c     **** 			at24c04_bytewrite( dir, dato );
+ 2262              		.loc 1 113 0
+ 2263 0274 CC309FE5 		ldr	r3, .L21+16
+ 2264 0278 0030D3E5 		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 2265 027c 0320A0E1 		mov	r2, r3
+ 2266 0280 C4309FE5 		ldr	r3, .L21+20
+ 2267 0284 0030D3E5 		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 2268 0288 0200A0E1 		mov	r0, r2
+ 2269 028c 0310A0E1 		mov	r1, r3
+ 2270 0290 FEFFFFEB 		bl	at24c04_bytewrite
+ 114:../main.c     **** 			kread = -1;
+ 2271              		.loc 1 114 0
+ 2272 0294 A8309FE5 		ldr	r3, .L21+12
+ 2273 0298 0020E0E3 		mvn	r2, #0
+ 2274 029c 002083E5 		str	r2, [r3, #0]
+ 115:../main.c     **** 			break;
+ 2275              		.loc 1 115 0
+ 2276 02a0 1F0000EA 		b	.L18
+ 2277              	.L16:
+ 116:../main.c     **** 		case 6:
+ 117:../main.c     **** 			at24c04_byteread( dir, &buffer [2] );
+ 2278              		.loc 1 117 0
+ 2279 02a4 9C309FE5 		ldr	r3, .L21+16
+ 2280 02a8 0030D3E5 		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 2281 02ac 0320A0E1 		mov	r2, r3
+ 2282 02b0 873F4BE2 		sub	r3, fp, #540
+ 2283 02b4 023083E2 		add	r3, r3, #2
+ 2284 02b8 0200A0E1 		mov	r0, r2
+ 2285 02bc 0310A0E1 		mov	r1, r3
+ 2286 02c0 FEFFFFEB 		bl	at24c04_byteread
+ 118:../main.c     **** 			int val = (buffer[2]>>4)&0xF;
+ 2287              		.loc 1 118 0
+ 2288 02c4 1A325BE5 		ldrb	r3, [fp, #-538]	@ zero_extendqisi2
+ 2289 02c8 2332A0E1 		mov	r3, r3, lsr #4
+ 2290 02cc FF3003E2 		and	r3, r3, #255
+ 2291 02d0 0F3003E2 		and	r3, r3, #15
+ 2292 02d4 1C300BE5 		str	r3, [fp, #-28]
+ 119:../main.c     **** 			D8Led_symbol(val);
+ 2293              		.loc 1 119 0
+ 2294 02d8 1C001BE5 		ldr	r0, [fp, #-28]
+ 2295 02dc FEFFFFEB 		bl	D8Led_symbol
+ 120:../main.c     **** 			DelayMs(1000);
+ 2296              		.loc 1 120 0
+ 2297 02e0 FA0FA0E3 		mov	r0, #1000
+ 2298 02e4 FEFFFFEB 		bl	DelayMs
+ 121:../main.c     **** 			val = buffer[2] & 0xF;
+ 2299              		.loc 1 121 0
+ 2300 02e8 1A325BE5 		ldrb	r3, [fp, #-538]	@ zero_extendqisi2
+ 2301 02ec 0F3003E2 		and	r3, r3, #15
+ 2302 02f0 1C300BE5 		str	r3, [fp, #-28]
+ 122:../main.c     **** 			D8Led_symbol(val);
+ 2303              		.loc 1 122 0
+ 2304 02f4 1C001BE5 		ldr	r0, [fp, #-28]
+ 2305 02f8 FEFFFFEB 		bl	D8Led_symbol
+ 123:../main.c     **** 			DelayMs(1000);
+ 2306              		.loc 1 123 0
+ 2307 02fc FA0FA0E3 		mov	r0, #1000
+ 2308 0300 FEFFFFEB 		bl	DelayMs
+ 124:../main.c     **** 			//D8Led_symbol(anterior);
+ 125:../main.c     **** 			kread = -1;
+ 2309              		.loc 1 125 0
+ 2310 0304 38309FE5 		ldr	r3, .L21+12
+ 2311 0308 0020E0E3 		mvn	r2, #0
+ 2312 030c 002083E5 		str	r2, [r3, #0]
+ 126:../main.c     **** 			st = anterior;
+ 2313              		.loc 1 126 0
+ 2314 0310 28309FE5 		ldr	r3, .L21+8
+ 2315 0314 14201BE5 		ldr	r2, [fp, #-20]
+ 2316 0318 002083E5 		str	r2, [r3, #0]
+ 127:../main.c     **** 					break;
+ 2317              		.loc 1 127 0
+ 2318 031c 000000EA 		b	.L18
+ 2319              	.L20:
+ 128:../main.c     **** 		default: break;
+ 2320              		.loc 1 128 0
+ 2321 0320 0000A0E1 		mov	r0, r0	@ nop
+ 2322              	.L18:
+ 2323              	.LBE2:
+ 129:../main.c     **** 		}
+ 130:../main.c     ****     	anterior = st;
+ 2324              		.loc 1 130 0
+ 2325 0324 14309FE5 		ldr	r3, .L21+8
+ 2326 0328 003093E5 		ldr	r3, [r3, #0]
+ 2327 032c 14300BE5 		str	r3, [fp, #-20]
+ 131:../main.c     ****     }
+ 2328              		.loc 1 131 0
+ 2329 0330 0000A0E1 		mov	r0, r0	@ nop
+  92:../main.c     ****     	while(anterior == st);
+ 2330              		.loc 1 92 0
+ 2331 0334 86FFFFEA 		b	.L9
+ 2332              	.L22:
+ 2333              		.align	2
+ 2334              	.L21:
+ 2335 0338 00000000 		.word	val
+ 2336 033c FF010000 		.word	511
+ 2337 0340 00000000 		.word	st
+ 2338 0344 00000000 		.word	kread
+ 2339 0348 00000000 		.word	dir
+ 2340 034c 00000000 		.word	dato
+ 2341              		.cfi_endproc
+ 2342              	.LFE1:
+ 2344              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+                            *COM*:00000004 val
+                            *COM*:00000004 st
+                            *COM*:00000001 dir
+                            *COM*:00000001 dato
+                            *COM*:00000004 kread
+C:\Users\USUARI~1\AppData\Local\Temp\ccxJ2vZu.s:2012   .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccxJ2vZu.s:2015   .text:00000000 practica_init
+C:\Users\USUARI~1\AppData\Local\Temp\ccxJ2vZu.s:2073   .text:00000074 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccxJ2vZu.s:2080   .text:00000084 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccxJ2vZu.s:2083   .text:00000084 Main
+C:\Users\USUARI~1\AppData\Local\Temp\ccxJ2vZu.s:2182   .text:0000017c $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccxJ2vZu.s:2192   .text:00000198 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccxJ2vZu.s:2335   .text:00000338 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+Eint4567_init
+Eint4567_activar
+keyboard_init
+keyboard_activar
+D8Led_init
+sys_init
+iic_init
+at24c04_bytewrite
+at24c04_byteread
+DelayMs
+D8Led_symbol
