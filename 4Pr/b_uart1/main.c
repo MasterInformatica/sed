@@ -50,28 +50,23 @@ int Main(void){
 		case '7':
 		case '8':
 		case '9':
+			D8Led_symbol(c-'0');
+			led1_off();
+			led2_off();
+			break;
 		case 'A':
 		case 'B':
 		case 'C':
 		case 'D':
 		case 'E':
 		case 'F':
-			D8Led_symbol(c-'0');
+			D8Led_symbol(c-'A'+10);
 			led1_off();
 			led2_off();
 			break;
 
 		}
-		if(c == 'I'){
-			led1_off();
-			led2_on();
-		} else if(c=='D'){
-			led1_on();
-			led2_off();
-		} else {
-			led1_off();
-			led2_off();
-		}
+
 	};
 /*		*pt_str = Uart_Getch(); // leer caracter
 		Uart_SendByte(*pt_str); // enviar caracter
