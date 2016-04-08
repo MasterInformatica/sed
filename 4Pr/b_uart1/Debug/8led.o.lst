@@ -180,12 +180,12 @@
  2064              	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 8led.c
-C:\Users\USUARI~1\AppData\Local\Temp\ccL1pvoZ.s:1964   .data:00000000 Symbol
-C:\Users\USUARI~1\AppData\Local\Temp\ccL1pvoZ.s:1961   .data:00000000 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccL1pvoZ.s:1982   .text:00000000 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccL1pvoZ.s:1985   .text:00000000 D8Led_init
-C:\Users\USUARI~1\AppData\Local\Temp\ccL1pvoZ.s:2016   .text:00000024 D8Led_symbol
-C:\Users\USUARI~1\AppData\Local\Temp\ccL1pvoZ.s:2060   .text:00000078 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccjMmpTg.s:1964   .data:00000000 Symbol
+C:\Users\USUARI~1\AppData\Local\Temp\ccjMmpTg.s:1961   .data:00000000 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccjMmpTg.s:1982   .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccjMmpTg.s:1985   .text:00000000 D8Led_init
+C:\Users\USUARI~1\AppData\Local\Temp\ccjMmpTg.s:2016   .text:00000024 D8Led_symbol
+C:\Users\USUARI~1\AppData\Local\Temp\ccjMmpTg.s:2060   .text:00000078 $d
                      .debug_frame:00000010 $d
 
 NO UNDEFINED SYMBOLS

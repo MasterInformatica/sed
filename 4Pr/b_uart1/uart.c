@@ -36,19 +36,19 @@ void Uart_Config(void)
     // Si no se usan interrupciones, no es necesario hacer nada
 }
 
-inline void Uart_TxEmpty(void)
+inline void Uart_TxEmpty0(void)
 {
     while (!(rUTRSTAT0 & 0x4)); 	     // esperar a que el shifter de TX se vacie
 }
 
 
-char Uart_Getch(void)
+char Uart_Getch0(void)
 {
     while (!(rUTRSTAT0 & 0x1));        // esperar a que el buffer contenga datos
 	return RdURXH0();		   		   // devolver el caracter
 }
 
-void Uart_SendByte(int data)
+void Uart_SendByte0(int data)
 {
     char localBuf[2] = {'\0','\0'};
 
@@ -61,22 +61,63 @@ void Uart_SendByte(int data)
 	WrUTXH0(data);				       // escribir data (utilizar macro)
 }
 
-void Uart_SendString(char *pt)
+void Uart_SendString0(char *pt)
 {
     while (*pt)						    // mandar byte a byte hasta completar string
-	Uart_SendByte(*pt++);
+	Uart_SendByte0(*pt++);
 }
 
-void Uart_Printf(char *fmt,...)
+void Uart_Printf0(char *fmt,...)
 {
     va_list ap;
     char string[256];
 
     va_start(ap,fmt);
     vsprintf(string,fmt,ap);
-    Uart_SendString(string);
+    Uart_SendString0(string);
     va_end(ap);
 }
 
 
+inline void Uart_TxEmpty1(void)
+{
+    while (!(rUTRSTAT1 & 0x4)); 	     // esperar a que el shifter de TX se vacie
+}
+
+
+char Uart_Getch1(void)
+{
+    while (!(rUTRSTAT1 & 0x1));        // esperar a que el buffer contenga datos
+	return RdURXH1();		   		   // devolver el caracter
+}
+
+void Uart_SendByte1(int data)
+{
+    char localBuf[2] = {'\0','\0'};
+
+    if(data == '\n')
+	{
+	   while (!(rUTRSTAT1 & 0x2));     // esperar a que THR se vacie
+	   WrUTXH1('\r');			       // escribir retorno de carro (utilizar macro)
+	}
+	while (!(rUTRSTAT1 & 0x2)); 	   // esperar a que THR se vacie
+	WrUTXH1(data);				       // escribir data (utilizar macro)
+}
+
+void Uart_SendString1(char *pt)
+{
+    while (*pt)						    // mandar byte a byte hasta completar string
+	Uart_SendByte1(*pt++);
+}
+
+void Uart_Printf1(char *fmt,...)
+{
+    va_list ap;
+    char string[256];
+
+    va_start(ap,fmt);
+    vsprintf(string,fmt,ap);
+    Uart_SendString1(string);
+    va_end(ap);
+}
 

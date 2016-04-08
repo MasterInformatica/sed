@@ -43,9 +43,14 @@ void Eint4567_ISR(void)
 
 	char c;
 	if(pulsado == 4){  //izq -> char I
-		Uart_SendByte('I');
+		Uart_SendByte0('I');
+		Uart_SendByte1('I');
+
+		D8Led_symbol(1);
 	} else if(pulsado == 8) { //dcha -> char D
-		Uart_SendByte('D');
+		Uart_SendByte0('D');
+		Uart_SendByte1('D');
+		D8Led_symbol(2);
 	}
 
 	//Delay para eliminar rebotes

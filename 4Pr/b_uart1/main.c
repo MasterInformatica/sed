@@ -29,7 +29,7 @@ int Main(void){
 
 	char c;
 	while(1){
-		c = Uart_Getch();
+		c = Uart_Getch1();
 		if(c == 'I'){
 			led1_off();
 			led2_on();
