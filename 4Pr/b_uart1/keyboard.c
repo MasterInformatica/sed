@@ -91,16 +91,16 @@ int key_read()
 
 	unsigned int offset[4] = {0xFD,0xFB,0xF7,0xEF};
 
-	//for(i=0; i<1; i++){
-	temp = *(keyboard_base + (offset[i])) & KEY_VALUE_MASK;
+	for(i=0; i<4; i++){
+		temp = *(keyboard_base + (offset[i])) & KEY_VALUE_MASK;
 
-	switch (temp) {
-		case 0x7:  value = 0 + (i*4); break;
-		case 0xB:  value = 1 + (i*4); break;
-		case 0xD:  value = 2 + (i*4); break;
-		case 0xE:  value = 3 + (i*4); break;
+		switch (temp) {
+			case 0x7:  value = 0 + (i*4); break;
+			case 0xB:  value = 1 + (i*4); break;
+			case 0xD:  value = 2 + (i*4); break;
+			case 0xE:  value = 3 + (i*4); break;
+		}
 	}
-	//}
 
 	return value;
 
