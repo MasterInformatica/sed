@@ -25,11 +25,43 @@ int Main(void){
 
 	initPractica();
 	Eint4567_activar();
-
+	keyboard_activar();
 
 	char c;
 	while(1){
 		c = Uart_Getch1();
+		Uart_SendByte0(c);
+		switch(c){
+		case 'L':
+			led1_on();
+			led2_off();
+			break;
+		case 'R':
+			led1_off();
+			led2_on();
+			break;
+		case '0':
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+		case 'A':
+		case 'B':
+		case 'C':
+		case 'D':
+		case 'E':
+		case 'F':
+			D8Led_symbol(c-'0');
+			led1_off();
+			led2_off();
+			break;
+
+		}
 		if(c == 'I'){
 			led1_off();
 			led2_on();
