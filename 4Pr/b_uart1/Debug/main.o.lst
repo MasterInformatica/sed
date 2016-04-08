@@ -1,0 +1,290 @@
+   1              		.cpu arm7tdmi
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 18, 4
+  11              		.file	"main.c"
+  21              	.Ltext0:
+  22              		.file 1 "../main.c"
+ 1889              		.align	2
+ 1892              	str_send:
+ 1893 0000 0A534544 		.ascii	"\012SED-P4 >\000"
+ 1893      2D503420 
+ 1893      3E00
+ 1894              		.global	str_error
+ 1895 000a 0000     		.align	2
+ 1898              	str_error:
+ 1899 000c 0A536520 		.ascii	"\012Se ha producido un desbordamiento!\012\000\000"
+ 1899      68612070 
+ 1899      726F6475 
+ 1899      6369646F 
+ 1899      20756E20 
+ 1900 0032 00000000 		.space	12
+ 1900      00000000 
+ 1900      00000000 
+ 1901              		.comm	str,256,4
+ 1902 003e 0000     		.text
+ 1903              		.align	2
+ 1904              		.global	Main
+ 1906              	Main:
+ 1907              	.LFB0:
+   1:../main.c     **** /*--- ficheros de cabecera ---*/
+   2:../main.c     **** #include "44blib.h"
+   3:../main.c     **** #include "44b.h"
+   4:../main.c     **** #include "uart.h"
+   5:../main.c     **** /*--- declaracion de funciones ---*/
+   6:../main.c     **** int Main(void);
+   7:../main.c     **** 
+   8:../main.c     **** /*--- variables globales ---*/
+   9:../main.c     **** char str_send[10] = "\nSED-P4 >\0";
+  10:../main.c     **** char str_error[50] = "\nSe ha producido un desbordamiento!\n\0";
+  11:../main.c     **** char str[256];
+  12:../main.c     **** 
+  13:../main.c     **** void initPractica();
+  14:../main.c     **** 
+  15:../main.c     **** /*--- codigo de la funcion ---*/
+  16:../main.c     **** int Main(void){
+ 1908              		.loc 1 16 0
+ 1909              		.cfi_startproc
+ 1910              		@ Function supports interworking.
+ 1911              		@ args = 0, pretend = 0, frame = 8
+ 1912              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1913 0000 0DC0A0E1 		mov	ip, sp
+ 1914              	.LCFI0:
+ 1915              		.cfi_def_cfa_register 12
+ 1916 0004 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1917 0008 04B04CE2 		sub	fp, ip, #4
+ 1918              		.cfi_offset 14, -8
+ 1919              		.cfi_offset 13, -12
+ 1920              		.cfi_offset 11, -16
+ 1921              	.LCFI1:
+ 1922              		.cfi_def_cfa 11, 4
+ 1923 000c 08D04DE2 		sub	sp, sp, #8
+  17:../main.c     **** 
+  18:../main.c     **** 	char *pt_str = str;
+ 1924              		.loc 1 18 0
+ 1925 0010 60309FE5 		ldr	r3, .L6
+ 1926 0014 10300BE5 		str	r3, [fp, #-16]
+  19:../main.c     **** 
+  20:../main.c     **** 	sys_init(); // inicializacion de la placa, interrupciones, puertos
+ 1927              		.loc 1 20 0
+ 1928 0018 FEFFFFEB 		bl	sys_init
+  21:../main.c     **** 
+  22:../main.c     **** 	Uart_Init(115200); // inicializacion de la Uart
+ 1929              		.loc 1 22 0
+ 1930 001c 58009FE5 		ldr	r0, .L6+4
+ 1931 0020 FEFFFFEB 		bl	Uart_Init
+  23:../main.c     **** 	Uart_Config(); // configuración de interrupciones y buffers
+ 1932              		.loc 1 23 0
+ 1933 0024 FEFFFFEB 		bl	Uart_Config
+  24:../main.c     **** //	Uart_Printf(str_send); // mostrar cabecera
+  25:../main.c     **** 
+  26:../main.c     **** 	initPractica();
+ 1934              		.loc 1 26 0
+ 1935 0028 FEFFFFEB 		bl	initPractica
+  27:../main.c     **** 	Eint4567_activar();
+ 1936              		.loc 1 27 0
+ 1937 002c FEFFFFEB 		bl	Eint4567_activar
+ 1938              	.L5:
+  28:../main.c     **** 
+  29:../main.c     **** 
+  30:../main.c     **** 	char c;
+  31:../main.c     **** 	while(1){
+  32:../main.c     **** 		c = Uart_Getch();
+ 1939              		.loc 1 32 0
+ 1940 0030 FEFFFFEB 		bl	Uart_Getch
+ 1941 0034 0030A0E1 		mov	r3, r0
+ 1942 0038 11304BE5 		strb	r3, [fp, #-17]
+  33:../main.c     **** 		if(c == 'I'){
+ 1943              		.loc 1 33 0
+ 1944 003c 11305BE5 		ldrb	r3, [fp, #-17]	@ zero_extendqisi2
+ 1945 0040 490053E3 		cmp	r3, #73
+ 1946 0044 0200001A 		bne	.L2
+ 1947              	.LBB2:
+  34:../main.c     **** 			led1_off();
+ 1948              		.loc 1 34 0
+ 1949 0048 FEFFFFEB 		bl	led1_off
+  35:../main.c     **** 			led2_on();
+ 1950              		.loc 1 35 0
+ 1951 004c FEFFFFEB 		bl	led2_on
+ 1952              	.LBE2:
+  36:../main.c     **** 		} else if(c=='D'){
+  37:../main.c     **** 			led1_on();
+  38:../main.c     **** 			led2_off();
+  39:../main.c     **** 		} else {
+  40:../main.c     **** 			led1_off();
+  41:../main.c     **** 			led2_off();
+  42:../main.c     **** 		}
+  43:../main.c     **** 	};
+ 1953              		.loc 1 43 0
+ 1954 0050 F6FFFFEA 		b	.L5
+ 1955              	.L2:
+  36:../main.c     **** 		} else if(c=='D'){
+ 1956              		.loc 1 36 0
+ 1957 0054 11305BE5 		ldrb	r3, [fp, #-17]	@ zero_extendqisi2
+ 1958 0058 440053E3 		cmp	r3, #68
+ 1959 005c 0200001A 		bne	.L4
+ 1960              	.LBB3:
+  37:../main.c     **** 			led1_on();
+ 1961              		.loc 1 37 0
+ 1962 0060 FEFFFFEB 		bl	led1_on
+  38:../main.c     **** 			led2_off();
+ 1963              		.loc 1 38 0
+ 1964 0064 FEFFFFEB 		bl	led2_off
+ 1965              	.LBE3:
+ 1966              		.loc 1 43 0
+ 1967 0068 F0FFFFEA 		b	.L5
+ 1968              	.L4:
+ 1969              	.LBB4:
+  40:../main.c     **** 			led1_off();
+ 1970              		.loc 1 40 0
+ 1971 006c FEFFFFEB 		bl	led1_off
+  41:../main.c     **** 			led2_off();
+ 1972              		.loc 1 41 0
+ 1973 0070 FEFFFFEB 		bl	led2_off
+ 1974              	.LBE4:
+ 1975              		.loc 1 43 0
+ 1976 0074 EDFFFFEA 		b	.L5
+ 1977              	.L7:
+ 1978              		.align	2
+ 1979              	.L6:
+ 1980 0078 00000000 		.word	str
+ 1981 007c 00C20100 		.word	115200
+ 1982              		.cfi_endproc
+ 1983              	.LFE0:
+ 1985              		.align	2
+ 1986              		.global	initPractica
+ 1988              	initPractica:
+ 1989              	.LFB1:
+  44:../main.c     **** /*		*pt_str = Uart_Getch(); // leer caracter
+  45:../main.c     **** 		Uart_SendByte(*pt_str); // enviar caracter
+  46:../main.c     **** 		if (*pt_str == CR_char){ // retorno de carro?
+  47:../main.c     **** 			if (pt_str != str) { // si cadena no vacia, mostrar
+  48:../main.c     **** 				*(++pt_str) = '\0'; // terminar cadena antes
+  49:../main.c     **** 				Uart_Printf("\n");
+  50:../main.c     **** 				Uart_Printf(str);
+  51:../main.c     **** 			}
+  52:../main.c     **** 			Uart_Printf(str_send); // preparar siguiente
+  53:../main.c     **** 			pt_str = str;
+  54:../main.c     **** 		}
+  55:../main.c     **** 		else if (++pt_str == str + 255){ // desbordamiento?
+  56:../main.c     **** 			Uart_Printf(str_error); // avisar del desbordamiento
+  57:../main.c     **** 			pt_str = str;
+  58:../main.c     **** 		}
+  59:../main.c     **** 	}
+  60:../main.c     **** */
+  61:../main.c     **** }
+  62:../main.c     **** 
+  63:../main.c     **** 
+  64:../main.c     **** void initPractica(){
+ 1990              		.loc 1 64 0
+ 1991              		.cfi_startproc
+ 1992              		@ Function supports interworking.
+ 1993              		@ args = 0, pretend = 0, frame = 0
+ 1994              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1995 0080 0DC0A0E1 		mov	ip, sp
+ 1996              	.LCFI2:
+ 1997              		.cfi_def_cfa_register 12
+ 1998 0084 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1999 0088 04B04CE2 		sub	fp, ip, #4
+ 2000              		.cfi_offset 14, -8
+ 2001              		.cfi_offset 13, -12
+ 2002              		.cfi_offset 11, -16
+ 2003              	.LCFI3:
+ 2004              		.cfi_def_cfa 11, 4
+  65:../main.c     **** 	rI_ISPC = 0x3ffffff; //borrar interrupciones pendientes
+ 2005              		.loc 1 65 0
+ 2006 008c 50309FE5 		ldr	r3, .L9
+ 2007 0090 3F23E0E3 		mvn	r2, #-67108864
+ 2008 0094 002083E5 		str	r2, [r3, #0]
+  66:../main.c     **** 
+  67:../main.c     **** 	// Configura las lineas como de tipo IRQ mediante INTMOD
+  68:../main.c     **** 	rINTMOD = 0x0;
+ 2009              		.loc 1 68 0
+ 2010 0098 48309FE5 		ldr	r3, .L9+4
+ 2011 009c 0020A0E3 		mov	r2, #0
+ 2012 00a0 002083E5 		str	r2, [r3, #0]
+  69:../main.c     **** 	// Habilita int. vectorizadas y la linea IRQ (FIQ no) mediante INTCON
+  70:../main.c     **** 	rINTCON = 0x1;
+ 2013              		.loc 1 70 0
+ 2014 00a4 1E36A0E3 		mov	r3, #31457280
+ 2015 00a8 0120A0E3 		mov	r2, #1
+ 2016 00ac 002083E5 		str	r2, [r3, #0]
+  71:../main.c     **** 
+  72:../main.c     **** 	// Enmascara todas las lineas excepto el bit global (INTMSK)
+  73:../main.c     **** 	rINTMSK = ~( BIT_GLOBAL );
+ 2017              		.loc 1 73 0
+ 2018 00b0 34309FE5 		ldr	r3, .L9+8
+ 2019 00b4 0123E0E3 		mvn	r2, #67108864
+ 2020 00b8 002083E5 		str	r2, [r3, #0]
+  74:../main.c     **** 
+  75:../main.c     **** 	//Iniciamos los distintos componentes
+  76:../main.c     **** 	Eint4567_init();
+ 2021              		.loc 1 76 0
+ 2022 00bc FEFFFFEB 		bl	Eint4567_init
+  77:../main.c     **** 	keyboard_init();
+ 2023              		.loc 1 77 0
+ 2024 00c0 FEFFFFEB 		bl	keyboard_init
+  78:../main.c     **** 
+  79:../main.c     **** 
+  80:../main.c     **** 	//Apagamos todos los leds y 8 segmentos
+  81:../main.c     **** 	leds_off();
+ 2025              		.loc 1 81 0
+ 2026 00c4 FEFFFFEB 		bl	leds_off
+  82:../main.c     **** 	D8Led_init();
+ 2027              		.loc 1 82 0
+ 2028 00c8 FEFFFFEB 		bl	D8Led_init
+  83:../main.c     **** 
+  84:../main.c     **** 	/* Por precaucion, se vuelven a borrar los bits de INTPND y EXTINTPND */
+  85:../main.c     **** 	rI_ISPC = 0x3ffffff;
+ 2029              		.loc 1 85 0
+ 2030 00cc 10309FE5 		ldr	r3, .L9
+ 2031 00d0 3F23E0E3 		mvn	r2, #-67108864
+ 2032 00d4 002083E5 		str	r2, [r3, #0]
+  86:../main.c     **** }
+ 2033              		.loc 1 86 0
+ 2034 00d8 0CD04BE2 		sub	sp, fp, #12
+ 2035 00dc 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2036 00e0 1EFF2FE1 		bx	lr
+ 2037              	.L10:
+ 2038              		.align	2
+ 2039              	.L9:
+ 2040 00e4 2400E001 		.word	31457316
+ 2041 00e8 0800E001 		.word	31457288
+ 2042 00ec 0C00E001 		.word	31457292
+ 2043              		.cfi_endproc
+ 2044              	.LFE1:
+ 2046              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+C:\Users\USUARI~1\AppData\Local\Temp\ccjSEW0o.s:1892   .data:00000000 str_send
+C:\Users\USUARI~1\AppData\Local\Temp\ccjSEW0o.s:1889   .data:00000000 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccjSEW0o.s:1898   .data:0000000c str_error
+                            *COM*:00000100 str
+C:\Users\USUARI~1\AppData\Local\Temp\ccjSEW0o.s:1903   .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccjSEW0o.s:1906   .text:00000000 Main
+C:\Users\USUARI~1\AppData\Local\Temp\ccjSEW0o.s:1988   .text:00000080 initPractica
+C:\Users\USUARI~1\AppData\Local\Temp\ccjSEW0o.s:1980   .text:00000078 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccjSEW0o.s:1985   .text:00000080 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccjSEW0o.s:2040   .text:000000e4 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+sys_init
+Uart_Init
+Uart_Config
+Eint4567_activar
+Uart_Getch
+led1_off
+led2_on
+led1_on
+led2_off
+Eint4567_init
+keyboard_init
+leds_off
+D8Led_init
