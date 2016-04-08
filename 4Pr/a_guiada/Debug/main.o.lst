@@ -1,0 +1,216 @@
+   1              		.cpu arm7tdmi
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 18, 4
+  11              		.file	"main.c"
+  21              	.Ltext0:
+  22              		.file 1 "../main.c"
+ 1889              		.align	2
+ 1892              	str_send:
+ 1893 0000 0A534544 		.ascii	"\012SED-P4 >\000"
+ 1893      2D503420 
+ 1893      3E00
+ 1894              		.global	str_error
+ 1895 000a 0000     		.align	2
+ 1898              	str_error:
+ 1899 000c 0A536520 		.ascii	"\012Se ha producido un desbordamiento!\012\000\000"
+ 1899      68612070 
+ 1899      726F6475 
+ 1899      6369646F 
+ 1899      20756E20 
+ 1900 0032 00000000 		.space	12
+ 1900      00000000 
+ 1900      00000000 
+ 1901              		.comm	str,256,4
+ 1902 003e 0000     		.section	.rodata
+ 1903              		.align	2
+ 1904              	.LC0:
+ 1905 0000 0A00     		.ascii	"\012\000"
+ 1906 0002 0000     		.text
+ 1907              		.align	2
+ 1908              		.global	Main
+ 1910              	Main:
+ 1911              	.LFB0:
+   1:../main.c     **** /*--- ficheros de cabecera ---*/
+   2:../main.c     **** #include "44blib.h"
+   3:../main.c     **** #include "44b.h"
+   4:../main.c     **** #include "uart.h"
+   5:../main.c     **** /*--- declaracion de funciones ---*/
+   6:../main.c     **** int Main(void);
+   7:../main.c     **** 
+   8:../main.c     **** /*--- variables globales ---*/
+   9:../main.c     **** char str_send[10] = "\nSED-P4 >\0";
+  10:../main.c     **** char str_error[50] = "\nSe ha producido un desbordamiento!\n\0";
+  11:../main.c     **** char str[256];
+  12:../main.c     **** 
+  13:../main.c     **** /*--- codigo de la funcion ---*/
+  14:../main.c     **** int Main(void){
+ 1912              		.loc 1 14 0
+ 1913              		.cfi_startproc
+ 1914              		@ Function supports interworking.
+ 1915              		@ args = 0, pretend = 0, frame = 8
+ 1916              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1917 0000 0DC0A0E1 		mov	ip, sp
+ 1918              	.LCFI0:
+ 1919              		.cfi_def_cfa_register 12
+ 1920 0004 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1921 0008 04B04CE2 		sub	fp, ip, #4
+ 1922              		.cfi_offset 14, -8
+ 1923              		.cfi_offset 13, -12
+ 1924              		.cfi_offset 11, -16
+ 1925              	.LCFI1:
+ 1926              		.cfi_def_cfa 11, 4
+ 1927 000c 08D04DE2 		sub	sp, sp, #8
+  15:../main.c     **** 
+  16:../main.c     **** 	char *pt_str = str;
+ 1928              		.loc 1 16 0
+ 1929 0010 D0309FE5 		ldr	r3, .L7
+ 1930 0014 10300BE5 		str	r3, [fp, #-16]
+  17:../main.c     **** 
+  18:../main.c     **** 	sys_init(); // inicializacion de la placa, interrupciones, puertos
+ 1931              		.loc 1 18 0
+ 1932 0018 FEFFFFEB 		bl	sys_init
+  19:../main.c     **** 
+  20:../main.c     **** 	Uart_Init(115200); // inicializacion de la Uart
+ 1933              		.loc 1 20 0
+ 1934 001c C8009FE5 		ldr	r0, .L7+4
+ 1935 0020 FEFFFFEB 		bl	Uart_Init
+  21:../main.c     **** 	Uart_Config(); // configuración de interrupciones y buffers
+ 1936              		.loc 1 21 0
+ 1937 0024 FEFFFFEB 		bl	Uart_Config
+  22:../main.c     **** 	Uart_Printf(str_send); // mostrar cabecera
+ 1938              		.loc 1 22 0
+ 1939 0028 C0009FE5 		ldr	r0, .L7+8
+ 1940 002c FEFFFFEB 		bl	Uart_Printf
+ 1941 0030 000000EA 		b	.L5
+ 1942              	.L6:
+  23:../main.c     **** 
+  24:../main.c     **** 	while(1){
+  25:../main.c     **** 		*pt_str = Uart_Getch(); // leer caracter
+  26:../main.c     **** 		Uart_SendByte(*pt_str); // enviar caracter
+  27:../main.c     **** 		if (*pt_str == CR_char){ // retorno de carro?
+  28:../main.c     **** 			if (pt_str != str) { // si cadena no vacia, mostrar
+  29:../main.c     **** 				*(++pt_str) = '\0'; // terminar cadena antes
+  30:../main.c     **** 				Uart_Printf("\n");
+  31:../main.c     **** 				Uart_Printf(str);
+  32:../main.c     **** 			}
+  33:../main.c     **** 			Uart_Printf(str_send); // preparar siguiente
+  34:../main.c     **** 			pt_str = str;
+  35:../main.c     **** 		}
+  36:../main.c     **** 		else if (++pt_str == str + 255){ // desbordamiento?
+  37:../main.c     **** 			Uart_Printf(str_error); // avisar del desbordamiento
+  38:../main.c     **** 			pt_str = str;
+  39:../main.c     **** 		}
+  40:../main.c     **** 	}
+ 1943              		.loc 1 40 0
+ 1944 0034 0000A0E1 		mov	r0, r0	@ nop
+ 1945              	.L5:
+  25:../main.c     **** 		*pt_str = Uart_Getch(); // leer caracter
+ 1946              		.loc 1 25 0
+ 1947 0038 FEFFFFEB 		bl	Uart_Getch
+ 1948 003c 0030A0E1 		mov	r3, r0
+ 1949 0040 0320A0E1 		mov	r2, r3
+ 1950 0044 10301BE5 		ldr	r3, [fp, #-16]
+ 1951 0048 0020C3E5 		strb	r2, [r3, #0]
+  26:../main.c     **** 		Uart_SendByte(*pt_str); // enviar caracter
+ 1952              		.loc 1 26 0
+ 1953 004c 10301BE5 		ldr	r3, [fp, #-16]
+ 1954 0050 0030D3E5 		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 1955 0054 0300A0E1 		mov	r0, r3
+ 1956 0058 FEFFFFEB 		bl	Uart_SendByte
+  27:../main.c     **** 		if (*pt_str == CR_char){ // retorno de carro?
+ 1957              		.loc 1 27 0
+ 1958 005c 10301BE5 		ldr	r3, [fp, #-16]
+ 1959 0060 0030D3E5 		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 1960 0064 0D0053E3 		cmp	r3, #13
+ 1961 0068 1200001A 		bne	.L2
+  28:../main.c     **** 			if (pt_str != str) { // si cadena no vacia, mostrar
+ 1962              		.loc 1 28 0
+ 1963 006c 10201BE5 		ldr	r2, [fp, #-16]
+ 1964 0070 70309FE5 		ldr	r3, .L7
+ 1965 0074 030052E1 		cmp	r2, r3
+ 1966 0078 0900000A 		beq	.L3
+  29:../main.c     **** 				*(++pt_str) = '\0'; // terminar cadena antes
+ 1967              		.loc 1 29 0
+ 1968 007c 10301BE5 		ldr	r3, [fp, #-16]
+ 1969 0080 013083E2 		add	r3, r3, #1
+ 1970 0084 10300BE5 		str	r3, [fp, #-16]
+ 1971 0088 10301BE5 		ldr	r3, [fp, #-16]
+ 1972 008c 0020A0E3 		mov	r2, #0
+ 1973 0090 0020C3E5 		strb	r2, [r3, #0]
+  30:../main.c     **** 				Uart_Printf("\n");
+ 1974              		.loc 1 30 0
+ 1975 0094 58009FE5 		ldr	r0, .L7+12
+ 1976 0098 FEFFFFEB 		bl	Uart_Printf
+  31:../main.c     **** 				Uart_Printf(str);
+ 1977              		.loc 1 31 0
+ 1978 009c 44009FE5 		ldr	r0, .L7
+ 1979 00a0 FEFFFFEB 		bl	Uart_Printf
+ 1980              	.L3:
+  33:../main.c     **** 			Uart_Printf(str_send); // preparar siguiente
+ 1981              		.loc 1 33 0
+ 1982 00a4 44009FE5 		ldr	r0, .L7+8
+ 1983 00a8 FEFFFFEB 		bl	Uart_Printf
+  34:../main.c     **** 			pt_str = str;
+ 1984              		.loc 1 34 0
+ 1985 00ac 34309FE5 		ldr	r3, .L7
+ 1986 00b0 10300BE5 		str	r3, [fp, #-16]
+ 1987              		.loc 1 40 0
+ 1988 00b4 DFFFFFEA 		b	.L5
+ 1989              	.L2:
+  36:../main.c     **** 		else if (++pt_str == str + 255){ // desbordamiento?
+ 1990              		.loc 1 36 0
+ 1991 00b8 10301BE5 		ldr	r3, [fp, #-16]
+ 1992 00bc 013083E2 		add	r3, r3, #1
+ 1993 00c0 10300BE5 		str	r3, [fp, #-16]
+ 1994 00c4 10201BE5 		ldr	r2, [fp, #-16]
+ 1995 00c8 28309FE5 		ldr	r3, .L7+16
+ 1996 00cc 030052E1 		cmp	r2, r3
+ 1997 00d0 D7FFFF1A 		bne	.L6
+  37:../main.c     **** 			Uart_Printf(str_error); // avisar del desbordamiento
+ 1998              		.loc 1 37 0
+ 1999 00d4 20009FE5 		ldr	r0, .L7+20
+ 2000 00d8 FEFFFFEB 		bl	Uart_Printf
+  38:../main.c     **** 			pt_str = str;
+ 2001              		.loc 1 38 0
+ 2002 00dc 04309FE5 		ldr	r3, .L7
+ 2003 00e0 10300BE5 		str	r3, [fp, #-16]
+ 2004              		.loc 1 40 0
+ 2005 00e4 D3FFFFEA 		b	.L5
+ 2006              	.L8:
+ 2007              		.align	2
+ 2008              	.L7:
+ 2009 00e8 00000000 		.word	str
+ 2010 00ec 00C20100 		.word	115200
+ 2011 00f0 00000000 		.word	str_send
+ 2012 00f4 00000000 		.word	.LC0
+ 2013 00f8 FF000000 		.word	str+255
+ 2014 00fc 00000000 		.word	str_error
+ 2015              		.cfi_endproc
+ 2016              	.LFE0:
+ 2018              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+C:\Users\USUARI~1\AppData\Local\Temp\cck7L1aL.s:1892   .data:00000000 str_send
+C:\Users\USUARI~1\AppData\Local\Temp\cck7L1aL.s:1889   .data:00000000 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cck7L1aL.s:1898   .data:0000000c str_error
+                            *COM*:00000100 str
+C:\Users\USUARI~1\AppData\Local\Temp\cck7L1aL.s:1903   .rodata:00000000 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cck7L1aL.s:1907   .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cck7L1aL.s:1910   .text:00000000 Main
+C:\Users\USUARI~1\AppData\Local\Temp\cck7L1aL.s:2009   .text:000000e8 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+sys_init
+Uart_Init
+Uart_Config
+Uart_Printf
+Uart_Getch
+Uart_SendByte
