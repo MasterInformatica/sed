@@ -1,57 +1,67 @@
-#salida del oscilador a 100MHz
-#
-NET clock LOC=T9;
-#set clock period
-#NET reloj PERIOD = 10ns HIGH 50%;
-#
+## System ucf file For Spartan 3S100
+## with aliases such as XSA-3S1000 Board / XST3 / 3S1000 ft256 / ...
+## and the XST-3.0 XSTend Board V 3.0
+## note: Column-edited with geany
+##
+## for further information see "Connections Between the XST-3.0 Board and the Various XSA Boards"
+## on http://www.xess.com/static/media/manuals/xst-manual-v3_0.pdf#page=24
 
-	
-	#switches placa superior
+## marks a new section
 
-#NET Reset LOC=K4;
-#NET SW<2> LOC=K3;
-#NET SW<3> LOC=K2;
-#NET SW<4> LOC=J4;
-
-	#switches placa extendida
-
-#NET GPI1<0> LOC=P12;
-#NET GPI1<1> LOC=J1;
-#NET GPI1<2> LOC=H1;
-#NET GPI1<3> LOC=H3;
-#NET GPI1<4> LOC=G2;
-#NET GPI1<5> LOC=K15;
-#NET GPI1<6> LOC=K16;
-NET reset LOC=F15;
-
-#
-	#push buttons placa superior
-#NET reset LOC=E11; 
-#NET SW3 LOC=A13; 
-
-	# Push button placa extendida
-#NET pushb1 LOC=H4;
-#NET pushb2 LOC=L5;
-#NET pushb3 LOC=N2;
-#NET pushb4 LOC=M3;
+##CLOCKS
+NET reloj		  LOC=T9;  # 100 MHz clock acc. to http://www.xess.com/static/media/projects/xst3_IDE.zip
+#NET clk_pin	  LOC=P8; # 50 MHz clock  acc. to http://www.xess.com/static/media/projects/xst3_RS232.zip
 
 
-#barra de leds placa extendida
-#
-NET rgb<0> LOC=L5;
-NET rgb<1> LOC=N2;
-NET rgb<2> LOC=M3;
-NET rgb<3> LOC=N1;
-NET rgb<4> LOC=T13;
-NET rgb<5> LOC=L15;
-NET rgb<6> LOC=J13;
-NET rgb<7> LOC=H15;
-NET rgb<8> LOC=J16;
-#NET GPO1<9> LOC=J14;
+## SWITCHES upper board
 
- 
+#NET swUp<1>	  LOC=K4;
+#NET swUp<2>	  LOC=K3;
+#NET swUp<3>	  LOC=K2;
+#NET swUp<4>	  LOC=J4;
 
-#Display 7-segmentos 
+#switches extension board
+# mainly from http://www.xess.com/static/media/projects/xst3_switches_leds.zip
+#NET swExt<0>	  LOC=P12; # DIP switch 1
+#NET swExt<1>	  LOC=J1;  # DIP switch 2
+#NET swExt<2>	  LOC=H1;  # DIP switch 3
+#NET swExt<3>	  LOC=H3;  # DIP switch 4
+#NET swExt<4>	  LOC=G2;  # DIP switch 5
+#NET swExt<5>	  LOC=K15; # DIP switch 6
+#NET swExt<6>	  LOC=K16; # DIP switch 7
+NET reset	  LOC=F15; # DIP switch 8
+
+
+## PUSH BUTTONS upper board
+#NET pushbOnb1	  LOC=E11; 
+#NET pushbOnb2	  LOC=A13; 
+
+# Push buttons extension Board
+#NET pushbExt1	  LOC=H4;
+#NET pushbExt2	  LOC=L5;
+#NET pushbExt3	  LOC=N2;
+#NET pushbExt4	  LOC=M3;
+
+
+### RS232
+#NET TX			  LOC=J2; # RS232 TD pin 3
+#NET RX			  LOC=G5; # RS232 RD pin 2
+
+##LED Bar Extension Board
+
+NET rgb<0>   	  LOC=L5;
+NET rgb<1>	  LOC=N2;
+NET rgb<2>	  LOC=M3;
+NET rgb<3>	  LOC=N1;
+NET rgb<4>	  LOC=T13;
+NET rgb<5>	  LOC=L15;
+NET rgb<6>	  LOC=J13;
+NET rgb<7>	  LOC=H15;
+NET rgb<8>	  LOC=J16;
+#NET ledBar<10>	  LOC=J14;
+
+
+##7-Segment Displays
 #
 #		   S0
 #		   ---
@@ -61,89 +71,296 @@ NET rgb<8> LOC=J16;
 #	    S4	|	|S2
 #
 #		   ---
-#		   S3
+#		   S3				s7 = punto
+
+#7-Segment Display on upper board
+
+#NET segDispU<0>  LOC=R10;
+#NET segDispU<1>  LOC=P10;
+#NET segDispU<2>  LOC=M11;
+#NET segDispU<3>  LOC=M6;
+#NET segDispU<4>  LOC=N6;
+#NET segDispU<5>  LOC=T7;
+#NET segDispU<6>  LOC=R7;
+#NET segDispU<7>  LOC=N11; # Decimal Point
 
 
-#Display 7-segmentos de la placa superior
+#7-Segment Display -left one- extension board
 
-#net display<0> loc=R10;
-#net display<1> loc=P10;
-#net display<2> loc=M11;
-#NET display<3> loc=M6;
-#NET display<4> loc=N6;
-#NET display<5> loc=T7;
-#NET display<6> loc=R7;
+#NET segDispL<0>  LOC=H14;
+#NET segDispL<1>  LOC=M4;
+#NET segDispL<2>  LOC=P1;
+#NET segDispL<3>  LOC=N3;
+#NET segDispL<4>  LOC=M15;
+#NET segDispL<5>  LOC=H13;
+#NET segDispL<6>  LOC=G16;
+#NET segDispL<7>  LOC=N15; # Decimal Point
 
-#Display 7-segmentos de la parte izquierda de la placa extendida:
+#7-Segment Display -right one- extension board
 
-#NET displayi<0> LOC=H14;
-#NET displayi<1> LOC=M4;
-#NET displayi<2> LOC=P1;
-#NET displayi<3> LOC=N3;
-#NET displayi<4> LOC=M15;
-#NET displayi<5> LOC=H13;
-#NET displayi<6> LOC=G16;
+#NET segDispR<0>  LOC=E2;
+#NET segDispR<1>  LOC=E1;
+#NET segDispR<2>  LOC=F3;
+#NET segDispR<3>  LOC=F2;
+#NET segDispR<4>  LOC=G4;
+#NET segDispR<5>  LOC=G3;
+#NET segDispR<6>  LOC=G1;
+#NET segDispR<7>  LOC=H4;  # Decimal Point
+
+## ETHERNET
+#NET ether_cs_n	  LOC=G13; # chip-enable for Ether#NET chip
+
+##VGA
+
+# VGA monitor interface as taken from http://www.xess.com/static/media/projects/xst3_video.zip
+NET rgb<0>   	  LOC=C8;  # red (least-significant bit)  
+NET rgb<1>   	  LOC=D6;  
+NET rgb<2>   	  LOC=B1;  # red (most-significant bit)
+NET rgb<0>   	  LOC=A8;  # green (least-significant bit)
+NET rgb<1>   	  LOC=A5;  
+NET rgb<2>   	  LOC=C3;  # green (most-significant bit)
+NET rgb<0>   	  LOC=C9;  # blue (least-significant bit)
+NET rgb<1>   	  LOC=E7;  
+NET rgb<2>   	  LOC=D5;  # blue (most-significant bit)
+NET hsyncb	  LOC=B7;  # horizontal sync
+NET vsyncb	  LOC=D8;  # vertical sync
+
+## SDRAM	interface as taken from http://www.xess.com/static/media/projects/xst3_video.zip
+#NET sclkfb       LOC=N8;  # SDRAM clock fed back into the FPGA  
+#NET sclk         LOC=E10; # clock from FPGA to SDRAM 
+#NET cke          LOC=D7;  # clock-enable
+#NET cs_n         LOC=B8;  # chip-select
+#NET ras_n        LOC=A9;  # RAS
+#NET cas_n        LOC=A10; # CAS
+#NET we_n         LOC=B10; # write-enable
+#NET ba<0>        LOC=A7;  # bank address 0
+#NET ba<1>        LOC=C7;  # bank address 1
+#NET sAddr<0>     LOC=B5;  # row/column address 0 (least-significant bit)
+#NET sAddr<1>     LOC=A4;  
+#NET sAddr<2>     LOC=B4;  
+#NET sAddr<3>     LOC=E6;  
+#NET sAddr<4>     LOC=E3;  
+#NET sAddr<5>     LOC=C1;  
+#NET sAddr<6>     LOC=E4;  
+#NET sAddr<7>     LOC=D3;  
+#NET sAddr<8>     LOC=C2;  
+#NET sAddr<9>     LOC=A3;  
+#NET sAddr<10>    LOC=B6;  
+#NET sAddr<11>    LOC=C5;  
+#NET sAddr<12>    LOC=C6;  # row/column address 12 (most-significant bit)  
+#NET sData<0>     LOC=C15; # data bit 0 (least-significant bit)
+#NET sData<1>     LOC=D12; 
+#NET sData<2>     LOC=A14; 
+#NET sData<3>     LOC=B13; 
+#NET sData<4>     LOC=D11; 
+#NET sData<5>     LOC=A12; 
+#NET sData<6>     LOC=C11; 
+#NET sData<7>     LOC=D10; 
+#NET sData<8>     LOC=B11; 
+#NET sData<9>     LOC=B12; 
+#NET sData<10>    LOC=C12; 
+#NET sData<11>    LOC=B14; 
+#NET sData<12>    LOC=D14; 
+#NET sData<13>    LOC=C16; 
+#NET sData<14>    LOC=F12; 
+#NET sData<15>    LOC=F13; # data bit 15 (most-significant bit) 
+#NET dqmh         LOC=D9;  # qualifier for upper-byte of data bus
+#NET dqml         LOC=C10; # qualifier for lower byte of data bus
+
+## video decoder interface as taken from http://www.xess.com/static/media/projects/xst3_video.zip
+#NET vidin_clk    LOC=H16; # clock from the video decoder 
+#NET vidin_y<0>   LOC=H14; # pixel data (least-significant bit)
+#NET vidin_y<1>   LOC=M4;  
+#NET vidin_y<2>   LOC=P1;  
+#NET vidin_y<3>   LOC=N3;  
+#NET vidin_y<4>   LOC=M15; 
+#NET vidin_y<5>   LOC=H13; 
+#NET vidin_y<6>   LOC=G16; 
+#NET vidin_y<7>   LOC=N15; # pixel data (most-significant bit) 
+
+## PC-to-video decoder I2C interface (thru the CPLD) as taken from http://www.xess.com/static/media/projects/xst3_video.zip
+#NET lp_d<0>      LOC=N14; # data bit D0 
+#NET lp_d<1>      LOC=P15; # data bit D1
+#NET lp_s<3>      LOC=N5;  # status bit S3
+#NET lp_s<4>      LOC=K14; # status bit S4
+#NET scl          LOC=F5;  # I2C clock
+#NET sda          LOC=D2;  # I2C data to video decoder 
+
+## Parallel port Interface
+#NET ppd<0>  	  LOC=N14; 
+#NET ppd<1>  	  LOC=P15; 
+#NET ppd<2>  	  LOC=R16; 
+#NET ppd<3>  	  LOC=P14; 
+#NET ppd<4>  	  LOC=P13; 
+#NET ppd<5>  	  LOC=N12; 
+##NET ppd<6>	   LOC=T14;
+##NET ppd<7>	   LOC=R13;
+#NET pps<3>  	  LOC=N5;  
+#NET pps<4>  	  LOC=K14; 
+#NET pps<5>  	  LOC=K13; 
+#NET pps<6>  	  LOC=T10; 
+
+##AUDIO as taken from http://www.xess.com/static/media/projects/xst3_audio.zip
+#NET mclk          LOC=P11; # master clock for the codec 
+#NET sclk          LOC=T12; # serial bit clock for the codec 
+#NET lrck          LOC=R12; # left-right channel clock for the codec 
+#NET sdti          LOC=M10; # serial data input to the codec 
+#NET sdto          LOC=K5;  # serial data output from the codec  
+#NET ADC_rdy_diag  LOC=E2;  # analog-to-digital diagnostic signal  
+#NET DAC_rdy_diag  LOC=E1;  # digital-to-analog diagnostic signal  
 
 
 
 
-#Display 7-segmentos de la parte derecha de la placa extendida
+#------------------------------------------------------------------------------------------------------
 
-#NET displayd<0> loc=E2;
-#NET displayd<1> loc=E1;
-#NET displayd<2> loc=F3;
-#NET displayd<3> loc=F2;
-#NET displayd<4> loc=G4;
-#NET displayd<5> loc=G3;
-#NET displayd<6> loc=G1;
 
-#Display 7-segmentos de la placa superior
-
-#net LEDS<20> loc=R10; #
-#net LEDS<19> loc=P10; #
-#net LEDS<18> loc=M11; #
-#NET LEDS<17> loc=M6;  #
-#NET LEDS<16> loc=N6;  #
-#NET LEDS<15> loc=T7; #
-#NET LEDS<14> loc=R7; #
+##salida del oscilador a 100MHz
+##
+#NET reloj LOC=T9;
+##set clock period
+##NET reloj PERIOD = 10ns HIGH 50%;
+##
+#
+#	
+#	#switches placa superior
+#
+##NET Reset LOC=K4;
+##NET SW<2> LOC=K3;
+##NET SW<3> LOC=K2;
+##NET SW<4> LOC=J4;
+#
+#	#switches placa extendida
+#
+##NET GPI1<0> LOC=P12;
+##NET GPI1<1> LOC=J1;
+##NET GPI1<2> LOC=H1;
+##NET GPI1<3> LOC=H3;
+##NET GPI1<4> LOC=G2;
+##NET GPI1<5> LOC=K15;
+##NET GPI1<6> LOC=K16;
+##NET reset LOC=F15;
+#
+##
+#	#push buttons placa superior
+#NET reset LOC=E11; 
+##NET SW3 LOC=A13; 
+#
+#	# Push button placa extendida
+##NET pushb1 LOC=H4;
+##NET pushb2 LOC=L5;
+##NET pushb3 LOC=N2;
+##NET pushb4 LOC=M3;
+#
+#
+##barra de leds placa extendida
+##
+#NET rgb<0> LOC=L5;
+#NET rgb<1> LOC=N2;
+#NET rgb<2> LOC=M3;
+#NET rgb<3> LOC=N1;
+#NET rgb<4> LOC=T13;
+#NET rgb<5> LOC=L15;
+#NET rgb<6> LOC=J13;
+#NET rgb<7> LOC=H15;
+#NET rgb<8> LOC=J16;
+##NET GPO1<9> LOC=J14;
+#
+# 
+#
+##Display 7-segmentos 
+##
+##		   S0
+##		   ---
+##	    S5	|	|s1
+##		    S6
+##		   ---
+##	    S4	|	|S2
+##
+##		   ---
+##		   S3
+#
+#
+##Display 7-segmentos de la placa superior
+#
+##net display<0> loc=R10;
+##net display<1> loc=P10;
+##net display<2> loc=M11;
+##NET display<3> loc=M6;
+##NET display<4> loc=N6;
+##NET display<5> loc=T7;
+##NET display<6> loc=R7;
 #
 ##Display 7-segmentos de la parte izquierda de la placa extendida:
 #
-#NET LEDS<13> LOC=H14; #
-#NET LEDS<12> LOC=M4;
-#NET LEDS<11> LOC=P1;
-#NET LEDS<10> LOC=N3;
-#NET LEDS<9> LOC=M15;
-#NET LEDS<8> LOC=H13;
-#NET LEDS<7> LOC=G16;
-
-#Display 7-segmentos de la parte derecha de la placa extendida
-
-#NET LEDS<6> loc=E2;
-#NET LEDS<5> loc=E1;
-#NET LEDS<4> loc=F3;
-#NET LEDS<3> loc=F2;
-#NET LEDS<2> loc=G4;
-#NET LEDS<1> loc=G3;
-#NET LEDS<0> loc=G1;
-
-
-NET rgb<6> loc=C9;#VGA-BLUE0 C9 BLU0;
-NET rgb<7> loc=E7;#VGA-BLUE1 E7 BLU1;
-NET rgb<8> loc=D5;#VGA-BLUE2 D5 BLU2;
-NET rgb<3> loc=A8;#VGA-GREEN0 A8 GRN0;
-NET rgb<4> loc=A5;#VGA-GREEN1 A5 GRN1;
-NET rgb<5> loc=C3;#VGA-GREEN2 C3 GRN2;
-NET rgb<0> loc=C8;#VGA-RED0 C8 RED0;
-NET rgb<1> loc=D6;#VGA-RED1 D6 RED1;
-NET rgb<2> loc=B1;#VGA-RED2 B1 RED2;
-NET hsyncb loc=B7;#VGA-HSYNC# B7 HSYNC#
-NET vsyncb loc=D8;#VGA-VSYNC# D8 VSYNC#
-
-
-		
-		
-#### Module RS232 constraints
-
-#Net rx LOC=G5;
-#Net tx LOC=J2;
+##NET displayi<0> LOC=H14;
+##NET displayi<1> LOC=M4;
+##NET displayi<2> LOC=P1;
+##NET displayi<3> LOC=N3;
+##NET displayi<4> LOC=M15;
+##NET displayi<5> LOC=H13;
+##NET displayi<6> LOC=G16;
+#
+#
+#
+#
+##Display 7-segmentos de la parte derecha de la placa extendida
+#
+##NET displayd<0> loc=E2;
+##NET displayd<1> loc=E1;
+##NET displayd<2> loc=F3;
+##NET displayd<3> loc=F2;
+##NET displayd<4> loc=G4;
+##NET displayd<5> loc=G3;
+##NET displayd<6> loc=G1;
+#
+##Display 7-segmentos de la placa superior
+#
+##net LEDS<20> loc=R10; #
+##net LEDS<19> loc=P10; #
+##net LEDS<18> loc=M11; #
+##NET LEDS<17> loc=M6;  #
+##NET LEDS<16> loc=N6;  #
+##NET LEDS<15> loc=T7; #
+##NET LEDS<14> loc=R7; #
+##
+###Display 7-segmentos de la parte izquierda de la placa extendida:
+##
+##NET LEDS<13> LOC=H14; #
+##NET LEDS<12> LOC=M4;
+##NET LEDS<11> LOC=P1;
+##NET LEDS<10> LOC=N3;
+##NET LEDS<9> LOC=M15;
+##NET LEDS<8> LOC=H13;
+##NET LEDS<7> LOC=G16;
+#
+##Display 7-segmentos de la parte derecha de la placa extendida
+#
+##NET LEDS<6> loc=E2;
+##NET LEDS<5> loc=E1;
+##NET LEDS<4> loc=F3;
+##NET LEDS<3> loc=F2;
+##NET LEDS<2> loc=G4;
+##NET LEDS<1> loc=G3;
+##NET LEDS<0> loc=G1;
+#
+#
+#NET rgb<6> loc=C9;#VGA-BLUE0 C9 BLU0;
+#NET rgb<7> loc=E7;#VGA-BLUE1 E7 BLU1;
+#NET rgb<8> loc=D5;#VGA-BLUE2 D5 BLU2;
+#NET rgb<3> loc=A8;#VGA-GREEN0 A8 GRN0;
+#NET rgb<4> loc=A5;#VGA-GREEN1 A5 GRN1;
+#NET rgb<5> loc=C3;#VGA-GREEN2 C3 GRN2;
+#NET rgb<0> loc=C8;#VGA-RED0 C8 RED0;
+#NET rgb<1> loc=D6;#VGA-RED1 D6 RED1;
+#NET rgb<2> loc=B1;#VGA-RED2 B1 RED2;
+#NET hsyncb loc=B7;#VGA-HSYNC# B7 HSYNC#
+#NET vsyncb loc=D8;#VGA-VSYNC# D8 VSYNC#
+#
+#
+#		
+#		
+##### Module RS232 constraints
+#
+##Net rx LOC=G5;
+##Net tx LOC=J2;

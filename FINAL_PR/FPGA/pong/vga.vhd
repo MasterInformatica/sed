@@ -11,7 +11,7 @@ entity vgacore is
 	port
 	(
 		reset: in std_logic;                  -- reset
-		clock: in std_logic;
+		reloj: in std_logic;
 		
 		hsyncb: inout std_logic;	           -- horizontal (line) sync
 		vsyncb: out std_logic;	              -- vertical (frame) sync
@@ -34,34 +34,49 @@ component divisor is
 		reloj: out std_logic
 	);
 end component;
-signal hcnt: std_logic_vector(8 downto 0);	-- horizontal pixel counter
+
+------------------
+-- CTES DE VGA  --
+------------------
+constant H_PIXELS: INTEGER:=640;
+constant H_FRONT: INTEGER:=16;
+constant H_BACK: INTEGER:=48;
+constant H_SYNCTIME: INTEGER:=96;
+constant H_PERIOD: INTEGER:= H_SYNCTIME + H_PIXELS + H_FRONT + H_BACK;
+
+constant V_LINES: INTEGER:=480;
+constant V_FRONT: INTEGER:=11;
+constant V_BACK: INTEGER:=32;
+constant V_SYNCTIME: INTEGER:=2;
+constant V_PERIOD: INTEGER:= V_SYNCTIME + V_LINES + V_FRONT + V_BACK;
+
+
+
+
+signal hcnt: std_logic_vector(9 downto 0);	-- horizontal pixel counter
 signal vcnt: std_logic_vector(9 downto 0);	-- vertical line counter
 
-
-signal pintarR: std_logic; 
-signal pintarG: std_logic; 
-signal pintarB: std_logic; 
-signal pintarBl: std_logic; 
-signal pintarW: std_logic; 
-signal reloj : std_logic;
+signal clock : std_logic;
+signal enable : std_logic;
 
 begin
 
 
-Nreloj_vga: divisor port map( conv_std_logic_vector(integer(3),25),reset,clock,reloj);
+Nreloj_vga: divisor port map( conv_std_logic_vector(integer(3),25),reset,reloj,clock);
 
-A: process(reloj,reset)
+
+A: process(clock,reset)
 begin
-	-- reset asynchronously clears pixel counter
-	if reset='1' then
-		hcnt <= "000000000";
-	-- horiz. pixel counter increments on rising edge of dot clock
-	elsif (reloj'event and reloj='1') then
-		-- horiz. pixel counter rolls-over after 381 pixels
-		if hcnt<380 then
+	-- reset asynchronously clears horizontal counter
+	if reset = '0' then
+		hcnt <= (others => '0');
+	-- horiz. counter increments on rising edge of dot clock
+	elsif (clock'event and clock = '1') then
+		-- horiz. counter restarts after the horizontal period (set by the constants)
+		if hcnt < H_PERIOD then
 			hcnt <= hcnt + 1;
 		else
-			hcnt <= "000000000";
+			hcnt <= (others => '0');
 		end if;
 	end if;
 end process;
@@ -70,28 +85,29 @@ end process;
 B: process(hsyncb,reset)
 begin
 	-- reset asynchronously clears line counter
-	if reset='1' then
-		vcnt <= "0000000000";
+	if reset='0' then
+		vcnt <= (others => '0');
 	-- vert. line counter increments after every horiz. line
-	elsif (hsyncb'event and hsyncb='1') then
-		-- vert. line counter rolls-over after 528 lines
-		if vcnt<527 then
+	elsif (hsyncb'event and hsyncb = '1') then
+		-- vert. line counter rolls-over after the set number of lines (set by the constants)
+		if vcnt < V_PERIOD then
 			vcnt <= vcnt + 1;
 		else
-			vcnt <= "0000000000";
+			vcnt <= (others => '0');
 		end if;
 	end if;
 end process;
 
-C: process(reloj,reset)
+
+C: process(clock,reset)
 begin
 	-- reset asynchronously sets horizontal sync to inactive
-	if reset='1' then
+	if reset = '0' then
 		hsyncb <= '1';
 	-- horizontal sync is recomputed on the rising edge of every dot clock
-	elsif (reloj'event and reloj='1') then
+	elsif (clock'event and clock = '1') then
 		-- horiz. sync is low in this interval to signal start of a new line
-		if (hcnt>=291 and hcnt<337) then
+		if (hcnt >= (H_PIXELS + H_FRONT) and hcnt < (H_PIXELS + H_SYNCTIME + H_FRONT)) then
 			hsyncb <= '0';
 		else
 			hsyncb <= '1';
@@ -99,19 +115,34 @@ begin
 	end if;
 end process;
 
-E: process(hsyncb,reset)
+-- set the vertical sync high time and low time according to the constants
+D: process(hsyncb, reset)
 begin
 	-- reset asynchronously sets vertical sync to inactive
-	if reset='1' then
+	if reset = '0' then
 		vsyncb <= '1';
 	-- vertical sync is recomputed at the end of every line of pixels
-	elsif (hsyncb'event and hsyncb='1') then
+	elsif (hsyncb'event and hsyncb = '1') then
 		-- vert. sync is low in this interval to signal start of a new frame
-		if (vcnt>=490 and vcnt<492) then
+		if (vcnt >= (V_LINES + V_FRONT) and vcnt < (V_LINES + V_SYNCTIME + V_FRONT)) then
 			vsyncb <= '0';
 		else
 			vsyncb <= '1';
 		end if;
+	end if;
+end process;
+
+
+E: process (clock)
+begin
+	if clock'EVENT and clock = '1' then
+		-- if we are outside the visible range on the screen then tell the RAMDAC to blank
+		-- in this section by putting enable low
+		if hcnt >= H_PIXELS or vcnt >= V_LINES then
+			enable <= '0';
+		 else 
+		 	enable <= '1';
+		 end if;
 	end if;
 end process;
 
@@ -132,58 +163,28 @@ end process;
 --
 ----------------------------------------------------------------------------
 --6px horizontal equivalen a 10 en vertical
-que_pintar: process(hcnt,vcnt)
-begin
+--
+--que_pintar: process(hcnt,vcnt)
+--begin
+--	pintar <='0';
+--	if hcnt <=640 then
+--		if vcnt <= 480 then
+--			pintar<='1';
+--		end if;
+--	end if;
+--
+--end process que_pintar;
+--
+--colorear: process(pintar,hcnt,vcnt)
+--begin
+--	if pintar ='1' then
+--		rgb<="111000000";
+--	else
+--		rgb<="000000111";
+--	end if;
+--end process colorear;
 
-	pintarB<='0';
-		 if hcnt > 94+78 and hcnt < 100+78 then
-			if vcnt > 92+160 and vcnt < 100+160 then
-				pintarB<='1';
-		end if;
-		end if;
-	pintarG<='0';
-		 if hcnt > 94+78+6 and hcnt < 100+78+6 then
-			if vcnt > 92+160+7 and vcnt < 100+160+7 then
-				pintarG<='1';
-		end if;
-		end if;
-	pintarR<='0';
-		 if hcnt > 94+78+12 and hcnt < 100+78+12 then
-			if vcnt > 92+160+14 and vcnt < 100+160+14 then
-				pintarR<='1';
-		end if;
-	end if;	
-	pintarBl<='0';
-		 if hcnt > 94+78+18 and hcnt < 100+78+18 then
-			if vcnt > 92+160+14 and vcnt < 100+160+14 then
-				pintarBl<='1';
-		end if;
-	end if;	
-	pintarW<='0';
-		 if hcnt > 94+78+24 and hcnt < 100+78+24 then
-			if vcnt > 92+160+14 and vcnt < 100+160+14 then
-				pintarW<='1';
-		end if;
-end if;
-end process que_pintar;
-
-colorear: process(pintarR,pintarG,pintarB,pintarBl,pintarW,hcnt,vcnt)
-begin
-	if pintarR='1' then
-		rgb<="000000111";
-	elsif pintarG='1' then
-		rgb<="000111000";
-	elsif pintarB='1' then
-		rgb<="111000000";
-	elsif pintarBl='1' then
-		rgb<="000000000";
-	elsif pintarW='1' then
-		rgb<="111111111";
-
-	else
-		rgb<="000000001";
-	end if;
-end process colorear;
+rgb<="111000000";
 
 ---------------------------------------------------------------------------
 end vgacore_arch;
