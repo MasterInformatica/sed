@@ -28,15 +28,16 @@ entity main is
 	port (
 		reset:in std_logic;--reset general
 		clock:in std_logic;--reloj original
-		--clk_teclado : in std_logic;--reloj PS2
-      --bit_teclado : in std_logic;--Entrada teclado
+--		clk_teclado : in std_logic;--reloj PS2
+--      bit_teclado : in std_logic;--Entrada teclado
 		rx : in std_logic;
 		tx : out std_logic;
 		hsyncb: inout std_logic;	-- horizontal (line) sync
 		vsyncb: out std_logic;	-- vertical (frame) sync
 		--tecla: out std_logic_vector(5 downto 0);--Tecla pulsada
 		rgb: out std_logic_vector(8 downto 0); -- SALIDA a la pantalla
-		LEDS: out std_logic_vector(20 downto 0)
+		LEDS: out std_logic_vector(20 downto 0);
+		caca: out std_logic_vector(7 downto 0)
 	);
 end main;
 
@@ -61,7 +62,8 @@ component keyboardUART is
        UART_Rx : IN STD_LOGIC;
 		 teclaLeida: in std_logic;
         tecla : out std_logic_vector(5 downto 0);
-		 UART_Tx : OUT STD_LOGIC
+		 UART_Tx : OUT STD_LOGIC;
+		 cacota : out std_logic_vector(7 downto 0)
 	  );
 end component;
  
@@ -130,6 +132,14 @@ component score is
 			 );
 end component;
 
+component divisor is
+   port ( CLKIN_IN        : in    std_logic; 
+          RST_IN          : in    std_logic; 
+          CLKDV_OUT       : out   std_logic; 
+          CLKIN_IBUFG_OUT : out   std_logic; 
+          CLK0_OUT        : out   std_logic
+          );
+end component;
 --============================END COMPONENTES========================================
 
 --===========================SIGNALS===============================================
@@ -165,14 +175,16 @@ signal LEDS2 :   STD_LOGIC_VECTOR(20 downto 0);
 
 SIGNAL Reset_n : STD_LOGIC;
 SIGNAL clko    : STD_LOGIC;
-
+signal clock2 : std_logic;
 
 --=========================END SIGNALS=================================================integer(16777000)
 
 begin
+clock2 <= clock;
 --==========================PORT MAP====================================================
 --Control_Teclado: keyboard port map(clk_teclado,bit_teclado,teclaLeida,Ktecla);
-UART_Teclado: keyboardUART port map(clko=>clock,Reset_n => Reset_n,UART_Rx => rx,teclaLeida=>teclaLeida,tecla=>Ktecla,UART_Tx=>tx);
+UART_Teclado: keyboardUART port map(clko,Reset_n,rx,teclaLeida,Ktecla,tx,caca);
+Nreloj_uart: divisor2 port map( conv_std_logic_vector(integer(1),25),reset,clock,clko);
 Nreloj_vga: divisor2 port map( conv_std_logic_vector(integer(3),25),reset,clock,reloj_vga);
 Nreloj_mov: divisor2 port map( velocidad,reset,clock,reloj_mov);
 Control_VGA: vgacore port map(reset,reloj_vga,vcuerpo,hcuerpo,sizeSNK,pasti_vpos,pasti_hpos,muerto,hsyncb,vsyncb,rgb);
@@ -180,7 +192,13 @@ Serpiente: snake port map(start,reloj_mov,pause,hpos,vpos,crece,vcuerpo,hcuerpo,
 Pastillas: pastilla port map(start,reloj_mov,comido,pasti_vpos,pasti_hpos);
 MyScore: score port map(reloj_mov,rstart,comido,LEDS2);
 --========================END PORT MAP===============================================
-
+--inst_divisor: divisor PORT MAP(
+--		CLKIN_IN => clock2,
+--		RST_IN => Reset_n,
+--		CLKDV_OUT => clko,
+--		CLKIN_IBUFG_OUT => open,
+--		CLK0_OUT => open
+--);
 --========================Procesar Tecla Leida============================================ 
 --process(muertisimo,muerto)
 --begin
@@ -300,7 +318,7 @@ begin
 end process;
 
 --==============================fin================================================
-Reset_n <= NOT Reset;
+Reset_n <= Reset;
 
 
 

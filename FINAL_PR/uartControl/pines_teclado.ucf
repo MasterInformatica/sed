@@ -5,6 +5,15 @@ NET clock LOC=T9;
 NET clock PERIOD = 10ns HIGH 50%;
 #
 
+#NET clk_teclado CLOCK_DEDICATED_ROUTE=FALSE;
+#NET clk_teclado LOC=B16;
+#NET bit_teclado LOC=E13;
+
+#### Module RS232 constraints
+
+Net rx LOC=G5;
+Net tx LOC=J2;
+
 	#switches placa superior
 
 #NET Reset LOC=K4;
@@ -21,11 +30,11 @@ NET clock PERIOD = 10ns HIGH 50%;
 #NET GPI1<4> LOC=G2;
 #NET GPI1<5> LOC=K15;
 #NET GPI1<6> LOC=K16;
-#NET GPI1<7> LOC=F15;
+NET reset LOC=F15;
 
 #
 	#push buttons placa superior
-NET reset LOC=E11; 
+#NET reset LOC=E11; 
 #NET SW3 LOC=A13; 
 
 	# Push button placa extendida
@@ -37,14 +46,14 @@ NET reset LOC=E11;
 
 #barra de leds placa extendida
 #
-#NET GPO1<0> LOC=L5;
-#NET GPO1<1> LOC=N2;
-#NET GPO1<2> LOC=M3;
-#NET GPO1<3> LOC=N1;
-#NET GPO1<4> LOC=T13;
-#NET GPO1<5> LOC=L15;
-#NET GPO1<6> LOC=J13;
-#NET GPO1<7> LOC=H15;
+NET caca<0> LOC=L5;
+NET caca<1> LOC=N2;
+NET caca<2> LOC=M3;
+NET caca<3> LOC=N1;
+NET caca<4> LOC=T13;
+NET caca<5> LOC=L15;
+NET caca<6> LOC=J13;
+NET caca<7> LOC=H15;
 #NET GPO1<8> LOC=J16;
 #NET GPO1<9> LOC=J14;
 
@@ -139,7 +148,3 @@ NET rgb(2) loc=B1;#VGA-RED2 B1 RED2;
 NET hsyncb loc=B7;#VGA-HSYNC# B7 HSYNC#
 NET vsyncb loc=D8;#VGA-VSYNC# D8 VSYNC#
 
-#### Module RS232 constraints
-
-Net rx LOC=G5;
-Net tx LOC=J2;

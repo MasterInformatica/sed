@@ -36,7 +36,8 @@ entity keyboardUART is
        UART_Rx : IN STD_LOGIC;
 		 teclaLeida: in std_logic;
         tecla : out std_logic_vector(5 downto 0);
-		 UART_Tx : OUT STD_LOGIC
+		 UART_Tx : OUT STD_LOGIC;
+		 cacota : out std_logic_vector(7 downto 0)
 	  );
 end keyboardUART;
 
@@ -118,7 +119,7 @@ SIGNAL RxRdy      : STD_LOGIC;
 begin
 
 
-
+cacota <= leer;
 	tecla <= Ktecla;
 	auxtecla<=Ktecla;
 
@@ -127,27 +128,27 @@ procesarTecla : process(empieza, leer,auxtecla,termina,teclaLeida)
 		if teclaLeida='1' then
 			Ktecla<=(others=>'0');
 		elsif empieza'event and empieza = '1' then
-				if leer = keyboardARR then
+				if leer(3 downto 0) = ukeyboardARR then
 					Ktecla(1) <= '1';
 					Ktecla(0)<='0';
 					Ktecla(5 downto 2) <=(others=>'0');
-				elsif leer = keyboardDER then
+				elsif leer(7 downto 4) = ukeyboardDER then
 					Ktecla(2) <= '1';
 					Ktecla(1 downto 0)<=(others=>'0');
 					Ktecla(5 downto 3) <=(others=>'0');
-				elsif leer = keyboardABJ then
+				elsif leer(3 downto 0) = ukeyboardABJ then
 					Ktecla(3) <= '1';
 					Ktecla(2 downto 0)<=(others=>'0');
 					Ktecla(5 downto 4) <=(others=>'0');
-				elsif leer = keyboardIZQ then
+				elsif leer(3 downto 0) = ukeyboardIZQ then
 					Ktecla(4) <= '1';
 					Ktecla(5)<='0';
 					Ktecla(3 downto 0) <=(others=>'0');
-				elsif leer = keyboardRESET then
+				elsif leer(3 downto 0) = ukeyboardRESET then
 					Ktecla(5) <= '1';
 					--Ktecla(0)<='0';
 					Ktecla(4 downto 0) <=(others=>'0');
-				elsif leer = keyboardPAUSE then
+				elsif leer(3 downto 0) = ukeyboardPAUSE then
 					Ktecla(0) <= '1';
 					--Ktecla(0)<='0';
 					Ktecla(5 downto 1) <=(others=>'0');
