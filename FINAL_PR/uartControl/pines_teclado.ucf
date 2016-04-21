@@ -1,0 +1,145 @@
+#salida del oscilador a 100MHz
+#
+NET clock LOC=T9;
+#set clock period
+NET clock PERIOD = 10ns HIGH 50%;
+#
+
+	#switches placa superior
+
+#NET Reset LOC=K4;
+#NET SW<2> LOC=K3;
+#NET SW<3> LOC=K2;
+#NET SW<4> LOC=J4;
+
+	#switches placa extendida
+
+#NET GPI1<0> LOC=P12;
+#NET GPI1<1> LOC=J1;
+#NET GPI1<2> LOC=H1;
+#NET GPI1<3> LOC=H3;
+#NET GPI1<4> LOC=G2;
+#NET GPI1<5> LOC=K15;
+#NET GPI1<6> LOC=K16;
+#NET GPI1<7> LOC=F15;
+
+#
+	#push buttons placa superior
+NET reset LOC=E11; 
+#NET SW3 LOC=A13; 
+
+	# Push button placa extendida
+#NET pushb1 LOC=H4;
+#NET pushb2 LOC=L5;
+#NET pushb3 LOC=N2;
+#NET pushb4 LOC=M3;
+
+
+#barra de leds placa extendida
+#
+#NET GPO1<0> LOC=L5;
+#NET GPO1<1> LOC=N2;
+#NET GPO1<2> LOC=M3;
+#NET GPO1<3> LOC=N1;
+#NET GPO1<4> LOC=T13;
+#NET GPO1<5> LOC=L15;
+#NET GPO1<6> LOC=J13;
+#NET GPO1<7> LOC=H15;
+#NET GPO1<8> LOC=J16;
+#NET GPO1<9> LOC=J14;
+
+ 
+
+#Display 7-segmentos 
+#
+#		   S0
+#		   ---
+#	    S5	|	|s1
+#		    S6
+#		   ---
+#	    S4	|	|S2
+#
+#		   ---
+#		   S3
+
+
+#Display 7-segmentos de la placa superior
+
+#net display<0> loc=R10;
+#net display<1> loc=P10;
+#net display<2> loc=M11;
+#NET display<3> loc=M6;
+#NET display<4> loc=N6;
+#NET display<5> loc=T7;
+#NET display<6> loc=R7;
+
+#Display 7-segmentos de la parte izquierda de la placa extendida:
+
+#NET displayi<0> LOC=H14;
+#NET displayi<1> LOC=M4;
+#NET displayi<2> LOC=P1;
+#NET displayi<3> LOC=N3;
+#NET displayi<4> LOC=M15;
+#NET displayi<5> LOC=H13;
+#NET displayi<6> LOC=G16;
+
+
+
+
+#Display 7-segmentos de la parte derecha de la placa extendida
+
+#NET displayd<0> loc=E2;
+#NET displayd<1> loc=E1;
+#NET displayd<2> loc=F3;
+#NET displayd<3> loc=F2;
+#NET displayd<4> loc=G4;
+#NET displayd<5> loc=G3;
+#NET displayd<6> loc=G1;
+
+#Display 7-segmentos de la placa superior
+
+net LEDS<20> loc=R10; #
+net LEDS<19> loc=P10; #
+net LEDS<18> loc=M11; #
+NET LEDS<17> loc=M6;  #
+NET LEDS<16> loc=N6;  #
+NET LEDS<15> loc=T7; #
+NET LEDS<14> loc=R7; #
+
+#Display 7-segmentos de la parte izquierda de la placa extendida:
+
+NET LEDS<13> LOC=H14; #
+NET LEDS<12> LOC=M4;
+NET LEDS<11> LOC=P1;
+NET LEDS<10> LOC=N3;
+NET LEDS<9> LOC=M15;
+NET LEDS<8> LOC=H13;
+NET LEDS<7> LOC=G16;
+
+#Display 7-segmentos de la parte derecha de la placa extendida
+
+NET LEDS<6> loc=E2;
+NET LEDS<5> loc=E1;
+NET LEDS<4> loc=F3;
+NET LEDS<3> loc=F2;
+NET LEDS<2> loc=G4;
+NET LEDS<1> loc=G3;
+NET LEDS<0> loc=G1;
+
+
+NET rgb(6) loc=C9;#VGA-BLUE0 C9 BLU0;
+NET rgb(7) loc=E7;#VGA-BLUE1 E7 BLU1;
+NET rgb(8) loc=D5;#VGA-BLUE2 D5 BLU2;
+NET rgb(3) loc=A8;#VGA-GREEN0 A8 GRN0;
+NET rgb(4) loc=A5;#VGA-GREEN1 A5 GRN1;
+NET rgb(5) loc=C3;#VGA-GREEN2 C3 GRN2;
+NET rgb(0) loc=C8;#VGA-RED0 C8 RED0;
+NET rgb(1) loc=D6;#VGA-RED1 D6 RED1;
+NET rgb(2) loc=B1;#VGA-RED2 B1 RED2;
+NET hsyncb loc=B7;#VGA-HSYNC# B7 HSYNC#
+NET vsyncb loc=D8;#VGA-VSYNC# D8 VSYNC#
+
+#### Module RS232 constraints
+
+Net rx LOC=G5;
+Net tx LOC=J2;

@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -o "G:/TOC/snake/simuSNKmodule_isim_beh.exe" -prj "G:/TOC/snake/simuSNKmodule_beh.prj" "work.simuSNKmodule" 

@@ -1,0 +1,8 @@
+INTSTYLE=impact
+INFILE=E:\TOC\snake\impact.xsl
+OUTFILE=E:\TOC\snake\impact.xsl
+FAMILY=Single
+PART=Single
+WORKINGDIR=E:\TOC\snake
+LICENSE=iMPACT
+USER_INFO=iMPACT
