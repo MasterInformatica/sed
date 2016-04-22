@@ -104,7 +104,7 @@ END GROUP
                 0x0c000000                . = 0xc000000
                 0x0c000000                Image_RO_Base = .
 
-.text           0x0c000000     0xa54c
+.text           0x0c000000     0xa4cc
  *(.text)
  .text          0x0c000000      0x710 ./commonUart/44binit.o
  .text          0x0c000710      0x46c ./commonUart/44blib.o
@@ -117,367 +117,367 @@ END GROUP
  .text          0x0c000b7c       0x7c ./8led.o
                 0x0c000b7c                D8Led_init
                 0x0c000ba0                D8Led_symbol
- .text          0x0c000bf8      0x254 ./button.o
+ .text          0x0c000bf8      0x2f4 ./button.o
                 0x0c000bf8                Eint4567_init
                 0x0c000c9c                Eint4567_ISR
-                0x0c000d48                Eint4567_activar
-                0x0c000db0                Eint4567_desactivar
-                0x0c000e00                button_no_pressed
- .text          0x0c000e4c      0x2dc ./keyboard.o
-                0x0c000e4c                keyboard_init
-                0x0c000ec8                keyboard_activar
-                0x0c000f14                keyboard_desactivar
-                0x0c000f54                Keyboard_ISR
-                0x0c001000                key_read
- .text          0x0c001128      0x230 ./led.o
-                0x0c001128                leds_on
-                0x0c001148                leds_off
-                0x0c001168                led1_on
-                0x0c0011a8                led1_off
-                0x0c0011e8                led2_on
-                0x0c001228                led2_off
-                0x0c001268                leds_switch
-                0x0c0012a8                Led_Display
- .text          0x0c001358      0x1c8 ./main.o
-                0x0c001358                Main
-                0x0c0014b0                initPractica
- .text          0x0c001520      0x518 ./uart.o
-                0x0c001520                Uart0_Init
-                0x0c0015f4                Uart1_Init
-                0x0c0016d0                Uart_Config
-                0x0c0016e8                Uart_TxEmpty0
-                0x0c00171c                Uart_Getch0
-                0x0c001764                Uart_SendByte0
-                0x0c0017f8                Uart_SendString0
-                0x0c001848                Uart_Printf0
-                0x0c001890                Uart_TxEmpty1
-                0x0c0018c4                Uart_Getch1
-                0x0c00190c                Uart_SendByte1
-                0x0c0019a0                Uart_SendString1
-                0x0c0019f0                Uart_Printf1
- .text          0x0c001a38       0x7c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-vsprintf.o)
-                0x0c001a38                _vsprintf_r
-                0x0c001a88                vsprintf
- .text          0x0c001ab4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
- .text          0x0c001ab4     0x2138 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfprintf.o)
-                0x0c001ab4                _svfprintf_r
- *fill*         0x0c003bec        0x4 00
- .text          0x0c003bf0     0x17d0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-dtoa.o)
-                0x0c003dc0                _dtoa_r
- .text          0x0c0053c0       0xd0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-locale.o)
-                0x0c0053c0                _setlocale_r
-                0x0c00542c                __locale_charset
-                0x0c005438                __locale_mb_cur_max
-                0x0c005448                __locale_msgcharset
-                0x0c005454                __locale_cjk_lang
-                0x0c00545c                _localeconv_r
-                0x0c005468                setlocale
-                0x0c005484                localeconv
- .text          0x0c005490      0x70c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mallocr.o)
-                0x0c005490                _malloc_r
- .text          0x0c005b9c      0x104 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memchr.o)
-                0x0c005b9c                memchr
- .text          0x0c005ca0      0x1c0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memcpy.o)
-                0x0c005ca0                memcpy
- .text          0x0c005e60        0x8 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mlock.o)
-                0x0c005e60                __malloc_lock
-                0x0c005e64                __malloc_unlock
- .text          0x0c005e68      0xcfc c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mprec.o)
-                0x0c005e68                _Balloc
-                0x0c005ef0                _Bfree
-                0x0c005f0c                __multadd
-                0x0c005fe8                __s2b
-                0x0c0060d4                __hi0bits
-                0x0c006124                __lo0bits
-                0x0c0061b4                __i2b
-                0x0c0061d8                __multiply
-                0x0c0063c0                __pow5mult
-                0x0c0064b4                __lshift
-                0x0c0065b8                __mcmp
-                0x0c006618                __mdiff
-                0x0c006770                __ulp
-                0x0c0067d0                __b2d
-                0x0c006894                __d2b
-                0x0c00699c                __ratio
-                0x0c006a14                _mprec_log10
-                0x0c006a68                __copybits
-                0x0c006adc                __any_on
- .text          0x0c006b64       0x8c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-s_fpclassify.o)
-                0x0c006b64                __fpclassifyd
- .text          0x0c006bf0       0x40 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-sbrkr.o)
-                0x0c006bf0                _sbrk_r
- .text          0x0c006c30      0x230 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-strcmp.o)
-                0x0c006c30                strcmp
- .text          0x0c006e60       0x60 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-strlen.o)
-                0x0c006e60                strlen
- .text          0x0c006ec0     0x1238 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfiprintf.o)
-                0x0c006ec0                __ssprint_r
-                0x0c00705c                _svfiprintf_r
- .text          0x0c0080f8       0x9c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-callocr.o)
-                0x0c0080f8                _calloc_r
- .text          0x0c008194      0x360 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-freer.o)
-                0x0c008194                _malloc_trim_r
-                0x0c008290                _free_r
- .text          0x0c0084f4      0x128 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memmove.o)
-                0x0c0084f4                memmove
- .text          0x0c00861c      0x100 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memset.o)
-                0x0c00861c                memset
- .text          0x0c00871c      0x5c0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-reallocr.o)
-                0x0c00871c                _realloc_r
- .text          0x0c008cdc      0x1ac c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-reent.o)
-                0x0c008cdc                cleanup_glue
-                0x0c008d08                _reclaim_reent
-                0x0c008e10                _wrapup_reent
- .text          0x0c008e88      0x114 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_udivsi3.o)
-                0x0c008e88                __aeabi_uidiv
-                0x0c008e88                __udivsi3
-                0x0c008f7c                __aeabi_uidivmod
- .text          0x0c008f9c      0x148 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_divsi3.o)
-                0x0c008f9c                __divsi3
-                0x0c008f9c                __aeabi_idiv
-                0x0c0090c4                __aeabi_idivmod
- .text          0x0c0090e4        0x4 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_dvmd_tls.o)
-                0x0c0090e4                __aeabi_idiv0
-                0x0c0090e4                __aeabi_ldiv0
- .text          0x0c0090e8      0x41c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_addsubdf3.o)
-                0x0c0090e8                __aeabi_drsub
-                0x0c0090f0                __aeabi_dsub
-                0x0c0090f0                __subdf3
-                0x0c0090f4                __aeabi_dadd
-                0x0c0090f4                __adddf3
-                0x0c009404                __floatunsidf
-                0x0c009404                __aeabi_ui2d
-                0x0c009428                __floatsidf
-                0x0c009428                __aeabi_i2d
-                0x0c009450                __aeabi_f2d
-                0x0c009450                __extendsfdf2
-                0x0c009490                __floatundidf
-                0x0c009490                __aeabi_ul2d
-                0x0c0094a4                __floatdidf
-                0x0c0094a4                __aeabi_l2d
- .text          0x0c009504      0x49c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_muldivdf3.o)
-                0x0c009504                __aeabi_dmul
-                0x0c009504                __muldf3
-                0x0c009794                __divdf3
-                0x0c009794                __aeabi_ddiv
- .text          0x0c0099a0      0x144 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_cmpdf2.o)
-                0x0c0099a0                __gtdf2
-                0x0c0099a0                __gedf2
-                0x0c0099a8                __ltdf2
-                0x0c0099a8                __ledf2
-                0x0c0099b0                __nedf2
-                0x0c0099b0                __eqdf2
-                0x0c0099b0                __cmpdf2
-                0x0c009a38                __aeabi_cdrcmple
-                0x0c009a54                __aeabi_cdcmpeq
-                0x0c009a54                __aeabi_cdcmple
-                0x0c009a6c                __aeabi_dcmpeq
-                0x0c009a84                __aeabi_dcmplt
-                0x0c009a9c                __aeabi_dcmple
-                0x0c009ab4                __aeabi_dcmpge
-                0x0c009acc                __aeabi_dcmpgt
- .text          0x0c009ae4       0x5c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_fixdfsi.o)
-                0x0c009ae4                __aeabi_d2iz
-                0x0c009ae4                __fixdfsi
- .text          0x0c009b40       0x3c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_aeabi_uldivmod.o)
-                0x0c009b40                __aeabi_uldivmod
- .text          0x0c009b7c       0x80 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(bpabi.o)
-                0x0c009b7c                __gnu_ldivmod_helper
-                0x0c009bbc                __gnu_uldivmod_helper
- .text          0x0c009bfc      0x4a8 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_divdi3.o)
-                0x0c009bfc                __divdi3
- .text          0x0c00a0a4      0x434 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_udivdi3.o)
-                0x0c00a0a4                __udivdi3
- .text          0x0c00a4d8       0x48 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_clzsi2.o)
-                0x0c00a4d8                __clzsi2
- .text          0x0c00a520       0x2c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libnosys.a(sbrk.o)
-                0x0c00a520                _sbrk
-                0x0c00a54c                Image_RO_Limit = .
-                0x0c00a54c                Image_RW_Base = .
+                0x0c000de8                Eint4567_activar
+                0x0c000e50                Eint4567_desactivar
+                0x0c000ea0                button_no_pressed
+ .text          0x0c000eec      0x2ec ./keyboard.o
+                0x0c000eec                keyboard_init
+                0x0c000f68                keyboard_activar
+                0x0c000fb4                keyboard_desactivar
+                0x0c000ff4                Keyboard_ISR
+                0x0c0010b0                key_read
+ .text          0x0c0011d8      0x230 ./led.o
+                0x0c0011d8                leds_on
+                0x0c0011f8                leds_off
+                0x0c001218                led1_on
+                0x0c001258                led1_off
+                0x0c001298                led2_on
+                0x0c0012d8                led2_off
+                0x0c001318                leds_switch
+                0x0c001358                Led_Display
+ .text          0x0c001408       0xc8 ./main.o
+                0x0c001408                Main
+                0x0c001460                initPractica
+ .text          0x0c0014d0      0x4e8 ./uart.o
+                0x0c0014d0                Uart0_Init
+                0x0c0015a4                Uart1_Init
+                0x0c001680                Uart_Config
+                0x0c001698                Uart_TxEmpty0
+                0x0c0016cc                Uart_Getch0
+                0x0c001714                Uart_SendByte0
+                0x0c0017a8                Uart_SendString0
+                0x0c0017f8                Uart_Printf0
+                0x0c001840                Uart_TxEmpty1
+                0x0c001874                Uart_Getch1
+                0x0c0018bc                Uart_SendByte1
+                0x0c00191c                Uart_SendString1
+                0x0c00196c                Uart_Printf1
+ .text          0x0c0019b8       0x7c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-vsprintf.o)
+                0x0c0019b8                _vsprintf_r
+                0x0c001a08                vsprintf
+ .text          0x0c001a34        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
+ .text          0x0c001a34     0x2138 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfprintf.o)
+                0x0c001a34                _svfprintf_r
+ *fill*         0x0c003b6c        0x4 00
+ .text          0x0c003b70     0x17d0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-dtoa.o)
+                0x0c003d40                _dtoa_r
+ .text          0x0c005340       0xd0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-locale.o)
+                0x0c005340                _setlocale_r
+                0x0c0053ac                __locale_charset
+                0x0c0053b8                __locale_mb_cur_max
+                0x0c0053c8                __locale_msgcharset
+                0x0c0053d4                __locale_cjk_lang
+                0x0c0053dc                _localeconv_r
+                0x0c0053e8                setlocale
+                0x0c005404                localeconv
+ .text          0x0c005410      0x70c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mallocr.o)
+                0x0c005410                _malloc_r
+ .text          0x0c005b1c      0x104 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memchr.o)
+                0x0c005b1c                memchr
+ .text          0x0c005c20      0x1c0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memcpy.o)
+                0x0c005c20                memcpy
+ .text          0x0c005de0        0x8 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mlock.o)
+                0x0c005de0                __malloc_lock
+                0x0c005de4                __malloc_unlock
+ .text          0x0c005de8      0xcfc c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mprec.o)
+                0x0c005de8                _Balloc
+                0x0c005e70                _Bfree
+                0x0c005e8c                __multadd
+                0x0c005f68                __s2b
+                0x0c006054                __hi0bits
+                0x0c0060a4                __lo0bits
+                0x0c006134                __i2b
+                0x0c006158                __multiply
+                0x0c006340                __pow5mult
+                0x0c006434                __lshift
+                0x0c006538                __mcmp
+                0x0c006598                __mdiff
+                0x0c0066f0                __ulp
+                0x0c006750                __b2d
+                0x0c006814                __d2b
+                0x0c00691c                __ratio
+                0x0c006994                _mprec_log10
+                0x0c0069e8                __copybits
+                0x0c006a5c                __any_on
+ .text          0x0c006ae4       0x8c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-s_fpclassify.o)
+                0x0c006ae4                __fpclassifyd
+ .text          0x0c006b70       0x40 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-sbrkr.o)
+                0x0c006b70                _sbrk_r
+ .text          0x0c006bb0      0x230 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-strcmp.o)
+                0x0c006bb0                strcmp
+ .text          0x0c006de0       0x60 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-strlen.o)
+                0x0c006de0                strlen
+ .text          0x0c006e40     0x1238 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfiprintf.o)
+                0x0c006e40                __ssprint_r
+                0x0c006fdc                _svfiprintf_r
+ .text          0x0c008078       0x9c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-callocr.o)
+                0x0c008078                _calloc_r
+ .text          0x0c008114      0x360 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-freer.o)
+                0x0c008114                _malloc_trim_r
+                0x0c008210                _free_r
+ .text          0x0c008474      0x128 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memmove.o)
+                0x0c008474                memmove
+ .text          0x0c00859c      0x100 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memset.o)
+                0x0c00859c                memset
+ .text          0x0c00869c      0x5c0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-reallocr.o)
+                0x0c00869c                _realloc_r
+ .text          0x0c008c5c      0x1ac c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-reent.o)
+                0x0c008c5c                cleanup_glue
+                0x0c008c88                _reclaim_reent
+                0x0c008d90                _wrapup_reent
+ .text          0x0c008e08      0x114 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_udivsi3.o)
+                0x0c008e08                __aeabi_uidiv
+                0x0c008e08                __udivsi3
+                0x0c008efc                __aeabi_uidivmod
+ .text          0x0c008f1c      0x148 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_divsi3.o)
+                0x0c008f1c                __divsi3
+                0x0c008f1c                __aeabi_idiv
+                0x0c009044                __aeabi_idivmod
+ .text          0x0c009064        0x4 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_dvmd_tls.o)
+                0x0c009064                __aeabi_idiv0
+                0x0c009064                __aeabi_ldiv0
+ .text          0x0c009068      0x41c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_addsubdf3.o)
+                0x0c009068                __aeabi_drsub
+                0x0c009070                __aeabi_dsub
+                0x0c009070                __subdf3
+                0x0c009074                __aeabi_dadd
+                0x0c009074                __adddf3
+                0x0c009384                __floatunsidf
+                0x0c009384                __aeabi_ui2d
+                0x0c0093a8                __floatsidf
+                0x0c0093a8                __aeabi_i2d
+                0x0c0093d0                __aeabi_f2d
+                0x0c0093d0                __extendsfdf2
+                0x0c009410                __floatundidf
+                0x0c009410                __aeabi_ul2d
+                0x0c009424                __floatdidf
+                0x0c009424                __aeabi_l2d
+ .text          0x0c009484      0x49c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_muldivdf3.o)
+                0x0c009484                __aeabi_dmul
+                0x0c009484                __muldf3
+                0x0c009714                __divdf3
+                0x0c009714                __aeabi_ddiv
+ .text          0x0c009920      0x144 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_cmpdf2.o)
+                0x0c009920                __gtdf2
+                0x0c009920                __gedf2
+                0x0c009928                __ltdf2
+                0x0c009928                __ledf2
+                0x0c009930                __nedf2
+                0x0c009930                __eqdf2
+                0x0c009930                __cmpdf2
+                0x0c0099b8                __aeabi_cdrcmple
+                0x0c0099d4                __aeabi_cdcmpeq
+                0x0c0099d4                __aeabi_cdcmple
+                0x0c0099ec                __aeabi_dcmpeq
+                0x0c009a04                __aeabi_dcmplt
+                0x0c009a1c                __aeabi_dcmple
+                0x0c009a34                __aeabi_dcmpge
+                0x0c009a4c                __aeabi_dcmpgt
+ .text          0x0c009a64       0x5c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_fixdfsi.o)
+                0x0c009a64                __aeabi_d2iz
+                0x0c009a64                __fixdfsi
+ .text          0x0c009ac0       0x3c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_aeabi_uldivmod.o)
+                0x0c009ac0                __aeabi_uldivmod
+ .text          0x0c009afc       0x80 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(bpabi.o)
+                0x0c009afc                __gnu_ldivmod_helper
+                0x0c009b3c                __gnu_uldivmod_helper
+ .text          0x0c009b7c      0x4a8 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_divdi3.o)
+                0x0c009b7c                __divdi3
+ .text          0x0c00a024      0x434 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_udivdi3.o)
+                0x0c00a024                __udivdi3
+ .text          0x0c00a458       0x48 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_clzsi2.o)
+                0x0c00a458                __clzsi2
+ .text          0x0c00a4a0       0x2c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libnosys.a(sbrk.o)
+                0x0c00a4a0                _sbrk
+                0x0c00a4cc                Image_RO_Limit = .
+                0x0c00a4cc                Image_RW_Base = .
 
-.glue_7         0x0c00a54c        0x0
+.glue_7         0x0c00a4cc        0x0
  .glue_7        0x00000000        0x0 linker stubs
 
-.glue_7t        0x0c00a54c        0x0
+.glue_7t        0x0c00a4cc        0x0
  .glue_7t       0x00000000        0x0 linker stubs
 
-.vfp11_veneer   0x0c00a54c        0x0
+.vfp11_veneer   0x0c00a4cc        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
 
-.v4_bx          0x0c00a54c        0x0
+.v4_bx          0x0c00a4cc        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
-.data           0x0c00a550      0x954
+.data           0x0c00a4d0      0x954
  *(.data)
- .data          0x0c00a550        0x6 ./commonUart/44binit.o
-                0x0c00a550                BDRAMTYPE
- *fill*         0x0c00a556        0x2 00
- .data          0x0c00a558        0xc ./commonUart/44blib.o
-                0x0c00a558                mallocPt
-                0x0c00a55c                run
- .data          0x0c00a564       0x40 ./8led.o
-                0x0c00a564                Symbol
- .data          0x0c00a5a4        0x0 ./button.o
- .data          0x0c00a5a4        0x4 ./keyboard.o
-                0x0c00a5a4                keyboard_base
- .data          0x0c00a5a8        0x0 ./led.o
- .data          0x0c00a5a8       0x40 ./main.o
-                0x0c00a5a8                str_send
-                0x0c00a5b4                str_error
- .data          0x0c00a5e8        0x0 ./uart.o
- .data          0x0c00a5e8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-vsprintf.o)
- .data          0x0c00a5e8      0x430 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
-                0x0c00a5e8                _impure_ptr
- .data          0x0c00aa18        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfprintf.o)
- .data          0x0c00aa18        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-dtoa.o)
- .data          0x0c00aa18       0x7c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-locale.o)
-                0x0c00aa38                __mb_cur_max
- .data          0x0c00aa94      0x410 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mallocr.o)
-                0x0c00aa94                __malloc_av_
-                0x0c00ae9c                __malloc_sbrk_base
-                0x0c00aea0                __malloc_trim_threshold
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memchr.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memcpy.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mlock.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mprec.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-s_fpclassify.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-sbrkr.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-strcmp.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-strlen.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfiprintf.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-callocr.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-freer.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memmove.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memset.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-reallocr.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-reent.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_udivsi3.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_divsi3.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_dvmd_tls.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_addsubdf3.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_muldivdf3.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_cmpdf2.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_fixdfsi.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_aeabi_uldivmod.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(bpabi.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_divdi3.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_udivdi3.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_clzsi2.o)
- .data          0x0c00aea4        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libnosys.a(sbrk.o)
+ .data          0x0c00a4d0        0x6 ./commonUart/44binit.o
+                0x0c00a4d0                BDRAMTYPE
+ *fill*         0x0c00a4d6        0x2 00
+ .data          0x0c00a4d8        0xc ./commonUart/44blib.o
+                0x0c00a4d8                mallocPt
+                0x0c00a4dc                run
+ .data          0x0c00a4e4       0x40 ./8led.o
+                0x0c00a4e4                Symbol
+ .data          0x0c00a524        0x0 ./button.o
+ .data          0x0c00a524        0x4 ./keyboard.o
+                0x0c00a524                keyboard_base
+ .data          0x0c00a528        0x0 ./led.o
+ .data          0x0c00a528       0x40 ./main.o
+                0x0c00a528                str_send
+                0x0c00a534                str_error
+ .data          0x0c00a568        0x0 ./uart.o
+ .data          0x0c00a568        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-vsprintf.o)
+ .data          0x0c00a568      0x430 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
+                0x0c00a568                _impure_ptr
+ .data          0x0c00a998        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfprintf.o)
+ .data          0x0c00a998        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-dtoa.o)
+ .data          0x0c00a998       0x7c c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-locale.o)
+                0x0c00a9b8                __mb_cur_max
+ .data          0x0c00aa14      0x410 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mallocr.o)
+                0x0c00aa14                __malloc_av_
+                0x0c00ae1c                __malloc_sbrk_base
+                0x0c00ae20                __malloc_trim_threshold
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memchr.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memcpy.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mlock.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mprec.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-s_fpclassify.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-sbrkr.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-strcmp.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-strlen.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfiprintf.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-callocr.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-freer.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memmove.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memset.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-reallocr.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-reent.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_udivsi3.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_divsi3.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_dvmd_tls.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_addsubdf3.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_muldivdf3.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_cmpdf2.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_fixdfsi.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_aeabi_uldivmod.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(bpabi.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_divdi3.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_udivdi3.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_clzsi2.o)
+ .data          0x0c00ae24        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libnosys.a(sbrk.o)
 
-.rodata         0x0c00aea8      0x180
+.rodata         0x0c00ae28      0x180
  *(.rodata)
- .rodata        0x0c00aea8       0x10 ./keyboard.o
- .rodata        0x0c00aeb8        0x4 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
-                0x0c00aeb8                _global_impure_ptr
- .rodata        0x0c00aebc       0x20 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfprintf.o)
- *fill*         0x0c00aedc        0x4 00
- .rodata        0x0c00aee0      0x128 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mprec.o)
-                0x0c00aef0                __mprec_tens
-                0x0c00afb8                __mprec_bigtens
-                0x0c00afe0                __mprec_tinytens
- .rodata        0x0c00b008       0x20 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfiprintf.o)
-                0x0c00b028                Image_RW_Limit = .
-                0x0c00b028                Image_ZI_Base = .
+ .rodata        0x0c00ae28       0x10 ./keyboard.o
+ .rodata        0x0c00ae38        0x4 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
+                0x0c00ae38                _global_impure_ptr
+ .rodata        0x0c00ae3c       0x20 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfprintf.o)
+ *fill*         0x0c00ae5c        0x4 00
+ .rodata        0x0c00ae60      0x128 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mprec.o)
+                0x0c00ae70                __mprec_tens
+                0x0c00af38                __mprec_bigtens
+                0x0c00af60                __mprec_tinytens
+ .rodata        0x0c00af88       0x20 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfiprintf.o)
+                0x0c00afa8                Image_RW_Limit = .
+                0x0c00afa8                Image_ZI_Base = .
 
-.rodata.str1.4  0x0c00b028       0x64
+.rodata.str1.4  0x0c00afa8       0x64
  .rodata.str1.4
-                0x0c00b028        0x2 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
+                0x0c00afa8        0x2 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
                                   0x4 (size before relaxing)
- *fill*         0x0c00b02a        0x2 00
+ *fill*         0x0c00afaa        0x2 00
  .rodata.str1.4
-                0x0c00b02c       0x42 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfprintf.o)
+                0x0c00afac       0x42 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfprintf.o)
                                  0x44 (size before relaxing)
- *fill*         0x0c00b06e        0x2 00
+ *fill*         0x0c00afee        0x2 00
  .rodata.str1.4
-                0x0c00b070       0x10 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-dtoa.o)
+                0x0c00aff0       0x10 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-dtoa.o)
                                  0x14 (size before relaxing)
  .rodata.str1.4
-                0x0c00b080        0xc c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-locale.o)
+                0x0c00b000        0xc c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-locale.o)
                                  0x14 (size before relaxing)
  .rodata.str1.4
                 0x00000000       0x30 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfiprintf.o)
 
-.ARM.extab      0x0c00b08c        0x0
- .ARM.extab     0x0c00b08c        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_divdi3.o)
- .ARM.extab     0x0c00b08c        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_udivdi3.o)
+.ARM.extab      0x0c00b00c        0x0
+ .ARM.extab     0x0c00b00c        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_divdi3.o)
+ .ARM.extab     0x0c00b00c        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_udivdi3.o)
 
-.ARM.exidx      0x0c00b08c        0x8
- .ARM.exidx     0x0c00b08c        0x8 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_divdi3.o)
- .ARM.exidx     0x0c00b094        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_udivdi3.o)
+.ARM.exidx      0x0c00b00c        0x8
+ .ARM.exidx     0x0c00b00c        0x8 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_divdi3.o)
+ .ARM.exidx     0x0c00b014        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_udivdi3.o)
                                   0x8 (size before relaxing)
 
-.bss            0x0c00b094      0x15c
+.bss            0x0c00b014      0x15c
  *(.bss)
- .bss           0x0c00b094        0x0 ./commonUart/44binit.o
- .bss           0x0c00b094        0x4 ./commonUart/44blib.o
-                0x0c00b094                restart
- .bss           0x0c00b098        0x0 ./8led.o
- .bss           0x0c00b098        0x0 ./button.o
- .bss           0x0c00b098        0x0 ./keyboard.o
- .bss           0x0c00b098        0x0 ./led.o
- .bss           0x0c00b098        0x0 ./main.o
- .bss           0x0c00b098        0x0 ./uart.o
- .bss           0x0c00b098        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-vsprintf.o)
- .bss           0x0c00b098        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
- .bss           0x0c00b098        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfprintf.o)
- .bss           0x0c00b098        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-dtoa.o)
- .bss           0x0c00b098        0xc c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-locale.o)
-                0x0c00b098                __nlocale_changed
-                0x0c00b09c                __mlocale_changed
-                0x0c00b0a0                _PathLocale
- .bss           0x0c00b0a4       0x34 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mallocr.o)
-                0x0c00b0a4                __malloc_top_pad
-                0x0c00b0a8                __malloc_current_mallinfo
-                0x0c00b0d0                __malloc_max_sbrked_mem
-                0x0c00b0d4                __malloc_max_total_mem
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memchr.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memcpy.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mlock.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mprec.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-s_fpclassify.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-sbrkr.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-strcmp.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-strlen.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfiprintf.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-callocr.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-freer.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memmove.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memset.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-reallocr.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-reent.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_udivsi3.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_divsi3.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_dvmd_tls.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_addsubdf3.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_muldivdf3.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_cmpdf2.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_fixdfsi.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_aeabi_uldivmod.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(bpabi.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_divdi3.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_udivdi3.o)
- .bss           0x0c00b0d8        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_clzsi2.o)
- .bss           0x0c00b0d8        0x4 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libnosys.a(sbrk.o)
- COMMON         0x0c00b0dc        0x8 ./commonUart/44blib.o
-                0x0c00b0dc                fileSize
-                0x0c00b0e0                downPt
- COMMON         0x0c00b0e4        0x4 ./keyboard.o
-                0x0c00b0e4                key
- COMMON         0x0c00b0e8        0x4 ./led.o
-                0x0c00b0e8                led_state
- COMMON         0x0c00b0ec      0x100 ./main.o
-                0x0c00b0ec                str
- COMMON         0x0c00b1ec        0x4 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-reent.o)
-                0x0c00b1ec                errno
-                0x0c00b1f0                Image_ZI_Limit = .
-                0x0c00b1f0                __bss_start__ = .
-                0x0c00b1f0                __bss_end__ = .
-                0x0c00b1f0                __EH_FRAME_BEGIN__ = .
-                0x0c00b1f0                __EH_FRAME_END__ = .
-                0x0c00b1f0                PROVIDE (__stack, .)
-                0x0c00b1f0                end = .
-                0x0c00b1f0                _end = .
+ .bss           0x0c00b014        0x0 ./commonUart/44binit.o
+ .bss           0x0c00b014        0x4 ./commonUart/44blib.o
+                0x0c00b014                restart
+ .bss           0x0c00b018        0x0 ./8led.o
+ .bss           0x0c00b018        0x0 ./button.o
+ .bss           0x0c00b018        0x0 ./keyboard.o
+ .bss           0x0c00b018        0x0 ./led.o
+ .bss           0x0c00b018        0x0 ./main.o
+ .bss           0x0c00b018        0x0 ./uart.o
+ .bss           0x0c00b018        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-vsprintf.o)
+ .bss           0x0c00b018        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
+ .bss           0x0c00b018        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfprintf.o)
+ .bss           0x0c00b018        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-dtoa.o)
+ .bss           0x0c00b018        0xc c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-locale.o)
+                0x0c00b018                __nlocale_changed
+                0x0c00b01c                __mlocale_changed
+                0x0c00b020                _PathLocale
+ .bss           0x0c00b024       0x34 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mallocr.o)
+                0x0c00b024                __malloc_top_pad
+                0x0c00b028                __malloc_current_mallinfo
+                0x0c00b050                __malloc_max_sbrked_mem
+                0x0c00b054                __malloc_max_total_mem
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memchr.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memcpy.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mlock.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-mprec.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-s_fpclassify.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-sbrkr.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-strcmp.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-strlen.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-svfiprintf.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-callocr.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-freer.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memmove.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-memset.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-reallocr.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-reent.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_udivsi3.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_divsi3.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_dvmd_tls.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_addsubdf3.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_muldivdf3.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_cmpdf2.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_arm_fixdfsi.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_aeabi_uldivmod.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(bpabi.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_divdi3.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_udivdi3.o)
+ .bss           0x0c00b058        0x0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a(_clzsi2.o)
+ .bss           0x0c00b058        0x4 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libnosys.a(sbrk.o)
+ COMMON         0x0c00b05c        0x8 ./commonUart/44blib.o
+                0x0c00b05c                fileSize
+                0x0c00b060                downPt
+ COMMON         0x0c00b064        0x4 ./keyboard.o
+                0x0c00b064                key
+ COMMON         0x0c00b068        0x4 ./led.o
+                0x0c00b068                led_state
+ COMMON         0x0c00b06c      0x100 ./main.o
+                0x0c00b06c                str
+ COMMON         0x0c00b16c        0x4 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a(lib_a-reent.o)
+                0x0c00b16c                errno
+                0x0c00b170                Image_ZI_Limit = .
+                0x0c00b170                __bss_start__ = .
+                0x0c00b170                __bss_end__ = .
+                0x0c00b170                __EH_FRAME_BEGIN__ = .
+                0x0c00b170                __EH_FRAME_END__ = .
+                0x0c00b170                PROVIDE (__stack, .)
+                0x0c00b170                end = .
+                0x0c00b170                _end = .
 
 .ARM.attributes
                 0x00000000       0x2c
@@ -578,41 +578,41 @@ END GROUP
  .comment       0x0000002a       0x11 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libnosys.a(sbrk.o)
                                  0x12 (size before relaxing)
 
-.debug_info     0x00000000      0xc99
+.debug_info     0x00000000      0xc48
  *(.debug_info)
  .debug_info    0x00000000       0x6c ./commonUart/44binit.o
  .debug_info    0x0000006c      0x229 ./commonUart/44blib.o
  .debug_info    0x00000295       0xa4 ./8led.o
- .debug_info    0x00000339      0x134 ./button.o
- .debug_info    0x0000046d      0x1ac ./keyboard.o
- .debug_info    0x00000619      0x104 ./led.o
- .debug_info    0x0000071d      0x20c ./main.o
- .debug_info    0x00000929      0x2d0 ./uart.o
- .debug_info    0x00000bf9       0xa0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libnosys.a(sbrk.o)
+ .debug_info    0x00000339      0x14e ./button.o
+ .debug_info    0x00000487      0x1bf ./keyboard.o
+ .debug_info    0x00000646      0x104 ./led.o
+ .debug_info    0x0000074a      0x18e ./main.o
+ .debug_info    0x000008d8      0x2d0 ./uart.o
+ .debug_info    0x00000ba8       0xa0 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libnosys.a(sbrk.o)
 
-.debug_line     0x00000000      0xcd9
+.debug_line     0x00000000      0xcc1
  *(.debug_line)
  .debug_line    0x00000000      0x118 ./commonUart/44binit.o
  .debug_line    0x00000118      0x3d7 ./commonUart/44blib.o
  .debug_line    0x000004ef       0x8f ./8led.o
- .debug_line    0x0000057e       0xc2 ./button.o
- .debug_line    0x00000640       0xd4 ./keyboard.o
- .debug_line    0x00000714       0xa9 ./led.o
- .debug_line    0x000007bd       0xc2 ./main.o
- .debug_line    0x0000087f      0x3f7 ./uart.o
- .debug_line    0x00000c76       0x63 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libnosys.a(sbrk.o)
+ .debug_line    0x0000057e       0xc6 ./button.o
+ .debug_line    0x00000644       0xd5 ./keyboard.o
+ .debug_line    0x00000719       0xa9 ./led.o
+ .debug_line    0x000007c2       0xaf ./main.o
+ .debug_line    0x00000871      0x3ed ./uart.o
+ .debug_line    0x00000c5e       0x63 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libnosys.a(sbrk.o)
 
-.debug_abbrev   0x00000000      0x6c9
+.debug_abbrev   0x00000000      0x6cf
  *(.debug_abbrev)
  .debug_abbrev  0x00000000       0x14 ./commonUart/44binit.o
  .debug_abbrev  0x00000014      0x11f ./commonUart/44blib.o
  .debug_abbrev  0x00000133       0x9b ./8led.o
- .debug_abbrev  0x000001ce       0xd7 ./button.o
- .debug_abbrev  0x000002a5      0x11d ./keyboard.o
- .debug_abbrev  0x000003c2       0x7c ./led.o
- .debug_abbrev  0x0000043e       0xf8 ./main.o
- .debug_abbrev  0x00000536      0x110 ./uart.o
- .debug_abbrev  0x00000646       0x83 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libnosys.a(sbrk.o)
+ .debug_abbrev  0x000001ce       0xe8 ./button.o
+ .debug_abbrev  0x000002b6      0x11d ./keyboard.o
+ .debug_abbrev  0x000003d3       0x7c ./led.o
+ .debug_abbrev  0x0000044f       0xed ./main.o
+ .debug_abbrev  0x0000053c      0x110 ./uart.o
+ .debug_abbrev  0x0000064c       0x83 c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libnosys.a(sbrk.o)
 
 .debug_frame    0x00000000      0xde0
  *(.debug_frame)
@@ -739,9 +739,9 @@ OUTPUT(b_uart1.elf elf32-littlearm)
                                  0xfc (size before relaxing)
  .debug_str     0x0000024a       0x68 ./led.o
                                  0x9d (size before relaxing)
- .debug_str     0x000002b2       0x42 ./main.o
-                                0x119 (size before relaxing)
- .debug_str     0x000002f4       0xc8 ./uart.o
+ .debug_str     0x000002b2       0x36 ./main.o
+                                 0xcf (size before relaxing)
+ .debug_str     0x000002e8       0xd4 ./uart.o
                                 0x1b8 (size before relaxing)
  .debug_str     0x000003bc       0x9e c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libnosys.a(sbrk.o)
                                  0xac (size before relaxing)

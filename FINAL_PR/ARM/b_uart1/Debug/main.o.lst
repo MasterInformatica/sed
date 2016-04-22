@@ -46,7 +46,7 @@
   11:../main.c     **** char str[256];
   12:../main.c     **** 
   13:../main.c     **** void initPractica();
-  14:../main.c     **** 
+  14:../main.c     **** extern int key;
   15:../main.c     **** /*--- codigo de la funcion ---*/
   16:../main.c     **** int Main(void){
  1908              		.loc 1 16 0
@@ -68,41 +68,44 @@
   17:../main.c     **** 
   18:../main.c     **** 	char *pt_str = str;
  1924              		.loc 1 18 0
- 1925 0010 38319FE5 		ldr	r3, .L10
+ 1925 0010 34309FE5 		ldr	r3, .L3
  1926 0014 10300BE5 		str	r3, [fp, #-16]
   19:../main.c     **** 
   20:../main.c     **** 	sys_init(); // inicializacion de la placa, interrupciones, puertos
  1927              		.loc 1 20 0
  1928 0018 FEFFFFEB 		bl	sys_init
-  21:../main.c     **** 
+  21:../main.c     **** 	key = 0;
+ 1929              		.loc 1 21 0
+ 1930 001c 2C309FE5 		ldr	r3, .L3+4
+ 1931 0020 0020A0E3 		mov	r2, #0
+ 1932 0024 002083E5 		str	r2, [r3, #0]
   22:../main.c     **** 	Uart0_Init(115200); // inicializacion de la Uart
- 1929              		.loc 1 22 0
- 1930 001c 30019FE5 		ldr	r0, .L10+4
- 1931 0020 FEFFFFEB 		bl	Uart0_Init
-  23:../main.c     **** 	Uart1_Init(19200); // inicializacion de la Uart
- 1932              		.loc 1 23 0
- 1933 0024 4B0CA0E3 		mov	r0, #19200
- 1934 0028 FEFFFFEB 		bl	Uart1_Init
+ 1933              		.loc 1 22 0
+ 1934 0028 24009FE5 		ldr	r0, .L3+8
+ 1935 002c FEFFFFEB 		bl	Uart0_Init
+  23:../main.c     **** 	Uart1_Init(115200); // inicializacion de la Uart
+ 1936              		.loc 1 23 0
+ 1937 0030 1C009FE5 		ldr	r0, .L3+8
+ 1938 0034 FEFFFFEB 		bl	Uart1_Init
   24:../main.c     **** 	Uart_Config(); // configuración de interrupciones y buffers
- 1935              		.loc 1 24 0
- 1936 002c FEFFFFEB 		bl	Uart_Config
+ 1939              		.loc 1 24 0
+ 1940 0038 FEFFFFEB 		bl	Uart_Config
   25:../main.c     **** //	Uart_Printf(str_send); // mostrar cabecera
   26:../main.c     **** 
   27:../main.c     **** 	initPractica();
- 1937              		.loc 1 27 0
- 1938 0030 FEFFFFEB 		bl	initPractica
+ 1941              		.loc 1 27 0
+ 1942 003c FEFFFFEB 		bl	initPractica
   28:../main.c     **** 	Eint4567_activar();
- 1939              		.loc 1 28 0
- 1940 0034 FEFFFFEB 		bl	Eint4567_activar
+ 1943              		.loc 1 28 0
+ 1944 0040 FEFFFFEB 		bl	Eint4567_activar
   29:../main.c     **** 	keyboard_activar();
- 1941              		.loc 1 29 0
- 1942 0038 FEFFFFEB 		bl	keyboard_activar
- 1943 003c 000000EA 		b	.L8
- 1944              	.L9:
+ 1945              		.loc 1 29 0
+ 1946 0044 FEFFFFEB 		bl	keyboard_activar
+ 1947              	.L2:
   30:../main.c     **** 
   31:../main.c     **** 	char c;
   32:../main.c     **** 	while(1){
-  33:../main.c     **** 		c = Uart_Getch1();
+  33:../main.c     **** 		/*c = Uart_Getch1();
   34:../main.c     **** 		Uart_SendByte0(c);
   35:../main.c     **** 		switch(c){
   36:../main.c     **** 		case 'L':
@@ -139,134 +142,22 @@
   67:../main.c     **** 			break;
   68:../main.c     **** 
   69:../main.c     **** 		}
-  70:../main.c     **** 
+  70:../main.c     **** */
   71:../main.c     **** 	};
- 1945              		.loc 1 71 0
- 1946 0040 0000A0E1 		mov	r0, r0	@ nop
- 1947              	.L8:
- 1948              	.LBB2:
-  33:../main.c     **** 		c = Uart_Getch1();
- 1949              		.loc 1 33 0
- 1950 0044 FEFFFFEB 		bl	Uart_Getch1
- 1951 0048 0030A0E1 		mov	r3, r0
- 1952 004c 11304BE5 		strb	r3, [fp, #-17]
-  34:../main.c     **** 		Uart_SendByte0(c);
- 1953              		.loc 1 34 0
- 1954 0050 11305BE5 		ldrb	r3, [fp, #-17]	@ zero_extendqisi2
- 1955 0054 0300A0E1 		mov	r0, r3
- 1956 0058 FEFFFFEB 		bl	Uart_SendByte0
-  35:../main.c     **** 		switch(c){
- 1957              		.loc 1 35 0
- 1958 005c 11305BE5 		ldrb	r3, [fp, #-17]	@ zero_extendqisi2
- 1959 0060 303043E2 		sub	r3, r3, #48
- 1960 0064 220053E3 		cmp	r3, #34
- 1961 0068 03F19F97 		ldrls	pc, [pc, r3, asl #2]
- 1962 006c F3FFFFEA 		b	.L9
- 1963              	.L7:
- 1964 0070 14010000 		.word	.L3
- 1965 0074 14010000 		.word	.L3
- 1966 0078 14010000 		.word	.L3
- 1967 007c 14010000 		.word	.L3
- 1968 0080 14010000 		.word	.L3
- 1969 0084 14010000 		.word	.L3
- 1970 0088 14010000 		.word	.L3
- 1971 008c 14010000 		.word	.L3
- 1972 0090 14010000 		.word	.L3
- 1973 0094 14010000 		.word	.L3
- 1974 0098 40000000 		.word	.L9
- 1975 009c 40000000 		.word	.L9
- 1976 00a0 40000000 		.word	.L9
- 1977 00a4 40000000 		.word	.L9
- 1978 00a8 40000000 		.word	.L9
- 1979 00ac 40000000 		.word	.L9
- 1980 00b0 40000000 		.word	.L9
- 1981 00b4 30010000 		.word	.L4
- 1982 00b8 30010000 		.word	.L4
- 1983 00bc 30010000 		.word	.L4
- 1984 00c0 30010000 		.word	.L4
- 1985 00c4 30010000 		.word	.L4
- 1986 00c8 30010000 		.word	.L4
- 1987 00cc 40000000 		.word	.L9
- 1988 00d0 40000000 		.word	.L9
- 1989 00d4 40000000 		.word	.L9
- 1990 00d8 40000000 		.word	.L9
- 1991 00dc 40000000 		.word	.L9
- 1992 00e0 FC000000 		.word	.L5
- 1993 00e4 40000000 		.word	.L9
- 1994 00e8 40000000 		.word	.L9
- 1995 00ec 40000000 		.word	.L9
- 1996 00f0 40000000 		.word	.L9
- 1997 00f4 40000000 		.word	.L9
- 1998 00f8 08010000 		.word	.L6
- 1999              	.L5:
- 2000              	.LBB3:
-  37:../main.c     **** 			led1_on();
- 2001              		.loc 1 37 0
- 2002 00fc FEFFFFEB 		bl	led1_on
-  38:../main.c     **** 			led2_off();
- 2003              		.loc 1 38 0
- 2004 0100 FEFFFFEB 		bl	led2_off
-  39:../main.c     **** 			break;
- 2005              		.loc 1 39 0
- 2006 0104 100000EA 		b	.L2
- 2007              	.L6:
-  41:../main.c     **** 			led1_off();
- 2008              		.loc 1 41 0
- 2009 0108 FEFFFFEB 		bl	led1_off
-  42:../main.c     **** 			led2_on();
- 2010              		.loc 1 42 0
- 2011 010c FEFFFFEB 		bl	led2_on
-  43:../main.c     **** 			break;
- 2012              		.loc 1 43 0
- 2013 0110 0D0000EA 		b	.L2
- 2014              	.L3:
-  54:../main.c     **** 			D8Led_symbol(c-'0');
- 2015              		.loc 1 54 0
- 2016 0114 11305BE5 		ldrb	r3, [fp, #-17]	@ zero_extendqisi2
- 2017 0118 303043E2 		sub	r3, r3, #48
- 2018 011c 0300A0E1 		mov	r0, r3
- 2019 0120 FEFFFFEB 		bl	D8Led_symbol
-  55:../main.c     **** 			led1_off();
- 2020              		.loc 1 55 0
- 2021 0124 FEFFFFEB 		bl	led1_off
-  56:../main.c     **** 			led2_off();
- 2022              		.loc 1 56 0
- 2023 0128 FEFFFFEB 		bl	led2_off
-  57:../main.c     **** 			break;
- 2024              		.loc 1 57 0
- 2025 012c 060000EA 		b	.L2
- 2026              	.L4:
-  64:../main.c     **** 			D8Led_symbol(c-'A'+10);
- 2027              		.loc 1 64 0
- 2028 0130 11305BE5 		ldrb	r3, [fp, #-17]	@ zero_extendqisi2
- 2029 0134 373043E2 		sub	r3, r3, #55
- 2030 0138 0300A0E1 		mov	r0, r3
- 2031 013c FEFFFFEB 		bl	D8Led_symbol
-  65:../main.c     **** 			led1_off();
- 2032              		.loc 1 65 0
- 2033 0140 FEFFFFEB 		bl	led1_off
-  66:../main.c     **** 			led2_off();
- 2034              		.loc 1 66 0
- 2035 0144 FEFFFFEB 		bl	led2_off
-  67:../main.c     **** 			break;
- 2036              		.loc 1 67 0
- 2037 0148 0000A0E1 		mov	r0, r0	@ nop
- 2038              	.L2:
- 2039              	.LBE3:
- 2040              	.LBE2:
- 2041              		.loc 1 71 0
- 2042 014c BCFFFFEA 		b	.L8
- 2043              	.L11:
- 2044              		.align	2
- 2045              	.L10:
- 2046 0150 00000000 		.word	str
- 2047 0154 00C20100 		.word	115200
- 2048              		.cfi_endproc
- 2049              	.LFE0:
- 2051              		.align	2
- 2052              		.global	initPractica
- 2054              	initPractica:
- 2055              	.LFB1:
+ 1948              		.loc 1 71 0 discriminator 1
+ 1949 0048 FEFFFFEA 		b	.L2
+ 1950              	.L4:
+ 1951              		.align	2
+ 1952              	.L3:
+ 1953 004c 00000000 		.word	str
+ 1954 0050 00000000 		.word	key
+ 1955 0054 00C20100 		.word	115200
+ 1956              		.cfi_endproc
+ 1957              	.LFE0:
+ 1959              		.align	2
+ 1960              		.global	initPractica
+ 1962              	initPractica:
+ 1963              	.LFB1:
   72:../main.c     **** /*		*pt_str = Uart_Getch(); // leer caracter
   73:../main.c     **** 		Uart_SendByte(*pt_str); // enviar caracter
   74:../main.c     **** 		if (*pt_str == CR_char){ // retorno de carro?
@@ -288,98 +179,96 @@
   90:../main.c     **** 
   91:../main.c     **** 
   92:../main.c     **** void initPractica(){
- 2056              		.loc 1 92 0
- 2057              		.cfi_startproc
- 2058              		@ Function supports interworking.
- 2059              		@ args = 0, pretend = 0, frame = 0
- 2060              		@ frame_needed = 1, uses_anonymous_args = 0
- 2061 0158 0DC0A0E1 		mov	ip, sp
- 2062              	.LCFI2:
- 2063              		.cfi_def_cfa_register 12
- 2064 015c 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
- 2065 0160 04B04CE2 		sub	fp, ip, #4
- 2066              		.cfi_offset 14, -8
- 2067              		.cfi_offset 13, -12
- 2068              		.cfi_offset 11, -16
- 2069              	.LCFI3:
- 2070              		.cfi_def_cfa 11, 4
+ 1964              		.loc 1 92 0
+ 1965              		.cfi_startproc
+ 1966              		@ Function supports interworking.
+ 1967              		@ args = 0, pretend = 0, frame = 0
+ 1968              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1969 0058 0DC0A0E1 		mov	ip, sp
+ 1970              	.LCFI2:
+ 1971              		.cfi_def_cfa_register 12
+ 1972 005c 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1973 0060 04B04CE2 		sub	fp, ip, #4
+ 1974              		.cfi_offset 14, -8
+ 1975              		.cfi_offset 13, -12
+ 1976              		.cfi_offset 11, -16
+ 1977              	.LCFI3:
+ 1978              		.cfi_def_cfa 11, 4
   93:../main.c     **** 	rI_ISPC = 0x3ffffff; //borrar interrupciones pendientes
- 2071              		.loc 1 93 0
- 2072 0164 50309FE5 		ldr	r3, .L13
- 2073 0168 3F23E0E3 		mvn	r2, #-67108864
- 2074 016c 002083E5 		str	r2, [r3, #0]
+ 1979              		.loc 1 93 0
+ 1980 0064 50309FE5 		ldr	r3, .L6
+ 1981 0068 3F23E0E3 		mvn	r2, #-67108864
+ 1982 006c 002083E5 		str	r2, [r3, #0]
   94:../main.c     **** 
   95:../main.c     **** 	// Configura las lineas como de tipo IRQ mediante INTMOD
   96:../main.c     **** 	rINTMOD = 0x0;
- 2075              		.loc 1 96 0
- 2076 0170 48309FE5 		ldr	r3, .L13+4
- 2077 0174 0020A0E3 		mov	r2, #0
- 2078 0178 002083E5 		str	r2, [r3, #0]
+ 1983              		.loc 1 96 0
+ 1984 0070 48309FE5 		ldr	r3, .L6+4
+ 1985 0074 0020A0E3 		mov	r2, #0
+ 1986 0078 002083E5 		str	r2, [r3, #0]
   97:../main.c     **** 	// Habilita int. vectorizadas y la linea IRQ (FIQ no) mediante INTCON
   98:../main.c     **** 	rINTCON = 0x1;
- 2079              		.loc 1 98 0
- 2080 017c 1E36A0E3 		mov	r3, #31457280
- 2081 0180 0120A0E3 		mov	r2, #1
- 2082 0184 002083E5 		str	r2, [r3, #0]
+ 1987              		.loc 1 98 0
+ 1988 007c 1E36A0E3 		mov	r3, #31457280
+ 1989 0080 0120A0E3 		mov	r2, #1
+ 1990 0084 002083E5 		str	r2, [r3, #0]
   99:../main.c     **** 
  100:../main.c     **** 	// Enmascara todas las lineas excepto el bit global (INTMSK)
  101:../main.c     **** 	rINTMSK = ~( BIT_GLOBAL );
- 2083              		.loc 1 101 0
- 2084 0188 34309FE5 		ldr	r3, .L13+8
- 2085 018c 0123E0E3 		mvn	r2, #67108864
- 2086 0190 002083E5 		str	r2, [r3, #0]
+ 1991              		.loc 1 101 0
+ 1992 0088 34309FE5 		ldr	r3, .L6+8
+ 1993 008c 0123E0E3 		mvn	r2, #67108864
+ 1994 0090 002083E5 		str	r2, [r3, #0]
  102:../main.c     **** 
  103:../main.c     **** 	//Iniciamos los distintos componentes
  104:../main.c     **** 	Eint4567_init();
- 2087              		.loc 1 104 0
- 2088 0194 FEFFFFEB 		bl	Eint4567_init
+ 1995              		.loc 1 104 0
+ 1996 0094 FEFFFFEB 		bl	Eint4567_init
  105:../main.c     **** 	keyboard_init();
- 2089              		.loc 1 105 0
- 2090 0198 FEFFFFEB 		bl	keyboard_init
+ 1997              		.loc 1 105 0
+ 1998 0098 FEFFFFEB 		bl	keyboard_init
  106:../main.c     **** 
  107:../main.c     **** 
  108:../main.c     **** 	//Apagamos todos los leds y 8 segmentos
  109:../main.c     **** 	leds_off();
- 2091              		.loc 1 109 0
- 2092 019c FEFFFFEB 		bl	leds_off
+ 1999              		.loc 1 109 0
+ 2000 009c FEFFFFEB 		bl	leds_off
  110:../main.c     **** 	D8Led_init();
- 2093              		.loc 1 110 0
- 2094 01a0 FEFFFFEB 		bl	D8Led_init
+ 2001              		.loc 1 110 0
+ 2002 00a0 FEFFFFEB 		bl	D8Led_init
  111:../main.c     **** 
  112:../main.c     **** 	/* Por precaucion, se vuelven a borrar los bits de INTPND y EXTINTPND */
  113:../main.c     **** 	rI_ISPC = 0x3ffffff;
- 2095              		.loc 1 113 0
- 2096 01a4 10309FE5 		ldr	r3, .L13
- 2097 01a8 3F23E0E3 		mvn	r2, #-67108864
- 2098 01ac 002083E5 		str	r2, [r3, #0]
+ 2003              		.loc 1 113 0
+ 2004 00a4 10309FE5 		ldr	r3, .L6
+ 2005 00a8 3F23E0E3 		mvn	r2, #-67108864
+ 2006 00ac 002083E5 		str	r2, [r3, #0]
  114:../main.c     **** }
- 2099              		.loc 1 114 0
- 2100 01b0 0CD04BE2 		sub	sp, fp, #12
- 2101 01b4 00689DE8 		ldmfd	sp, {fp, sp, lr}
- 2102 01b8 1EFF2FE1 		bx	lr
- 2103              	.L14:
- 2104              		.align	2
- 2105              	.L13:
- 2106 01bc 2400E001 		.word	31457316
- 2107 01c0 0800E001 		.word	31457288
- 2108 01c4 0C00E001 		.word	31457292
- 2109              		.cfi_endproc
- 2110              	.LFE1:
- 2112              	.Letext0:
+ 2007              		.loc 1 114 0
+ 2008 00b0 0CD04BE2 		sub	sp, fp, #12
+ 2009 00b4 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2010 00b8 1EFF2FE1 		bx	lr
+ 2011              	.L7:
+ 2012              		.align	2
+ 2013              	.L6:
+ 2014 00bc 2400E001 		.word	31457316
+ 2015 00c0 0800E001 		.word	31457288
+ 2016 00c4 0C00E001 		.word	31457292
+ 2017              		.cfi_endproc
+ 2018              	.LFE1:
+ 2020              	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\USUARI~1\AppData\Local\Temp\ccRDoCnr.s:1892   .data:00000000 str_send
-C:\Users\USUARI~1\AppData\Local\Temp\ccRDoCnr.s:1889   .data:00000000 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccRDoCnr.s:1898   .data:0000000c str_error
+C:\Users\USUARI~1\AppData\Local\Temp\ccGZKS46.s:1892   .data:00000000 str_send
+C:\Users\USUARI~1\AppData\Local\Temp\ccGZKS46.s:1889   .data:00000000 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccGZKS46.s:1898   .data:0000000c str_error
                             *COM*:00000100 str
-C:\Users\USUARI~1\AppData\Local\Temp\ccRDoCnr.s:1903   .text:00000000 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccRDoCnr.s:1906   .text:00000000 Main
-C:\Users\USUARI~1\AppData\Local\Temp\ccRDoCnr.s:2054   .text:00000158 initPractica
-C:\Users\USUARI~1\AppData\Local\Temp\ccRDoCnr.s:1964   .text:00000070 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccRDoCnr.s:2002   .text:000000fc $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccRDoCnr.s:2046   .text:00000150 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccRDoCnr.s:2051   .text:00000158 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccRDoCnr.s:2106   .text:000001bc $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccGZKS46.s:1903   .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccGZKS46.s:1906   .text:00000000 Main
+C:\Users\USUARI~1\AppData\Local\Temp\ccGZKS46.s:1962   .text:00000058 initPractica
+C:\Users\USUARI~1\AppData\Local\Temp\ccGZKS46.s:1953   .text:0000004c $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccGZKS46.s:1959   .text:00000058 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccGZKS46.s:2014   .text:000000bc $d
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS
@@ -389,13 +278,7 @@ Uart1_Init
 Uart_Config
 Eint4567_activar
 keyboard_activar
-Uart_Getch1
-Uart_SendByte0
-led1_on
-led2_off
-led1_off
-led2_on
-D8Led_symbol
+key
 Eint4567_init
 keyboard_init
 leds_off

@@ -37,6 +37,8 @@ entity main is
 		--tecla: out std_logic_vector(5 downto 0);--Tecla pulsada
 		rgb: out std_logic_vector(8 downto 0); -- SALIDA a la pantalla
 		LEDS: out std_logic_vector(20 downto 0);
+		
+		RxErr : OUT STD_LOGIC;
 		caca: out std_logic_vector(7 downto 0)
 	);
 end main;
@@ -63,6 +65,8 @@ component keyboardUART is
 		 teclaLeida: in std_logic;
         tecla : out std_logic_vector(5 downto 0);
 		 UART_Tx : OUT STD_LOGIC;
+		 
+		RxErr : OUT STD_LOGIC;
 		 cacota : out std_logic_vector(7 downto 0)
 	  );
 end component;
@@ -183,7 +187,7 @@ begin
 clock2 <= clock;
 --==========================PORT MAP====================================================
 --Control_Teclado: keyboard port map(clk_teclado,bit_teclado,teclaLeida,Ktecla);
-UART_Teclado: keyboardUART port map(clko,Reset_n,rx,teclaLeida,Ktecla,tx,caca);
+UART_Teclado: keyboardUART port map(clko,Reset_n,rx,teclaLeida,Ktecla,tx,RxErr,caca);
 Nreloj_uart: divisor2 port map( conv_std_logic_vector(integer(1),25),reset,clock,clko);
 Nreloj_vga: divisor2 port map( conv_std_logic_vector(integer(3),25),reset,clock,reloj_vga);
 Nreloj_mov: divisor2 port map( velocidad,reset,clock,reloj_mov);

@@ -214,7 +214,7 @@ begin
 	end if;
 end process que_pintar;
 
-colorear: process(pintar_snk, pintar_wall,pintar_pasti,hcnt,vcnt)
+colorear: process(pintar_snk, pintar_wall,pintar_pasti,hcnt,vcnt,muerto)
 begin
 	if pintar_snk='1' and pintar_wall='1' then rgb<="000000111";
 	elsif pintar_snk='1' and muerto='1' then rgb<="000000111";

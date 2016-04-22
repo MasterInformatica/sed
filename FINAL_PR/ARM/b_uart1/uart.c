@@ -14,8 +14,6 @@
 /*--- implementación de las funciones ---*/
 void Uart0_Init(int baud)
 {
-
-    
     /* UART0 */
     rULCON0=0x3;     // Modo normal, no paridad, 1b stop, 8b char
     rUCON0=0x205;    // tx=nivel, rx=flanco, no rx-timeout ni rx-error, normal, int/polling 
@@ -23,6 +21,7 @@ void Uart0_Init(int baud)
     rUFCON0=0x0;     // Desactivar FIFO
     rUMCON0=0x0;	 // Desactivar control de flujo
 }
+
 void Uart1_Init(int baud)
 {
     /* UART1 */
@@ -42,7 +41,6 @@ inline void Uart_TxEmpty0(void)
 {
     while (!(rUTRSTAT0 & 0x4)); 	     // esperar a que el shifter de TX se vacie
 }
-
 
 char Uart_Getch0(void)
 {
@@ -80,12 +78,10 @@ void Uart_Printf0(char *fmt,...)
     va_end(ap);
 }
 
-
 inline void Uart_TxEmpty1(void)
 {
     while (!(rUTRSTAT1 & 0x4)); 	     // esperar a que el shifter de TX se vacie
 }
-
 
 char Uart_Getch1(void)
 {
@@ -97,11 +93,11 @@ void Uart_SendByte1(int data)
 {
     char localBuf[2] = {'\0','\0'};
 
-    if(data == '\n')
+  /*  if(data == '\n')
 	{
 	   while (!(rUTRSTAT1 & 0x2));     // esperar a que THR se vacie
 	   WrUTXH1('\r');			       // escribir retorno de carro (utilizar macro)
-	}
+	}*/
 	while (!(rUTRSTAT1 & 0x2)); 	   // esperar a que THR se vacie
 	WrUTXH1(data);				       // escribir data (utilizar macro)
 }
@@ -122,4 +118,3 @@ void Uart_Printf1(char *fmt,...)
     Uart_SendString1(string);
     va_end(ap);
 }
-

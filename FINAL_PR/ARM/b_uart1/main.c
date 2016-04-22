@@ -11,16 +11,16 @@ char str_error[50] = "\nSe ha producido un desbordamiento!\n\0";
 char str[256];
 
 void initPractica();
-
+extern int key;
 /*--- codigo de la funcion ---*/
 int Main(void){
 
 	char *pt_str = str;
 
 	sys_init(); // inicializacion de la placa, interrupciones, puertos
-
+	key = 0;
 	Uart0_Init(115200); // inicializacion de la Uart
-	Uart1_Init(19200); // inicializacion de la Uart
+	Uart1_Init(115200); // inicializacion de la Uart
 	Uart_Config(); // configuración de interrupciones y buffers
 //	Uart_Printf(str_send); // mostrar cabecera
 
@@ -30,7 +30,7 @@ int Main(void){
 
 	char c;
 	while(1){
-		c = Uart_Getch1();
+		/*c = Uart_Getch1();
 		Uart_SendByte0(c);
 		switch(c){
 		case 'L':
@@ -67,7 +67,7 @@ int Main(void){
 			break;
 
 		}
-
+*/
 	};
 /*		*pt_str = Uart_Getch(); // leer caracter
 		Uart_SendByte(*pt_str); // enviar caracter

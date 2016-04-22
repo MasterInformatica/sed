@@ -55,7 +55,7 @@ NET caca<5> LOC=L15;
 NET caca<6> LOC=J13;
 NET caca<7> LOC=H15;
 #NET GPO1<8> LOC=J16;
-#NET GPO1<9> LOC=J14;
+NET RxErr LOC=J14;
 
  
 

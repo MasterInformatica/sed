@@ -6,7 +6,7 @@ void Eint4567_ISR(void) __attribute__ ((interrupt ("IRQ")));
 void Eint4567_init(void);
 extern int button_no_pressed();
 
-extern luz;
+extern key;
 extern st;
 
 
@@ -43,13 +43,16 @@ void Eint4567_ISR(void)
 
 	char c;
 	if(pulsado == 4){  //izq -> char I
-		Uart_SendByte0('L');
-		Uart_SendByte1('L');
+		key = (key +1)%160;
+		Uart_SendByte0(key);
+		Uart_SendByte1(key);
 
 		//D8Led_symbol(1);
 	} else if(pulsado == 8) { //dcha -> char D
-		Uart_SendByte0('R');
-		Uart_SendByte1('R');
+		key = (key -1)%160;
+
+		Uart_SendByte0(key);
+		Uart_SendByte1(key);
 		//D8Led_symbol(2);
 	}
 
