@@ -20,7 +20,7 @@ int Main(void){
 	sys_init(); // inicializacion de la placa, interrupciones, puertos
 	key = 0;
 	Uart0_Init(115200); // inicializacion de la Uart
-	Uart1_Init(115200); // inicializacion de la Uart
+	Uart1_Init(19200); // inicializacion de la Uart
 	Uart_Config(); // configuración de interrupciones y buffers
 //	Uart_Printf(str_send); // mostrar cabecera
 

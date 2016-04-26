@@ -22,19 +22,13 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.numeric_std.all;
-use work.tiposyconstantes.all;
 
 entity vgacore is
 	port
 	(
 		reset: in std_logic;	-- reset
-		reloj: in std_logic;
-		vcuerpo: in vectorV;
-		hcuerpo: in vectorH;
-		sizeSNK: in std_logic_vector(N-2 downto 0);
-		pasti_vpos: in integer range 0 to maxY+sizeY;
-		pasti_hpos: in integer range 0 to maxX+sizeX;
-		muerto: inout std_logic;
+		clock: in std_logic;
+	
 		hsyncb: inout std_logic;	-- horizontal (line) sync
 		vsyncb: out std_logic;	-- vertical (frame) sync
 		rgb: out std_logic_vector(8 downto 0) -- B G R colors
@@ -47,12 +41,28 @@ architecture vgacore_arch of vgacore is
 
 signal hcnt: std_logic_vector(8 downto 0);	-- horizontal pixel counter
 signal vcnt: std_logic_vector(9 downto 0);	-- vertical line counter
-signal pintar_snk: std_logic;					-- cuando pintar la serpiente
-signal pintar_wall: std_logic;
-signal pintar_pasti: std_logic;
+signal pintar: std_logic;
+signal reloj: std_logic;
+
+signal cuenta: std_logic_vector(1 downto 0);
 
 begin
 
+as: process(reset, clock, cuenta)
+begin
+	if(reset='1') then
+		cuenta <= "00";
+	elsif(clock'event and clock='1') then
+		if(cuenta="11") then
+			reloj <= not reloj;
+			cuenta <= "00";
+		else
+			cuenta <= cuenta + 1;
+		end if;
+	end if;
+end process;
+	
+	
 A: process(reloj,reset)
 begin
 	-- reset asynchronously clears pixel counter
@@ -134,94 +144,87 @@ end process;
 --
 ----------------------------------------------------------------------------
 --6px horizontal equivalen a 10 en vertical
-que_pintar: process(hcnt,vcnt,hcuerpo,vcuerpo,sizeSNK)
+que_pintar: process(hcnt,vcnt)
 begin
-	pintar_snk<='0';
-	pintar_wall<='0';
-	pintar_pasti<='0';
-		 if hcnt > 94+pasti_hpos and hcnt < 100+pasti_hpos then
-			if vcnt > 90+pasti_vpos and vcnt < 100+pasti_vpos then
-				pintar_pasti<='1';
+	pintar<='0';
+		 if hcnt > 94 and hcnt < 100 then
+			if vcnt > 90 and vcnt < 100 then
+				pintar<='1';
 			end if;
 		end if;
 	--pinta snk
-	
-		if hcnt > 94+hcuerpo(0) and hcnt < 100+hcuerpo(0) then
-			if vcnt > 90+vcuerpo(0) and vcnt < 100+vcuerpo(0) then
-				pintar_snk<='1';
-			end if;
-		end if;
-		for i in 1 to N-1 loop
-			if hcnt > 94+hcuerpo(i) and hcnt < 100+hcuerpo(i) then
-				if vcnt > 90+vcuerpo(i) and vcnt < 100+vcuerpo(i) then
-					pintar_snk<=sizeSNK(i-1);
-				end if;
-			end if;
-		end loop;
---		if hcnt > 94+hcuerpo(2) and hcnt < 100+hcuerpo(2) then
---			if vcnt > 90+vcuerpo(2) and vcnt < 100+vcuerpo(2) then
---				pintar_snk<=sizeSNK(1);
+--	
+--		if hcnt > 94+hcuerpo(0) and hcnt < 100+hcuerpo(0) then
+--			if vcnt > 90+vcuerpo(0) and vcnt < 100+vcuerpo(0) then
+--				pintar_snk<='1';
 --			end if;
 --		end if;
---		if hcnt > 94+hcuerpo(3) and hcnt < 100+hcuerpo(3) then
---			if vcnt > 90+vcuerpo(3) and vcnt < 100+vcuerpo(3) then
---				pintar_snk<=sizeSNK(2);
+--		for i in 1 to N-1 loop
+--			if hcnt > 94+hcuerpo(i) and hcnt < 100+hcuerpo(i) then
+--				if vcnt > 90+vcuerpo(i) and vcnt < 100+vcuerpo(i) then
+--					pintar_snk<=sizeSNK(i-1);
+--				end if;
 --			end if;
---		end if;
---		if hcnt > 94+hcuerpo(4) and hcnt < 100+hcuerpo(4) then
---			if vcnt > 90+vcuerpo(4) and vcnt < 100+vcuerpo(4) then
---				pintar_snk<=sizeSNK(3);
---			end if;
---		end if;
---		if hcnt > 94+hcuerpo(5) and hcnt < 100+hcuerpo(5) then
---			if vcnt > 90+vcuerpo(5) and vcnt < 100+vcuerpo(5) then
---				pintar_snk<=sizeSNK(4);
---			end if;
---		end if;
---		if hcnt > 94+hcuerpo(6) and hcnt < 100+hcuerpo(6) then
---			if vcnt > 90+vcuerpo(6) and vcnt < 100+vcuerpo(6) then
---				pintar_snk<=sizeSNK(5);
---			end if;
---		end if;
---		if hcnt > 94+hcuerpo(7) and hcnt < 100+hcuerpo(7) then
---			if vcnt > 90+vcuerpo(7) and vcnt < 100+vcuerpo(7) then
---				pintar_snk<=sizeSNK(6);
---			end if;
---		end if;
---		if hcnt > 94+hcuerpo(8) and hcnt < 100+hcuerpo(8)then
---			if vcnt > 90+vcuerpo(8) and vcnt < 100+vcuerpo(8) then
---				pintar_snk<=sizeSNK(7);
---			end if;
---		end if;
---		if hcnt > 94+hcuerpo(9) and hcnt < 100+hcuerpo(9) then
---			if vcnt > 90+vcuerpo(9) and vcnt < 100+vcuerpo(9) then
---				pintar_snk<=sizeSNK(8);
---			end if;
---		end if;
---		if hcnt > 94+hcuerpo(10) and hcnt < 100+hcuerpo(10)  then
---			if vcnt > 90+vcuerpo(10) and vcnt < 100+vcuerpo(10) then
---				pintar_snk<=sizeSNK(9);
---			end if;
---		end if;
-	   if hcnt > 94 and hcnt < 220 and vcnt >  90 and vcnt < 101 then
-			pintar_wall<='1';
-	elsif hcnt > 94 and hcnt < 220 and vcnt > 290 and vcnt < 301 then
-			pintar_wall<='1';
-	elsif vcnt > 99 and vcnt < 291 and hcnt >  94 and hcnt < 101 then
-			pintar_wall<='1';
-	elsif vcnt > 99 and vcnt < 291 and hcnt > 214 and hcnt < 221 then
-			pintar_wall<='1';
-	end if;
+--		end loop;
+----		if hcnt > 94+hcuerpo(2) and hcnt < 100+hcuerpo(2) then
+----			if vcnt > 90+vcuerpo(2) and vcnt < 100+vcuerpo(2) then
+----				pintar_snk<=sizeSNK(1);
+----			end if;
+----		end if;
+----		if hcnt > 94+hcuerpo(3) and hcnt < 100+hcuerpo(3) then
+----			if vcnt > 90+vcuerpo(3) and vcnt < 100+vcuerpo(3) then
+----				pintar_snk<=sizeSNK(2);
+----			end if;
+----		end if;
+----		if hcnt > 94+hcuerpo(4) and hcnt < 100+hcuerpo(4) then
+----			if vcnt > 90+vcuerpo(4) and vcnt < 100+vcuerpo(4) then
+----				pintar_snk<=sizeSNK(3);
+----			end if;
+----		end if;
+----		if hcnt > 94+hcuerpo(5) and hcnt < 100+hcuerpo(5) then
+----			if vcnt > 90+vcuerpo(5) and vcnt < 100+vcuerpo(5) then
+----				pintar_snk<=sizeSNK(4);
+----			end if;
+----		end if;
+----		if hcnt > 94+hcuerpo(6) and hcnt < 100+hcuerpo(6) then
+----			if vcnt > 90+vcuerpo(6) and vcnt < 100+vcuerpo(6) then
+----				pintar_snk<=sizeSNK(5);
+----			end if;
+----		end if;
+----		if hcnt > 94+hcuerpo(7) and hcnt < 100+hcuerpo(7) then
+----			if vcnt > 90+vcuerpo(7) and vcnt < 100+vcuerpo(7) then
+----				pintar_snk<=sizeSNK(6);
+----			end if;
+----		end if;
+----		if hcnt > 94+hcuerpo(8) and hcnt < 100+hcuerpo(8)then
+----			if vcnt > 90+vcuerpo(8) and vcnt < 100+vcuerpo(8) then
+----				pintar_snk<=sizeSNK(7);
+----			end if;
+----		end if;
+----		if hcnt > 94+hcuerpo(9) and hcnt < 100+hcuerpo(9) then
+----			if vcnt > 90+vcuerpo(9) and vcnt < 100+vcuerpo(9) then
+----				pintar_snk<=sizeSNK(8);
+----			end if;
+----		end if;
+----		if hcnt > 94+hcuerpo(10) and hcnt < 100+hcuerpo(10)  then
+----			if vcnt > 90+vcuerpo(10) and vcnt < 100+vcuerpo(10) then
+----				pintar_snk<=sizeSNK(9);
+----			end if;
+----		end if;
+--	   if hcnt > 94 and hcnt < 220 and vcnt >  90 and vcnt < 101 then
+--			pintar_wall<='1';
+--	elsif hcnt > 94 and hcnt < 220 and vcnt > 290 and vcnt < 301 then
+--			pintar_wall<='1';
+--	elsif vcnt > 99 and vcnt < 291 and hcnt >  94 and hcnt < 101 then
+--			pintar_wall<='1';
+--	elsif vcnt > 99 and vcnt < 291 and hcnt > 214 and hcnt < 221 then
+--			pintar_wall<='1';
+--	end if;
 end process que_pintar;
 
-colorear: process(pintar_snk, pintar_wall,pintar_pasti,hcnt,vcnt,muerto)
+colorear: process(pintar,hcnt,vcnt)
 begin
-	if pintar_snk='1' and pintar_wall='1' then rgb<="000000111";
-	elsif pintar_snk='1' and muerto='1' then rgb<="000000111";
-	elsif pintar_snk='1' and pintar_pasti='1' then rgb<="011111011";
-	elsif pintar_pasti='1' then rgb<="111111111";
-	elsif pintar_snk='1' then rgb<="000111000";
-	elsif pintar_wall='1' then rgb<="111000000";
+	if pintar='1' then rgb<="000000111";
 	else rgb <="000000000";
 	end if;
 end process colorear;

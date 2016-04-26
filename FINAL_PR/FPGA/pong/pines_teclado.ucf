@@ -9,7 +9,7 @@
 ## marks a new section
 
 ##CLOCKS
-NET reloj		  LOC=T9;  # 100 MHz clock acc. to http://www.xess.com/static/media/projects/xst3_IDE.zip
+NET ClkIN		  LOC=T9;  # 100 MHz clock acc. to http://www.xess.com/static/media/projects/xst3_IDE.zip
 #NET clk_pin	  LOC=P8; # 50 MHz clock  acc. to http://www.xess.com/static/media/projects/xst3_RS232.zip
 
 
@@ -29,7 +29,7 @@ NET reloj		  LOC=T9;  # 100 MHz clock acc. to http://www.xess.com/static/media/p
 #NET swExt<4>	  LOC=G2;  # DIP switch 5
 #NET swExt<5>	  LOC=K15; # DIP switch 6
 #NET swExt<6>	  LOC=K16; # DIP switch 7
-NET reset	  LOC=F15; # DIP switch 8
+NET reset_n	  LOC=F15; # DIP switch 8
 
 
 ## PUSH BUTTONS upper board
@@ -44,20 +44,20 @@ NET reset	  LOC=F15; # DIP switch 8
 
 
 ### RS232
-#NET TX			  LOC=J2; # RS232 TD pin 3
-#NET RX			  LOC=G5; # RS232 RD pin 2
+NET TX			  LOC=J2; # RS232 TD pin 3
+NET RX			  LOC=G5; # RS232 RD pin 2
 
 ##LED Bar Extension Board
 
-NET rgb<0>   	  LOC=L5;
-NET rgb<1>	  LOC=N2;
-NET rgb<2>	  LOC=M3;
-NET rgb<3>	  LOC=N1;
-NET rgb<4>	  LOC=T13;
-NET rgb<5>	  LOC=L15;
-NET rgb<6>	  LOC=J13;
-NET rgb<7>	  LOC=H15;
-NET rgb<8>	  LOC=J16;
+NET leds<0>   	  LOC=L5;
+NET leds<1>	  LOC=N2;
+NET leds<2>	  LOC=M3;
+NET leds<3>	  LOC=N1;
+NET leds<4>	  LOC=T13;
+NET leds<5>	  LOC=L15;
+NET leds<6>	  LOC=J13;
+NET leds<7>	  LOC=H15;
+#NET rgb<8>	  LOC=J16;
 #NET ledBar<10>	  LOC=J14;
 
 
