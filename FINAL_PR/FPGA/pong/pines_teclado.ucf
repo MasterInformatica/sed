@@ -113,12 +113,12 @@ NET leds<7>	  LOC=H15;
 ##VGA
 
 # VGA monitor interface as taken from http://www.xess.com/static/media/projects/xst3_video.zip
-NET rgb<0>   	  LOC=C8;  # red (least-significant bit)  
-NET rgb<1>   	  LOC=D6;  
-NET rgb<2>   	  LOC=B1;  # red (most-significant bit)
-NET rgb<0>   	  LOC=A8;  # green (least-significant bit)
-NET rgb<1>   	  LOC=A5;  
-NET rgb<2>   	  LOC=C3;  # green (most-significant bit)
+NET rgb<6>   	  LOC=C8;  # red (least-significant bit)  
+NET rgb<7>   	  LOC=D6;  
+NET rgb<8>   	  LOC=B1;  # red (most-significant bit)
+NET rgb<3>   	  LOC=A8;  # green (least-significant bit)
+NET rgb<4>   	  LOC=A5;  
+NET rgb<5>   	  LOC=C3;  # green (most-significant bit)
 NET rgb<0>   	  LOC=C9;  # blue (least-significant bit)
 NET rgb<1>   	  LOC=E7;  
 NET rgb<2>   	  LOC=D5;  # blue (most-significant bit)

@@ -24,11 +24,13 @@ use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.numeric_std.all;
 
 entity vgacore is
-	port (
-		reset: in std_logic;	                 -- reset
+	port
+	(
+		reset: in std_logic;	-- reset
 		clock: in std_logic;
-		hsyncb: inout std_logic;	           -- horizontal (line) sync
-		vsyncb: out std_logic;	              -- vertical (frame) sync
+	
+		hsyncb: inout std_logic;	-- horizontal (line) sync
+		vsyncb: out std_logic;	-- vertical (frame) sync
 		rgb: out std_logic_vector(8 downto 0) -- B G R colors
 	);
 end vgacore;
@@ -36,31 +38,37 @@ end vgacore;
 
 
 architecture vgacore_arch of vgacore is
-
-component divisor is
-    port (
-		  carga: in std_logic_vector(24 downto 0);
-        reset: in STD_LOGIC;
-        clk: in STD_LOGIC; -- reloj de entrada de la entity superior
-        reloj: out STD_LOGIC -- reloj que se utiliza en los process del programa principal
-    );
-end component;
-
-
+signal reloj: std_logic;
+signal cuenta: std_logic_vector(1 downto 0);
 
 signal hcnt: std_logic_vector(8 downto 0);	-- horizontal pixel counter
 signal vcnt: std_logic_vector(9 downto 0);	-- vertical line counter
-signal pintar: std_logic;
-signal reloj: std_logic;
 
-signal pinta_especial_rgb : std_logic_vector(8 downto 0);
-signal pinta_especial: std_logic;
+-- carta de ajuste
+signal pintar_especial: std_logic;
+signal pintar_especial_rgb: std_logic_vector(8 downto 0);
+-- elementos de la escena
+signal pintar_pared: std_logic;
+
+
 
 begin
 
-Nreloj_vga: divisor port map( conv_std_logic_vector(integer(3),25),reset,clock,reloj);
-
-
+as: process(reset, clock, cuenta)
+begin
+	if(reset='1') then
+		cuenta <= "00";
+	elsif(clock'event and clock='1') then
+		if(cuenta="11") then
+			reloj <= not reloj;
+			cuenta <= "00";
+		else
+			cuenta <= cuenta + 1;
+		end if;
+	end if;
+end process;
+	
+	
 A: process(reloj,reset)
 begin
 	-- reset asynchronously clears pixel counter
@@ -125,41 +133,65 @@ begin
 	end if;
 end process;
 
-----------------------------------------------------------------------------
---
--- A partir de aqui escribir la parte de dibujar en la pantalla
---
--- Tienen que generarse al menos dos process uno que actua sobre donde
--- se va a pintar, decide de qué pixel a que pixel se va a pintar
--- Puede haber tantos process como señales pintar (figuras) diferentes 
--- queramos dibujar
---
--- Otro process (tipo case para dibujos complicados) que dependiendo del
--- valor de las diferentes señales pintar genera diferentes colores (rgb)
--- Sólo puede haber un process para trabajar sobre rgb
---
-----------------------------------------------------------------------------
---
-----------------------------------------------------------------------------
---6px horizontal equivalen a 10 en vertical
-que_pintar: process(hcnt,vcnt)
+
+--------------------------------------------------------------------------------------
+-- Carta de ajustes en la parte superior de la pantalla para comprobar que todo ok
+carta_ajuste: process(hcnt, vcnt)
 begin
-	pintar<='0';
-	if hcnt > 10 and hcnt < 250 then
-		if vcnt > 10 and vcnt < 450 then
-			pintar<='1';
+	pintar_especial <= '0';
+	pintar_especial_rgb <= (others=>'0');
+
+	if vcnt > 0 and vcnt < 8 then
+		pintar_especial<='1';
+		if hcnt > 0 and hcnt < 35 then
+			pintar_especial_rgb <= "111000000";
+		elsif hcnt > 0 and hcnt < 70 then
+			pintar_especial_rgb <= "000111000";
+		elsif hcnt > 0 and hcnt < 105 then
+			pintar_especial_rgb <= "000000111";
+		elsif hcnt > 0 and hcnt < 140 then
+			pintar_especial_rgb <= "111000000";
+		elsif hcnt > 0 and hcnt < 175 then
+			pintar_especial_rgb <= "111111000";
+		elsif hcnt > 0 and hcnt < 210 then
+			pintar_especial_rgb <= "111000111";			
+		elsif hcnt > 0 and hcnt < 245 then
+			pintar_especial_rgb <= "000111111";
+		elsif hcnt > 0 and hcnt < 280 then
+			pintar_especial_rgb <= "111111111";		
 		end if;
 	end if;
+		
+end process;
 
+--------------------------------------------------------------------------------------
+-- 6px horizontal equivalen a 10 en vertical (más o menos)
+que_pintar: process(hcnt,vcnt)
+begin
+	pintar_pared<='0';	
+	
+	if hcnt > 0 and hcnt < 280 then
+		if vcnt >=10 and vcnt <= 13 then --pared superior
+			pintar_pared<='1';
+		elsif vcnt >=436 and vcnt <=439 then --pared inferior
+			pintar_pared<='1';
+		end if;
+	end if;
+	if hcnt = 140 then --linea central
+		if vcnt > 0 and vcnt(4 downto 2)="111" and vcnt <=439 then
+			pintar_pared<='1';
+		end if;
+	end if;
 end process que_pintar;
 
-colorear: process(pintar, pinta_especial, pinta_especial_rgb,hcnt,vcnt)
+colorear: process(hcnt,vcnt)
 begin
-
-	if pintar='1' then 
-		rgb <= "111000000";
-	else
-		rgb <= "000000000";
+	if pintar_especial='1' then
+		rgb <= pintar_especial_rgb;
+	elsif pintar_pared='1' then
+		rgb<="111111111";
+	else 
+		rgb <="000000000";
 	end if;
 end process colorear;
 ---------------------------------------------------------------------------
