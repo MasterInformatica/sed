@@ -18,8 +18,8 @@ package tiposyconstantes is
 constant N: integer :=18;
 constant sizeX: integer :=6;
 constant sizeY: integer :=10;
-constant maxX: integer :=sizeX*20;--coordenadas maximas
-constant maxY: integer :=sizeY*20;--coordenadas maximas
+constant maxX: integer :=sizeX*35;--coordenadas maximas
+constant maxY: integer :=sizeY*35;--coordenadas maximas
 
 type vectorH is array (0 to N-1) of integer range 0 to maxX+sizeX;
 type vectorV is array (0 to N-1) of integer range 0 to maxY+sizeY;
