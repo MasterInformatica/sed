@@ -2,7 +2,6 @@
 #
 NET clock LOC=T9;
 #set clock period
-NET clock PERIOD = 10ns HIGH 50%;
 #
 
 #NET clk_teclado CLOCK_DEDICATED_ROUTE=FALSE;

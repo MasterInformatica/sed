@@ -159,8 +159,8 @@ signal Kmuerto: std_logic :='0';
 signal pause: std_logic :='1';
 signal crece: std_logic :='0';
 signal rstart,start: std_logic :='0';
-signal velocidad: std_logic_vector(24 downto 0):= "0001111111111111111111110";
-signal kvelocidad: std_logic_vector(24 downto 0):= "0001111111111111111111110";
+signal velocidad: std_logic_vector(24 downto 0):= "0111111111111111111111110";
+signal kvelocidad: std_logic_vector(24 downto 0):= "0111111111111111111111110";
 --pantalla
 signal hpos:integer range 0 to maxX+sizeX:= 10*sizeX;
 signal vpos:integer range 0 to maxY+sizeY:=10*sizeY;
@@ -187,8 +187,8 @@ begin
 clock2 <= clock;
 --==========================PORT MAP====================================================
 --Control_Teclado: keyboard port map(clk_teclado,bit_teclado,teclaLeida,Ktecla);
-UART_Teclado: keyboardUART port map(clko,Reset_n,rx,teclaLeida,Ktecla,tx,RxErr,caca);
-Nreloj_uart: divisor2 port map( conv_std_logic_vector(integer(1),25),reset,clock,clko);
+UART_Teclado: keyboardUART port map(clock,Reset_n,rx,teclaLeida,Ktecla,tx,RxErr,caca);
+--Nreloj_uart: divisor2 port map( conv_std_logic_vector(integer(3),25),reset,clock,clko);
 Nreloj_vga: divisor2 port map( conv_std_logic_vector(integer(3),25),reset,clock,reloj_vga);
 Nreloj_mov: divisor2 port map( velocidad,reset,clock,reloj_mov);
 Control_VGA: vgacore port map(reset,reloj_vga,vcuerpo,hcuerpo,sizeSNK,pasti_vpos,pasti_hpos,muerto,hsyncb,vsyncb,rgb);
@@ -232,7 +232,7 @@ MyScore: score port map(reloj_mov,rstart,comido,LEDS2);
 		comido<='1';
 		start<='1';
 		rstart<='1';
-		kvelocidad<="0001111111111111111111110";
+		kvelocidad<="0111111111111111111111110";
 	elsif (reloj_mov'event and reloj_mov='1') then
 		teclaLeida<='0';
 		if vpos=0

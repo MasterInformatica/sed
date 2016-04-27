@@ -129,23 +129,23 @@ cc : process(empieza,leer,cacota2)
 begin
 if Reset_n = '1' then
 	cacota2 <= (others=>'0');
-elsif empieza = '1' then
+elsif clko'event and clko = '1' and empieza = '1' then
 	cacota2 <= leer;
 	
 	else
 	cacota2 <= cacota2;
 	end if;
-	end process;
+end process;
 procesarTecla : process(empieza, leer,auxtecla,termina,teclaLeida)
 	begin
 		if teclaLeida='1' then
 			Ktecla<=(others=>'0');
-		elsif empieza'event and empieza = '1' then
+		elsif clko'event and clko = '1' and empieza = '1' then
 				if leer(3 downto 0) = ukeyboardARR then
 					Ktecla(1) <= '1';
 					Ktecla(0)<='0';
 					Ktecla(5 downto 2) <=(others=>'0');
-				elsif leer(7 downto 4) = ukeyboardDER then
+				elsif leer(3 downto 0) = ukeyboardDER then
 					Ktecla(2) <= '1';
 					Ktecla(1 downto 0)<=(others=>'0');
 					Ktecla(5 downto 3) <=(others=>'0');
@@ -170,15 +170,15 @@ procesarTecla : process(empieza, leer,auxtecla,termina,teclaLeida)
 				else
 					Ktecla <= auxtecla;
 				end if;
-		--	else 
-				--Ktecla<=auxtecla;
+		else 
+				Ktecla<=auxtecla;
 		end if;
 	end process procesarTecla;
 
 
 UART: RS232
-  GENERIC MAP( F => 50000,
-               min_baud => 115200,
+  GENERIC MAP( F => 100000,
+               min_baud => 19200,
 					NDBits => 8
               )
   PORT MAP
