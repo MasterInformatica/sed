@@ -5,22 +5,22 @@ use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.NUMERIC_STD.ALL;
 use work.tiposyconstantes.all;
 
-entity pala is
+entity paddle is
     Port ( clk : in  STD_LOGIC;
            Reset_n : in  STD_LOGIC;
            baja : in  STD_LOGIC;
            sube : in  STD_LOGIC;
-           posicion : out integer range 0 to vga_vpx_max
+           posicion : out integer range vga_vpx_min to vga_vpx_max
 			  );
-end pala;
+end paddle;
 
-architecture Behavioral of pala is
-signal pos : integer range 0 to vga_vpx_max;
+architecture Behavioral of paddle is
+signal pos : integer range vga_vpx_min to vga_vpx_max;
 begin
 
 posicion <= pos;
 
-move_pala: process(clk,Reset_n,baja,sube)
+move_paddle: process(clk,Reset_n,baja,sube)
 begin
 	if (Reset_n = '1') then
 		pos <= paddle_vmid;
@@ -33,7 +33,7 @@ begin
 			pos <= pos;
 		end if;
 	end if;
-end process move_pala;
+end process move_paddle;
 
 end Behavioral;
 

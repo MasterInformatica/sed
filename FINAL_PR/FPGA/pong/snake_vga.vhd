@@ -24,7 +24,7 @@ use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.numeric_std.all;
 use work.tiposyconstantes.all;
 
-entity vgacore is
+entity vgacore2 is
 	port
 	(
 		reset: in std_logic;	-- reset
@@ -36,11 +36,11 @@ entity vgacore is
 		vsyncb: out std_logic;	-- vertical (frame) sync
 		rgb: out std_logic_vector(8 downto 0) -- B G R colors
 	);
-end vgacore;
+end vgacore2;
 
 
 
-architecture vgacore_arch of vgacore is
+architecture vgacore_arch of vgacore2 is
 
 signal hcnt: std_logic_vector(8 downto 0);	-- horizontal pixel counter
 signal vcnt: std_logic_vector(9 downto 0);	-- vertical line counter

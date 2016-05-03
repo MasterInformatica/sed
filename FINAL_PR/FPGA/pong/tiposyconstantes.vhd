@@ -33,7 +33,7 @@ constant ball_vpx     : integer  := pixelV;
 -- COLORES --
 -------------
 constant color_paddle  : std_logic_vector(8 downto 0) := "111111111";
-constant color_pared   : std_logic_vector(8 downto 0) := "000111000";
+constant color_pared   : std_logic_vector(8 downto 0) := "111111111";
 constant color_bola    : std_logic_vector(8 downto 0) := "111000000";
 
 

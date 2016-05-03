@@ -68,12 +68,12 @@ component keyboardUART is
 	  );
 end component;
  
-component pala is
+component paddle is
     Port ( clk : in  STD_LOGIC;
            Reset_n : in  STD_LOGIC;
            baja : in  STD_LOGIC;
            sube : in  STD_LOGIC;
-           posicion : out integer range 0 to vga_hpx_max
+           posicion : out integer range vga_vpx_min to vga_hpx_max
 			  );
 end component;
  
@@ -89,17 +89,23 @@ end component;
 
 
 --VGA
+
 component vgacore is
-	port
-	(
-		reset: in std_logic;	-- reset
-		reloj: in std_logic;
-		pala_1_vpos : in integer range 0 to vga_vpx_max;
-		pala_2_vpos : in integer range 0 to vga_vpx_max;
-		muerto: inout std_logic;
-		hsyncb: inout std_logic;	-- horizontal (line) sync
-		vsyncb: out std_logic;	-- vertical (frame) sync
-		rgb: out std_logic_vector(8 downto 0) -- B G R colors
+	port (
+		-- Generales del comopnente
+		reset    : in    std_logic;	          -- reset
+		clock    : in    std_logic;             -- clock
+		
+		-- Propios del modulo de pong
+		paddle_left_pos   : in   integer range vga_vpx_min  to vga_vpx_max;   
+	   paddle_right_pos  : in   integer range vga_vpx_min  to vga_vpx_max;
+		ball_h_pos        : in   integer range vga_hpx_min  to vga_hpx_max;
+		ball_v_pos        : in   integer range vga_vpx_min  to vga_vpx_max;
+		
+		-- Propios el vga
+		hsyncb   : inout std_logic;	                     -- horizontal (line) sync
+		vsyncb   : out   std_logic;	                     -- vertical (frame) sync
+		rgb      : out   std_logic_vector(8 downto 0)      -- B G R colors
 	);
 end component;
 
@@ -140,8 +146,8 @@ signal sube_2     : std_logic;
 
 -- VGA 
 
-signal pala_1_vpos : integer range 0 to vga_vpx_max;
-signal pala_2_vpos : integer range 0 to vga_vpx_max;
+signal pala_1_vpos : integer range vga_vpx_min to vga_vpx_max;
+signal pala_2_vpos : integer range vga_vpx_min to vga_vpx_max;
 
 ---------------------------- OLD -------------------------------------------------
 --juego
@@ -171,12 +177,11 @@ begin
 clock2 <= clock;
 --==========================PORT MAP====================================================
 --Control_Teclado: keyboard port map(clk_teclado,bit_teclado,teclaLeida,Ktecla);
-Pala_1: pala port map(reloj_mov,Reset_n,baja_1,sube_1,pala_1_vpos);
-Pala_2: pala port map(reloj_mov,Reset_n,baja_2,sube_2,pala_2_vpos);
+Pala_1: paddle port map(reloj_mov,Reset_n,baja_1,sube_1,pala_1_vpos);
+Pala_2: paddle port map(reloj_mov,Reset_n,baja_2,sube_2,pala_2_vpos);
 UART_Teclado: keyboardUART port map(clock,Reset_n,rx,teclaLeida,Ktecla,tx,RxErr);
-Nreloj_vga: divisor2 port map( conv_std_logic_vector(integer(3),25),reset,clock,reloj_vga);
 Nreloj_mov: divisor2 port map( velocidad,reset,clock,reloj_mov);
-Control_VGA: vgacore port map(reset,reloj_vga,pala_1_vpos,pala_2_vpos,muerto,hsyncb,vsyncb,rgb);
+Control_VGA: vgacore port map(reset,clock,pala_1_vpos,pala_2_vpos,20,20,hsyncb,vsyncb,rgb);
 --MyScore: score port map(reloj_mov,rstart,comido,LEDS2);
 --========================END PORT MAP===============================================
 
