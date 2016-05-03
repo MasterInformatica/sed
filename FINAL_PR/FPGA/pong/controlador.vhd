@@ -29,7 +29,7 @@ entity main is
 		reset:in std_logic;--reset general
 		clock:in std_logic;--reloj original
 --		clk_teclado : in std_logic;--reloj PS2
---      bit_teclado : in std_logic;--Entrada teclado
+--    bit_teclado : in std_logic;--Entrada teclado
 		rx : in std_logic;
 		tx : out std_logic;
 		hsyncb: inout std_logic;	-- horizontal (line) sync
@@ -38,8 +38,7 @@ entity main is
 		rgb: out std_logic_vector(8 downto 0); -- SALIDA a la pantalla
 		LEDS: out std_logic_vector(20 downto 0);
 		
-		RxErr : OUT STD_LOGIC;
-		caca: out std_logic_vector(7 downto 0)
+		RxErr : OUT STD_LOGIC
 	);
 end main;
 
@@ -51,25 +50,33 @@ component Keyboard is
 	port (
 		clk_teclado : in std_logic;
 		bit_teclado : in std_logic;
-		teclaLeida: in std_logic;
-		tecla : out std_logic_vector(5 downto 0)
+		teclaLeida  : in std_logic;
+		tecla       : out std_logic_vector(5 downto 0)
 	);
 end component;
 
 
 component keyboardUART is
 	  PORT (
-		 clko     : IN STD_LOGIC;
+		 clko      : IN STD_LOGIC;
 		 Reset_n   : IN STD_LOGIC;
-       UART_Rx : IN STD_LOGIC;
+       UART_Rx   : IN STD_LOGIC;
 		 teclaLeida: in std_logic;
-        tecla : out std_logic_vector(5 downto 0);
-		 UART_Tx : OUT STD_LOGIC;
-		 
-		RxErr : OUT STD_LOGIC;
-		 cacota : out std_logic_vector(7 downto 0)
+       tecla     : out std_logic_vector(5 downto 0);
+		 UART_Tx   : OUT STD_LOGIC;
+		 RxErr     : OUT STD_LOGIC
 	  );
 end component;
+ 
+component pala is
+    Port ( clk : in  STD_LOGIC;
+           Reset_n : in  STD_LOGIC;
+           baja : in  STD_LOGIC;
+           sube : in  STD_LOGIC;
+           posicion : out integer range 0 to maxY+sizeY
+			  );
+end component;
+ 
  
 -- DIVISOR que regula los relojes
 component divisor2 is
@@ -92,6 +99,8 @@ component vgacore is
 		sizeSNK: in std_logic_vector(N-2 downto 0);
 		pasti_vpos: in integer range 0 to maxY+sizeY;
 		pasti_hpos: in integer range 0 to maxX+sizeX;
+		pala_1_vpos : in integer range 0 to maxY+sizeY;
+		pala_2_vpos : in integer range 0 to maxY+sizeY;
 		muerto: inout std_logic;
 		hsyncb: inout std_logic;	-- horizontal (line) sync
 		vsyncb: out std_logic;	-- vertical (frame) sync
@@ -153,6 +162,19 @@ signal reloj_vga: std_logic;--reloj de pantalla
 --teclado
 signal ktecla : std_logic_vector(5 downto 0);
 signal teclaLeida : std_logic :='1';
+-- pala 1
+signal baja_1     : std_logic;
+signal sube_1     : std_logic;
+-- pala 2
+signal baja_2     : std_logic;
+signal sube_2     : std_logic;
+
+-- VGA 
+
+signal pala_1_vpos : integer range 0 to maxY+sizeY;
+signal pala_2_vpos : integer range 0 to maxY+sizeY;
+
+---------------------------- OLD -------------------------------------------------
 --juego
 signal muerto,muertisimo: std_logic :='0';
 signal Kmuerto: std_logic :='0';
@@ -181,42 +203,28 @@ SIGNAL Reset_n : STD_LOGIC;
 SIGNAL clko    : STD_LOGIC;
 signal clock2 : std_logic;
 
---=========================END SIGNALS=================================================integer(16777000)
+--=========================END SIGNALS=================================================
 
 begin
 clock2 <= clock;
 --==========================PORT MAP====================================================
 --Control_Teclado: keyboard port map(clk_teclado,bit_teclado,teclaLeida,Ktecla);
-UART_Teclado: keyboardUART port map(clock,Reset_n,rx,teclaLeida,Ktecla,tx,RxErr,caca);
---Nreloj_uart: divisor2 port map( conv_std_logic_vector(integer(3),25),reset,clock,clko);
+Pala_1: pala port map(reloj_mov,Reset_n,baja_1,sube_1,pala_1_vpos);
+Pala_2: pala port map(reloj_mov,Reset_n,baja_2,sube_2,pala_2_vpos);
+UART_Teclado: keyboardUART port map(clock,Reset_n,rx,teclaLeida,Ktecla,tx,RxErr);
 Nreloj_vga: divisor2 port map( conv_std_logic_vector(integer(3),25),reset,clock,reloj_vga);
 Nreloj_mov: divisor2 port map( velocidad,reset,clock,reloj_mov);
-Control_VGA: vgacore port map(reset,reloj_vga,vcuerpo,hcuerpo,sizeSNK,pasti_vpos,pasti_hpos,muerto,hsyncb,vsyncb,rgb);
+Control_VGA: vgacore port map(reset,reloj_vga,vcuerpo,hcuerpo,sizeSNK,pasti_vpos,pasti_hpos,pala_1_vpos,pala_2_vpos,muerto,hsyncb,vsyncb,rgb);
 Serpiente: snake port map(start,reloj_mov,pause,hpos,vpos,crece,vcuerpo,hcuerpo,sizeSNK);
 Pastillas: pastilla port map(start,reloj_mov,comido,pasti_vpos,pasti_hpos);
 MyScore: score port map(reloj_mov,rstart,comido,LEDS2);
 --========================END PORT MAP===============================================
---inst_divisor: divisor PORT MAP(
---		CLKIN_IN => clock2,
---		RST_IN => Reset_n,
---		CLKDV_OUT => clko,
---		CLKIN_IBUFG_OUT => open,
---		CLK0_OUT => open
---);
+
 --========================Procesar Tecla Leida============================================ 
---process(muertisimo,muerto)
---begin
---
---		if muertisimo='0' OR muerto ='0' then
+
 			vpos<=kvpos;
 			hpos<=khpos;
---		else
---			vpos<=vpos;
---			hpos<=hpos;
---		end if;
-----	end if;
--- end process;
- --tecla<=Ktecla;
+
  muerto<=Kmuerto;
  velocidad<=kvelocidad;
  LEDS<=LEDS2;
@@ -273,30 +281,56 @@ MyScore: score port map(reloj_mov,rstart,comido,LEDS2);
 				comido<='0';
 				crece<='0';
 			end if;
+			teclaLeida<='1';
 			if Ktecla(1) = '1' and vpos>0 then --arr
+				sube_1 <= '1';
+				baja_1 <= '0';
+				sube_2 <= '0';
+				baja_2 <= '0';
 				kvpos<=vpos-sizeY;	
 				khpos<=hpos;
 				pause<='0';
 			elsif Ktecla(2) = '1' and hpos < maxX then --der
+				sube_1 <= '0';
+				baja_1 <= '0';
+				sube_2 <= '1';
+				baja_2 <= '0';
 				khpos<=hpos+sizeX;
 				kvpos<=vpos;
 				pause<='0';
 			elsif Ktecla(3) = '1' and vpos < maxY then --abj
+				sube_1 <= '0';
+				baja_1 <= '1';
+				sube_2 <= '0';
+				baja_2 <= '0';
 				kvpos<=vpos+sizeY;
 				khpos<=hpos;
 				pause<='0';
 			elsif Ktecla(4) = '1' and hpos > 0 then --izq
+			   sube_1 <= '0';
+				baja_1 <= '0';
+				sube_2 <= '0';
+				baja_2 <= '1';
 				khpos<=hpos-sizeX;
 				kvpos<=vpos;
 				pause<='0';
 			elsif Ktecla(0) = '1' then --pause
+				sube_1 <= '0';
+				baja_1 <= '0';
+				sube_2 <= '0';
+				baja_2 <= '0';
 				khpos<=hpos;
 				kvpos<=vpos;
 				pause<='1';
 			else
+				sube_1 <= '0';
+				baja_1 <= '0';
+				sube_2 <= '0';
+				baja_2 <= '0';
 				khpos<=hpos;
 				kvpos<=vpos;
 				pause<=pause;
+				teclaLeida<='0';
 			end if;
 			if muertisimo='1' then
 				Kmuerto<='1';

@@ -23,7 +23,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.numeric_std.all;
 
-entity vgacore is
+entity vgacore2 is
 	port
 	(
 		reset: in std_logic;	-- reset
@@ -33,11 +33,11 @@ entity vgacore is
 		vsyncb: out std_logic;	-- vertical (frame) sync
 		rgb: out std_logic_vector(8 downto 0) -- B G R colors
 	);
-end vgacore;
+end vgacore2;
 
 
 
-architecture vgacore_arch of vgacore is
+architecture vgacore_arch of vgacore2 is
 signal reloj: std_logic;
 signal cuenta: std_logic_vector(1 downto 0);
 

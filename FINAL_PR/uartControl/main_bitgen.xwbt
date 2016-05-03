@@ -1,8 +1,0 @@
-INTSTYLE=ise
-INFILE=C:\hlocal\sed\FINAL_PR\uartControl\main.ncd
-OUTFILE=C:\hlocal\sed\FINAL_PR\uartControl\main.bit
-FAMILY=Spartan3
-PART=xc3s1000-5ft256
-WORKINGDIR=C:\hlocal\sed\FINAL_PR\uartControl
-LICENSE=WebPack
-USER_INFO=210699396_1777489394_210552810_807

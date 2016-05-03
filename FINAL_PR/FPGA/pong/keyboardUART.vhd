@@ -37,8 +37,7 @@ entity keyboardUART is
 		 teclaLeida: in std_logic;
         tecla : out std_logic_vector(5 downto 0);
 		 UART_Tx : OUT STD_LOGIC;
-		RxErr : OUT STD_LOGIC;
-		 cacota : out std_logic_vector(7 downto 0)
+		RxErr : OUT STD_LOGIC
 	  );
 end keyboardUART;
 
@@ -78,23 +77,6 @@ END COMPONENT RS232;
 -- SENYALES --
 --------------
 
-
-   --- Colas de lectura/escritura
---SIGNAL fifoRd_din   : STD_LOGIC_VECTOR (7 downto 0);
---SIGNAL fifoRd_wr_en : STD_LOGIC;
---SIGNAL fifoRd_rd_en : STD_LOGIC;
---SIGNAL fifoRd_dout  : STD_LOGIC_VECTOR (7 downto 0);
---SIGNAL fifoRd_full  : STD_LOGIC;
---SIGNAL fifoRd_empty : STD_LOGIC;
---
---SIGNAL fifoWr_din   : STD_LOGIC_VECTOR (7 downto 0);
---SIGNAL fifoWr_wr_en : STD_LOGIC;
---SIGNAL fifoWr_rd_en : STD_LOGIC;
---SIGNAL fifoWr_dout  : STD_LOGIC_VECTOR (7 downto 0);
---SIGNAL fifoWr_full  : STD_LOGIC;
---SIGNAL fifoWr_empty : STD_LOGIC;
-
-
    --- MicroBlaze
 SIGNAL IO_Addr_Strobe  : STD_LOGIC;   
 SIGNAL IO_Read_Strobe  : STD_LOGIC;
@@ -114,28 +96,16 @@ SIGNAL TxBusy     : STD_LOGIC;
 
  signal empieza : std_logic := '0';
   signal leer : std_logic_vector(7 downto 0) := (others => '0');
-  signal cacota2 : std_logic_vector(7 downto 0) := (others => '0');
 signal termina : std_logic := '0';
   signal Ktecla : std_logic_vector(5 downto 0) := (others => '0');
  signal auxtecla : std_logic_vector(5 downto 0) := (others => '0');
 
 begin
 
-
-cacota <= cacota2;
 	tecla <= Ktecla;
 	auxtecla<=Ktecla;
-cc : process(empieza,leer,cacota2)
-begin
-if Reset_n = '1' then
-	cacota2 <= (others=>'0');
-elsif clko'event and clko = '1' and empieza = '1' then
-	cacota2 <= leer;
-	
-	else
-	cacota2 <= cacota2;
-	end if;
-end process;
+
+
 procesarTecla : process(empieza, leer,auxtecla,termina,teclaLeida)
 	begin
 		if teclaLeida='1' then

@@ -15,6 +15,20 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 
 package tiposyconstantes is
+
+-- GAME
+constant sizePala : integer	:=  2; -- 2^sizePala+1 = vertical de las palas 
+constant mapaX		: integer	:= 40;
+constant mapaY		: integer	:= 20;
+
+
+
+-- VGA
+constant pixelX 	: integer	:=  6; -- size X de un cuadrado en pixeles
+constant pixelY 	: integer	:= 10; -- size Y de un cuadrado en pixeles
+
+
+------------------------------- OLD --------------------------------------
 constant N: integer :=18;
 constant sizeX: integer :=6;
 constant sizeY: integer :=10;
@@ -25,15 +39,19 @@ type vectorH is array (0 to N-1) of integer range 0 to maxX+sizeX;
 type vectorV is array (0 to N-1) of integer range 0 to maxY+sizeY;
 type vectorHpasti is array (0 to 20) of integer range 0 to maxX+sizeX;
 type vectorVpasti is array (0 to 20) of integer range 0 to maxY+sizeY;
+--------------------------------------------------------------------------
 
-  constant ukeyboardIZQ : std_logic_vector(3 downto 0) := X"4";--X"1C";--a
-  constant ukeyboardDER : std_logic_vector(3 downto 0) := X"6";--X"23";--d
-  constant ukeyboardABJ : std_logic_vector(3 downto 0) := X"5";--X"1B";--s
-  constant ukeyboardARR : std_logic_vector(3 downto 0) := X"1"; --X"1D";--w"
-  constant ukeyboardRESET : std_logic_vector(3 downto 0) := X"F";--X"76";--ESC
-  constant ukeyboardPAUSE : std_logic_vector(3 downto 0) := X"E";--X"29";--espacio
-  constant ukeyboardCRECE : std_logic_vector(3 downto 0) := X"D";--X"15";--espacio
-  
+---------------------------- UART control --------------------------------
+  constant ukeyboardIZQ : std_logic_vector(3 downto 0) := X"4";--a
+  constant ukeyboardDER : std_logic_vector(3 downto 0) := X"6";--d
+  constant ukeyboardABJ : std_logic_vector(3 downto 0) := X"5";--s
+  constant ukeyboardARR : std_logic_vector(3 downto 0) := X"1";--w"
+  constant ukeyboardRESET : std_logic_vector(3 downto 0) := X"F";--ESC
+  constant ukeyboardPAUSE : std_logic_vector(3 downto 0) := X"E";--espacio
+  constant ukeyboardCRECE : std_logic_vector(3 downto 0) := X"D";--espacio
+--------------------------------------------------------------------------  
+
+-------------------------- KeyBoard control ------------------------------
   constant keyboardIZQ : std_logic_vector(7 downto 0) := X"1C";--a
   constant keyboardDER : std_logic_vector(7 downto 0) := X"23";--d
   constant keyboardABJ : std_logic_vector(7 downto 0) := X"1B";--s
@@ -41,7 +59,7 @@ type vectorVpasti is array (0 to 20) of integer range 0 to maxY+sizeY;
   constant keyboardRESET : std_logic_vector(7 downto 0) := X"76";--ESC
   constant keyboardPAUSE : std_logic_vector(7 downto 0) := X"29";--espacio
   constant keyboardCRECE : std_logic_vector(7 downto 0) := X"15";--espacio
-  
+--------------------------------------------------------------------------    
   
 end tiposyconstantes;
 

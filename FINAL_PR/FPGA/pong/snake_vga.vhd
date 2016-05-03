@@ -34,6 +34,8 @@ entity vgacore is
 		sizeSNK: in std_logic_vector(N-2 downto 0);
 		pasti_vpos: in integer range 0 to maxY+sizeY;
 		pasti_hpos: in integer range 0 to maxX+sizeX;
+		pala_1_vpos : in integer range 0 to maxY+sizeY;
+		pala_2_vpos : in integer range 0 to maxY+sizeY;
 		muerto: inout std_logic;
 		hsyncb: inout std_logic;	-- horizontal (line) sync
 		vsyncb: out std_logic;	-- vertical (frame) sync
@@ -50,6 +52,8 @@ signal vcnt: std_logic_vector(9 downto 0);	-- vertical line counter
 signal pintar_snk: std_logic;					-- cuando pintar la serpiente
 signal pintar_wall: std_logic;
 signal pintar_pasti: std_logic;
+signal pintar_pala: std_logic;
+signal pintar_pala_2: std_logic;
 
 begin
 
@@ -139,6 +143,21 @@ begin
 	pintar_snk<='0';
 	pintar_wall<='0';
 	pintar_pasti<='0';
+	pintar_pala <='0';
+	pintar_pala <='0';
+	if hcnt > 94 and hcnt < 100 then
+		if vcnt > 90+pala_1_vpos and vcnt < 100 +pala_1_vpos then
+			pintar_pala <= '1';
+		end if;
+	end if;
+	
+	if hcnt > 194 and hcnt < 200 then
+		if vcnt > 90+pala_2_vpos and vcnt < 100 +pala_2_vpos then
+			pintar_pala <= '1';
+		end if;
+	end if;
+	
+	
 		 if hcnt > 94+pasti_hpos and hcnt < 100+pasti_hpos then
 			if vcnt > 90+pasti_vpos and vcnt < 100+pasti_vpos then
 				pintar_pasti<='1';
@@ -216,7 +235,8 @@ end process que_pintar;
 
 colorear: process(pintar_snk, pintar_wall,pintar_pasti,hcnt,vcnt)
 begin
-	if pintar_snk='1' and pintar_wall='1' then rgb<="000000111";
+	if pintar_pala = '1' then rgb <= "001011111";
+	elsif pintar_snk='1' and pintar_wall='1' then rgb<="000000111";
 	elsif pintar_snk='1' and muerto='1' then rgb<="000000111";
 	elsif pintar_snk='1' and pintar_pasti='1' then rgb<="011111011";
 	elsif pintar_pasti='1' then rgb<="111111111";
