@@ -73,7 +73,7 @@ component pala is
            Reset_n : in  STD_LOGIC;
            baja : in  STD_LOGIC;
            sube : in  STD_LOGIC;
-           posicion : out integer range 0 to maxY+sizeY
+           posicion : out integer range 0 to vga_hpx_max
 			  );
 end component;
  
@@ -94,44 +94,13 @@ component vgacore is
 	(
 		reset: in std_logic;	-- reset
 		reloj: in std_logic;
-		vcuerpo: in vectorV;
-		hcuerpo: in vectorH;
-		sizeSNK: in std_logic_vector(N-2 downto 0);
-		pasti_vpos: in integer range 0 to maxY+sizeY;
-		pasti_hpos: in integer range 0 to maxX+sizeX;
-		pala_1_vpos : in integer range 0 to maxY+sizeY;
-		pala_2_vpos : in integer range 0 to maxY+sizeY;
+		pala_1_vpos : in integer range 0 to vga_vpx_max;
+		pala_2_vpos : in integer range 0 to vga_vpx_max;
 		muerto: inout std_logic;
 		hsyncb: inout std_logic;	-- horizontal (line) sync
 		vsyncb: out std_logic;	-- vertical (frame) sync
 		rgb: out std_logic_vector(8 downto 0) -- B G R colors
 	);
-end component;
-
---SNAKE
-component snake is
-    Port ( 
-				reset: in std_logic;
-				clk_game : in  STD_LOGIC;
-				pause: in std_logic;
-				new_head_hpos:IN integer range 0 to maxX+sizeX;
-				new_head_vpos:IN integer range 0 to maxY+sizeY;
-				crece : in  STD_LOGIC;
-				vcuerpo: out vectorV;
-				hcuerpo: out vectorH;
-				sizeSNK :out std_logic_vector(N-2 downto 0)
-			 );
-end component;
-
--- Generador de pastillas
-component pastilla is
-	Port ( 
-				reset: in std_logic;
-				clk_game : in  std_logic;
-				comido : in  std_logic;
-				pasti_vpos: out integer range 0 to maxY+sizeY;
-				pasti_hpos: out integer range 0 to maxX+sizeX
-			 );
 end component;
 
 -- SCORE
@@ -171,8 +140,8 @@ signal sube_2     : std_logic;
 
 -- VGA 
 
-signal pala_1_vpos : integer range 0 to maxY+sizeY;
-signal pala_2_vpos : integer range 0 to maxY+sizeY;
+signal pala_1_vpos : integer range 0 to vga_vpx_max;
+signal pala_2_vpos : integer range 0 to vga_vpx_max;
 
 ---------------------------- OLD -------------------------------------------------
 --juego
@@ -184,18 +153,11 @@ signal rstart,start: std_logic :='0';
 signal velocidad: std_logic_vector(24 downto 0):= "0111111111111111111111110";
 signal kvelocidad: std_logic_vector(24 downto 0):= "0111111111111111111111110";
 --pantalla
-signal hpos:integer range 0 to maxX+sizeX:= 10*sizeX;
-signal vpos:integer range 0 to maxY+sizeY:=10*sizeY;
-signal khpos:integer range 0 to maxX+sizeX:= 10*sizeX;
-signal kvpos:integer range 0 to maxY+sizeY:=10*sizeY;
---snake
-signal vcuerpo: vectorV;
-signal hcuerpo: vectorH;
-signal sizeSNK : std_logic_vector(N-2 downto 0):=(others=>'0');
---pastilla
-signal comido: std_logic:='1';
-signal pasti_hpos:integer range 0 to maxX+sizeX:= 60;
-signal pasti_vpos:integer range 0 to maxY+sizeY:= 36;
+signal hpos:integer range 0 to vga_hpx_max   := 10*pixelH;
+signal vpos:integer range 0 to vga_vpx_max   :=10*pixelV;
+signal khpos:integer range 0 to vga_hpx_max  := 10*pixelH;
+signal kvpos:integer range 0 to vga_vpx_max  :=10*pixelV;
+
 signal LEDS2 :   STD_LOGIC_VECTOR(20 downto 0);
 
 
@@ -214,10 +176,8 @@ Pala_2: pala port map(reloj_mov,Reset_n,baja_2,sube_2,pala_2_vpos);
 UART_Teclado: keyboardUART port map(clock,Reset_n,rx,teclaLeida,Ktecla,tx,RxErr);
 Nreloj_vga: divisor2 port map( conv_std_logic_vector(integer(3),25),reset,clock,reloj_vga);
 Nreloj_mov: divisor2 port map( velocidad,reset,clock,reloj_mov);
-Control_VGA: vgacore port map(reset,reloj_vga,vcuerpo,hcuerpo,sizeSNK,pasti_vpos,pasti_hpos,pala_1_vpos,pala_2_vpos,muerto,hsyncb,vsyncb,rgb);
-Serpiente: snake port map(start,reloj_mov,pause,hpos,vpos,crece,vcuerpo,hcuerpo,sizeSNK);
-Pastillas: pastilla port map(start,reloj_mov,comido,pasti_vpos,pasti_hpos);
-MyScore: score port map(reloj_mov,rstart,comido,LEDS2);
+Control_VGA: vgacore port map(reset,reloj_vga,pala_1_vpos,pala_2_vpos,muerto,hsyncb,vsyncb,rgb);
+--MyScore: score port map(reloj_mov,rstart,comido,LEDS2);
 --========================END PORT MAP===============================================
 
 --========================Procesar Tecla Leida============================================ 
@@ -231,13 +191,11 @@ MyScore: score port map(reloj_mov,rstart,comido,LEDS2);
  cKey: process(reset,Ktecla, reloj_mov)--mueve la cabeza de la serpiente
  begin
 	if reset='1' OR Ktecla(5) = '1' then--reset total
-		kvpos<=sizeY*10;
-		khpos<=sizeX*10;
+		kvpos<=pixelV*10;
+		khpos<=pixelH*10;
 		Kmuerto<='0';
-		crece<='0';
 		pause<='1';
 		teclaLeida<='1';
-		comido<='1';
 		start<='1';
 		rstart<='1';
 		kvelocidad<="0111111111111111111111110";
@@ -245,115 +203,83 @@ MyScore: score port map(reloj_mov,rstart,comido,LEDS2);
 		teclaLeida<='0';
 		if vpos=0
 			OR hpos=0 
-			OR vpos=maxY 
-			OR hpos=maxX 
+			OR vpos=pixelV 
+			OR hpos=pixelH 
 			OR muerto='1'
 		then --muerto antes
 			khpos<=hpos;
 			kvpos<=vpos;
 			Kmuerto<='1';
-			crece<='0';
 			pause<='1';
-			comido<='0';
 			start<='0';
 			rstart<='0';
 			kvelocidad<=velocidad;
-		elsif sizeSNK(N-2)='1' and hpos=pasti_hpos and vpos=pasti_vpos then --next level tamaño maximo y comido
-			kvpos<=sizeY*6;
-			khpos<=sizeX*6;
-			Kmuerto<='0';
-			crece<='0';
-			pause<='1';
-			teclaLeida<='1';
-			comido<='0';
-			comido<='0';
-			start<='1';
-			rstart<='0';
-			kvelocidad<=velocidad-6;
+
 		else --si no he muerto y no restart
 			start<='0';
 			rstart<='0';
 			kvelocidad<=velocidad;
-			if (hpos=pasti_hpos and vpos=pasti_vpos) then --comer pastilla
-				comido<='1';
-				crece<='1';
-			else --no comer
-				comido<='0';
-				crece<='0';
-			end if;
 			teclaLeida<='1';
-			if Ktecla(1) = '1' and vpos>0 then --arr
+			if Ktecla(1) = '1' and vpos > vga_vpx_min then --arr
 				sube_1 <= '1';
 				baja_1 <= '0';
 				sube_2 <= '0';
 				baja_2 <= '0';
-				kvpos<=vpos-sizeY;	
-				khpos<=hpos;
 				pause<='0';
-			elsif Ktecla(2) = '1' and hpos < maxX then --der
+			elsif Ktecla(2) = '1' and hpos < vga_hpx_max then --der
 				sube_1 <= '0';
 				baja_1 <= '0';
 				sube_2 <= '1';
 				baja_2 <= '0';
-				khpos<=hpos+sizeX;
-				kvpos<=vpos;
 				pause<='0';
-			elsif Ktecla(3) = '1' and vpos < maxY then --abj
+			elsif Ktecla(3) = '1' and vpos < vga_vpx_max then --abj
 				sube_1 <= '0';
 				baja_1 <= '1';
 				sube_2 <= '0';
 				baja_2 <= '0';
-				kvpos<=vpos+sizeY;
-				khpos<=hpos;
 				pause<='0';
-			elsif Ktecla(4) = '1' and hpos > 0 then --izq
+			elsif Ktecla(4) = '1' and hpos > vga_hpx_min then --izq
 			   sube_1 <= '0';
 				baja_1 <= '0';
 				sube_2 <= '0';
 				baja_2 <= '1';
-				khpos<=hpos-sizeX;
-				kvpos<=vpos;
 				pause<='0';
 			elsif Ktecla(0) = '1' then --pause
 				sube_1 <= '0';
 				baja_1 <= '0';
 				sube_2 <= '0';
 				baja_2 <= '0';
-				khpos<=hpos;
-				kvpos<=vpos;
 				pause<='1';
 			else
 				sube_1 <= '0';
 				baja_1 <= '0';
 				sube_2 <= '0';
 				baja_2 <= '0';
-				khpos<=hpos;
-				kvpos<=vpos;
 				pause<=pause;
 				teclaLeida<='0';
 			end if;
-			if muertisimo='1' then
-				Kmuerto<='1';
-			else
-				Kmuerto<='0';
-			end if;
-			
+--			if muertisimo='1' then
+--				Kmuerto<='1';
+--			else
+--				Kmuerto<='0';
+--			end if;
+--			
 		end if;
 	end if;
 end process cKey;
 --========================FIn procesar tecla=================================================
 
 
---=============================esta MUERTO===============================================
-process (vcuerpo,hcuerpo,sizeSNK,khpos,kvpos,muerto)
-begin
-	muertisimo<='0';
-	for i in 1 to N-1 loop
-		if(kvpos=vcuerpo(i) and khpos=hcuerpo(i) and sizeSNK(i-1)='1') then
-			muertisimo<='1';
-		end if;
-	end loop;
-end process;
+----=============================esta MUERTO===============================================
+--process (khpos,kvpos)
+--begin
+--	muertisimo<='0';
+--	for i in 1 to N-1 loop
+--		if(kvpos=vcuerpo(i) and khpos=hcuerpo(i) and sizeSNK(i-1)='1') then
+--			muertisimo<='1';
+--		end if;
+--	end loop;
+--end process;
 
 --==============================fin================================================
 Reset_n <= Reset;
