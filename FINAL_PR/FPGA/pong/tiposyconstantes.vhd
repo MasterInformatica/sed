@@ -22,7 +22,7 @@ constant hpx_gap	      : integer  := pixelH * 2;
 constant paddle_size  : integer	:= 5;
 constant paddle_hpx   : integer  := pixelH * 1;
 constant paddle_vpx   : integer  := pixelV * paddle_size;
-constant paddle_vmid : integer  := ( ( ( vga_vpx_max - vga_vpx_min ) / pixelV ) / 2 ) * pixelV;
+constant paddle_vmid  : integer  := ( ( ( vga_vpx_max - vga_vpx_min ) / pixelV ) / 2 ) * pixelV;
 
 --BALL
 constant ball_hpx     : integer  := pixelH;

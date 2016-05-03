@@ -191,16 +191,16 @@ begin
 	
 	-- LEFT
 	if hcnt > hpx_gap and hcnt < (hpx_gap + paddle_hpx) then
-		if vcnt <= (paddle_left_pos + tam_pala_arriba) and 
-			vcnt >= (paddle_left_pos - tam_pala_abajo) then
+		if vcnt > (paddle_left_pos - tam_pala_arriba) and 
+			vcnt < (paddle_left_pos + tam_pala_abajo) then
 			pintar_paddle <= '1';
 		end if;
 	end if;
+
 	-- RIGHT
-	-- LEFT
-	if hcnt > hpx_gap and hcnt < (hpx_gap + paddle_hpx) then
-		if vcnt <= (paddle_right_pos + tam_pala_arriba) and 
-			vcnt >= (paddle_right_pos - tam_pala_abajo) then
+	if hcnt > (vga_hpx_max - hpx_gap - paddle_hpx ) and hcnt < (vga_hpx_max - hpx_gap) then
+		if vcnt > (paddle_right_pos - tam_pala_arriba) and 
+			vcnt < (paddle_right_pos + tam_pala_abajo) then
 			pintar_paddle <= '1';
 		end if;
 	end if;

@@ -177,8 +177,8 @@ begin
 clock2 <= clock;
 --==========================PORT MAP====================================================
 --Control_Teclado: keyboard port map(clk_teclado,bit_teclado,teclaLeida,Ktecla);
-Pala_1: paddle port map(reloj_mov,Reset_n,baja_1,sube_1,pala_1_vpos);
-Pala_2: paddle port map(reloj_mov,Reset_n,baja_2,sube_2,pala_2_vpos);
+Pala_1: paddle port map(clock,Reset_n,baja_1,sube_1,pala_1_vpos);
+Pala_2: paddle port map(clock,Reset_n,baja_2,sube_2,pala_2_vpos);
 UART_Teclado: keyboardUART port map(clock,Reset_n,rx,teclaLeida,Ktecla,tx,RxErr);
 Nreloj_mov: divisor2 port map( velocidad,reset,clock,reloj_mov);
 Control_VGA: vgacore port map(reset,clock,pala_1_vpos,pala_2_vpos,20,20,hsyncb,vsyncb,rgb);
