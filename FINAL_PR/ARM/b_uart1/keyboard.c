@@ -74,7 +74,7 @@ void Keyboard_ISR(void)
 			Uart_SendByte0(pulsado +'A');
 			Uart_SendByte1(pulsado+10);
 
-		}else{
+		}else if(pulsado != -1){
 			Uart_SendByte0(pulsado +'0');
 			Uart_SendByte1(pulsado );
 		}
