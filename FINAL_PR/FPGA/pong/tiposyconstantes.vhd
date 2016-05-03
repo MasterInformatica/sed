@@ -1,70 +1,76 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
---
---	Package File Template
---
---	Purpose: This package defines supplemental types, subtypes, 
---		 constants, and functions 
---
---   To use any of the example code shown below, uncomment the lines and modify as necessary
---
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 
 package tiposyconstantes is
 
--- GAME
-constant sizePala : integer	:=  2; -- 2^sizePala+1 = vertical de las palas 
-constant mapaX		: integer	:= 40;
-constant mapaY		: integer	:= 20;
+-- VGA
+constant vga_hpx_min  : integer  := 10;
+constant vga_hpx_max  : integer  := 280;
+constant vga_vpx_min  : integer  := 9;
+constant vga_vpx_max  : integer  := 439;
+constant pixelH 	    : integer  :=  6; -- size X de un cuadrado en pixeles
+constant pixelV 	    : integer  := 10; -- size Y de un cuadrado en pixeles
+
+ 
+---- GAME
+constant hpx_gap	    : integer  := pixelH * 2;
+-- PADDLE 
+constant paddle_size  : integer	:= 5;
+constant paddle_hpx   : integer  := pixelH * 1;
+constant paddle_vpx   : integer  := pixelV * paddle_size;
+--BALL
+constant ball_hpx     : integer  := pixelH;
+constant ball_vpx     : integer  := pixelV;
+
+
+
+
+--constant mapaX		: integer	:= 40;
+--constant mapaY		: integer	:= 20;
 
 
 
 -- VGA
-constant pixelX 	: integer	:=  6; -- size X de un cuadrado en pixeles
-constant pixelY 	: integer	:= 10; -- size Y de un cuadrado en pixeles
 
 
 ------------------------------- OLD --------------------------------------
-constant N: integer :=18;
-constant sizeX: integer :=6;
-constant sizeY: integer :=10;
-constant maxX: integer :=sizeX*35;--coordenadas maximas
-constant maxY: integer :=sizeY*35;--coordenadas maximas
-
-type vectorH is array (0 to N-1) of integer range 0 to maxX+sizeX;
-type vectorV is array (0 to N-1) of integer range 0 to maxY+sizeY;
-type vectorHpasti is array (0 to 20) of integer range 0 to maxX+sizeX;
-type vectorVpasti is array (0 to 20) of integer range 0 to maxY+sizeY;
+--constant N: integer :=18;
+--constant sizeX: integer :=6;
+--constant sizeY: integer :=10;
+--constant maxX: integer :=sizeX*35;--coordenadas maximas
+--constant maxY: integer :=sizeY*35;--coordenadas maximas
+--
+--type vectorH is array (0 to N-1) of integer range 0 to maxX+sizeX;
+--type vectorV is array (0 to N-1) of integer range 0 to maxY+sizeY;
+--type vectorHpasti is array (0 to 20) of integer range 0 to maxX+sizeX;
+--type vectorVpasti is array (0 to 20) of integer range 0 to maxY+sizeY;
 --------------------------------------------------------------------------
 
 ---------------------------- UART control --------------------------------
-  constant ukeyboardIZQ : std_logic_vector(3 downto 0) := X"4";--a
-  constant ukeyboardDER : std_logic_vector(3 downto 0) := X"6";--d
-  constant ukeyboardABJ : std_logic_vector(3 downto 0) := X"5";--s
-  constant ukeyboardARR : std_logic_vector(3 downto 0) := X"1";--w"
-  constant ukeyboardRESET : std_logic_vector(3 downto 0) := X"F";--ESC
-  constant ukeyboardPAUSE : std_logic_vector(3 downto 0) := X"E";--espacio
-  constant ukeyboardCRECE : std_logic_vector(3 downto 0) := X"D";--espacio
+  constant ukeyboardIZQ : std_logic_vector(3 downto 0) := X"4";   --a
+  constant ukeyboardDER : std_logic_vector(3 downto 0) := X"6";   --d
+  constant ukeyboardABJ : std_logic_vector(3 downto 0) := X"5";   --s
+  constant ukeyboardARR : std_logic_vector(3 downto 0) := X"1";   --w"
+  constant ukeyboardRESET : std_logic_vector(3 downto 0) := X"F"; --ESC
+  constant ukeyboardPAUSE : std_logic_vector(3 downto 0) := X"E"; --espacio
+  constant ukeyboardCRECE : std_logic_vector(3 downto 0) := X"D"; --espacio
 --------------------------------------------------------------------------  
 
 -------------------------- KeyBoard control ------------------------------
-  constant keyboardIZQ : std_logic_vector(7 downto 0) := X"1C";--a
-  constant keyboardDER : std_logic_vector(7 downto 0) := X"23";--d
-  constant keyboardABJ : std_logic_vector(7 downto 0) := X"1B";--s
-  constant keyboardARR : std_logic_vector(7 downto 0) := X"1D";--w"
-  constant keyboardRESET : std_logic_vector(7 downto 0) := X"76";--ESC
-  constant keyboardPAUSE : std_logic_vector(7 downto 0) := X"29";--espacio
-  constant keyboardCRECE : std_logic_vector(7 downto 0) := X"15";--espacio
+  constant keyboardIZQ : std_logic_vector(7 downto 0) := X"1C";     --a
+  constant keyboardDER : std_logic_vector(7 downto 0) := X"23";     --d
+  constant keyboardABJ : std_logic_vector(7 downto 0) := X"1B";     --s
+  constant keyboardARR : std_logic_vector(7 downto 0) := X"1D";     --w"
+  constant keyboardRESET : std_logic_vector(7 downto 0) := X"76";   --ESC
+  constant keyboardPAUSE : std_logic_vector(7 downto 0) := X"29";   --espacio
+  constant keyboardCRECE : std_logic_vector(7 downto 0) := X"15";   --(??)
 --------------------------------------------------------------------------    
   
 end tiposyconstantes;
 
-package body tiposyconstantes is
 
+
+package body tiposyconstantes is
 
  
 end tiposyconstantes;
