@@ -1,73 +1,74 @@
-----------------------------------------------------------------------------------
--- Company: JJDA
--- Engineer: Jesús Javier Doménech Arellano - 47470902Y
--- 
--- Create Date:    12:41:21 11/26/2012 
--- Design Name: 
--- Module Name:    vga - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
---
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
---
-----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.numeric_std.all;
+use work.tiposyconstantes.all;
 
-entity vgacore2 is
-	port
-	(
-		reset: in std_logic;	-- reset
-		clock: in std_logic;
-	
-		hsyncb: inout std_logic;	-- horizontal (line) sync
-		vsyncb: out std_logic;	-- vertical (frame) sync
-		rgb: out std_logic_vector(8 downto 0) -- B G R colors
+
+entity vgacore is
+	port (
+		-- Generales del comopnente
+		reset    : in    std_logic;	          -- reset
+		clock    : in    std_logic;             -- clock
+		
+		-- Propios del modulo de pong
+		paddle_left_pos   : in   integer range vga_vpx_min  to vga_vpx_max;   
+	   paddle_right_pos  : in   integer range vga_vpx_min  to vga_vpx_max;
+		ball_h_pos        : in   integer range vga_hpx_min  to vga_hpx_max;
+		ball_v_pos        : in   integer range vga_vpx_min  to vga_vpx_max;
+		
+		-- Propios el vga
+		hsyncb   : inout std_logic;	                     -- horizontal (line) sync
+		vsyncb   : out   std_logic;	                     -- vertical (frame) sync
+		rgb      : out   std_logic_vector(8 downto 0)      -- B G R colors
 	);
-end vgacore2;
+end vgacore;
 
 
 
-architecture vgacore_arch of vgacore2 is
+
+
+architecture vgacore_arch of vgacore is
+
+-------------------
+--- COMPONENTES ---
+-------------------
+component divisor2 is
+	port(
+		carga: in std_logic_vector(24 downto 0);--typa=1 => reloj pantalla; typa=0 =>reloj movimiento
+		reset,clk: in std_logic;
+		reloj: out std_logic
+	);
+end component;
+
+----------------
+--- SENYALES ---
+----------------
 signal reloj: std_logic;
-signal cuenta: std_logic_vector(1 downto 0);
 
-signal hcnt: std_logic_vector(8 downto 0);	-- horizontal pixel counter
-signal vcnt: std_logic_vector(9 downto 0);	-- vertical line counter
+signal hcnt: std_logic_vector(8 downto 0);	  -- horizontal pixel counter
+signal vcnt: std_logic_vector(9 downto 0);	  -- vertical line counter
 
 -- carta de ajuste
-signal pintar_especial: std_logic;
-signal pintar_especial_rgb: std_logic_vector(8 downto 0);
+signal pintar_ajuste : std_logic;
+signal rgb_ajuste    : std_logic_vector(8 downto 0);
+
 -- elementos de la escena
-signal pintar_pared: std_logic;
+signal pintar_pared   : std_logic;
+signal pintar_paddle  : std_logic;
 
 
+-- Constantes
+constant tam_pala_arriba : integer := (((paddle_size - 1) / 2) * pixelV );
+constant tam_pala_abajo  : integer := (((paddle_size + 1) / 2) * pixelV );
 
 begin
-
-as: process(reset, clock, cuenta)
-begin
-	if(reset='1') then
-		cuenta <= "00";
-	elsif(clock'event and clock='1') then
-		if(cuenta="11") then
-			reloj <= not reloj;
-			cuenta <= "00";
-		else
-			cuenta <= cuenta + 1;
-		end if;
-	end if;
-end process;
-	
+----------------
+--- PORT MAP ---
+----------------
+Nreloj_vga: divisor2 port map( conv_std_logic_vector(integer(3),25),reset,clock,reloj);
+-----------------------------------------------------------------------------------------------
 	
 A: process(reloj,reset)
 begin
@@ -117,13 +118,13 @@ begin
 	end if;
 end process;
 
-E: process(hsyncb,reset)
+D: process(hsyncb,reset)
 begin
 	-- reset asynchronously sets vertical sync to inactive
 	if reset='1' then
 		vsyncb <= '1';
-	-- vertical sync is recomputed at the end of every line of pixels
-	elsif (hsyncb'event and hsyncb='1') then
+		-- vertical sync is recomputed at the end of every line of pixels
+		elsif (hsyncb'event and hsyncb='1') then
 		-- vert. sync is low in this interval to signal start of a new frame
 		if (vcnt>=490 and vcnt<492) then
 			vsyncb <= '0';
@@ -134,41 +135,41 @@ begin
 end process;
 
 
+
 --------------------------------------------------------------------------------------
 -- Carta de ajustes en la parte superior de la pantalla para comprobar que todo ok
 carta_ajuste: process(hcnt, vcnt)
 begin
-	pintar_especial <= '0';
-	pintar_especial_rgb <= (others=>'0');
+	pintar_ajuste <= '0';
+	rgb_ajuste <= (others=>'0');
 
-	if vcnt > 0 and vcnt < 8 then
-		pintar_especial<='1';
+	if vcnt > 0 and vcnt < vga_vpx_min - 1 then
+		pintar_ajuste <= '1';
 		if hcnt > 0 and hcnt < 35 then
-			pintar_especial_rgb <= "111000000";
+			rgb_ajuste <= "111000000";
 		elsif hcnt > 0 and hcnt < 70 then
-			pintar_especial_rgb <= "000111000";
+			rgb_ajuste <= "000111000";
 		elsif hcnt > 0 and hcnt < 105 then
-			pintar_especial_rgb <= "000000111";
+			rgb_ajuste <= "000000111";
 		elsif hcnt > 0 and hcnt < 140 then
-			pintar_especial_rgb <= "111000000";
+			rgb_ajuste <= "111000000";
 		elsif hcnt > 0 and hcnt < 175 then
-			pintar_especial_rgb <= "111111000";
+			rgb_ajuste <= "111111000";
 		elsif hcnt > 0 and hcnt < 210 then
-			pintar_especial_rgb <= "111000111";			
+			rgb_ajuste <= "111000111";			
 		elsif hcnt > 0 and hcnt < 245 then
-			pintar_especial_rgb <= "000111111";
+			rgb_ajuste <= "000111111";
 		elsif hcnt > 0 and hcnt < 280 then
-			pintar_especial_rgb <= "111111111";		
+			rgb_ajuste <= "111111111";		
 		end if;
 	end if;
 		
 end process;
 
 --------------------------------------------------------------------------------------
--- 6px horizontal equivalen a 10 en vertical (más o menos)
-que_pintar: process(hcnt,vcnt)
+bordes_escena: process (hcnt, vcnt)
 begin
-	pintar_pared<='0';	
+	pintar_pared <= '0';	
 	
 	if hcnt > 0 and hcnt < 280 then
 		if vcnt >=10 and vcnt <= 13 then --pared superior
@@ -182,16 +183,40 @@ begin
 			pintar_pared<='1';
 		end if;
 	end if;
-end process que_pintar;
+end process bordes_escena;
+---------------------------------------------------------------------------
+paddle_lr: process (hcnt, vcnt)
+begin
+	pintar_paddle <= '0';	
+	
+	-- LEFT
+	if hcnt > hpx_gap and hcnt < (hpx_gap + paddle_hpx) then
+		if vcnt <= (paddle_left_pos + tam_pala_arriba) and 
+			vcnt >= (paddle_left_pos - tam_pala_abajo) then
+			pintar_paddle <= '1';
+		end if;
+	end if;
+	-- RIGHT
+	-- LEFT
+	if hcnt > hpx_gap and hcnt < (hpx_gap + paddle_hpx) then
+		if vcnt <= (paddle_right_pos + tam_pala_arriba) and 
+			vcnt >= (paddle_right_pos - tam_pala_abajo) then
+			pintar_paddle <= '1';
+		end if;
+	end if;
 
+end process paddle_lr;
+---------------------------------------------------------------------------
 colorear: process(hcnt,vcnt)
 begin
-	if pintar_especial='1' then
-		rgb <= pintar_especial_rgb;
-	elsif pintar_pared='1' then
-		rgb<="111111111";
-	else 
-		rgb <="000000000";
+	if pintar_ajuste = '1' then       --- Carta de ajuste
+		rgb <= rgb_ajuste;
+	elsif pintar_pared = '1' then     --- Paredes y linea central
+		rgb <= color_pared;
+	elsif  pintar_paddle = '1' then     --- Paddle
+		rgb <= color_paddle;
+	else                              --- Resto
+		rgb <= "000000000";   
 	end if;
 end process colorear;
 ---------------------------------------------------------------------------

@@ -3,7 +3,9 @@ use IEEE.STD_LOGIC_1164.all;
 
 package tiposyconstantes is
 
--- VGA
+---------
+-- VGA --
+---------
 constant vga_hpx_min  : integer  := 10;
 constant vga_hpx_max  : integer  := 280;
 constant vga_vpx_min  : integer  := 9;
@@ -11,16 +13,28 @@ constant vga_vpx_max  : integer  := 439;
 constant pixelH 	    : integer  :=  6; -- size X de un cuadrado en pixeles
 constant pixelV 	    : integer  := 10; -- size Y de un cuadrado en pixeles
 
- 
----- GAME
-constant hpx_gap	    : integer  := pixelH * 2;
+----------
+-- GAME --
+----------
+constant hpx_gap	      : integer  := pixelH * 2;
 -- PADDLE 
-constant paddle_size  : integer	:= 5;
-constant paddle_hpx   : integer  := pixelH * 1;
-constant paddle_vpx   : integer  := pixelV * paddle_size;
+constant paddle_size    : integer	:= 5;
+constant paddle_hpx     : integer  := pixelH * 1;
+constant paddle_vpx     : integer  := pixelV * paddle_size;
+
+
 --BALL
 constant ball_hpx     : integer  := pixelH;
 constant ball_vpx     : integer  := pixelV;
+
+
+
+-------------
+-- COLORES --
+-------------
+constant color_paddle  : std_logic_vector(8 downto 0) := "111111111";
+constant color_pared   : std_logic_vector(8 downto 0) := "000111000";
+constant color_bola    : std_logic_vector(8 downto 0) := "111000000";
 
 
 
