@@ -63,6 +63,8 @@ signal pintar_paddle  : std_logic;
 constant tam_pala_arriba : integer := (((paddle_size - 1) / 2) * pixelV );
 constant tam_pala_abajo  : integer := (((paddle_size + 1) / 2) * pixelV );
 
+constant linea_central   : integer := vga_global_hpx_min +
+										((vga_global_hpx_max - vga_global_hpx_min) / 2);
 begin
 ----------------
 --- PORT MAP ---
@@ -143,7 +145,7 @@ begin
 	pintar_ajuste <= '0';
 	rgb_ajuste <= (others=>'0');
 
-	if vcnt > 0 and vcnt < vga_vpx_min - 1 then
+	if vcnt > vga_global_hpx_min and vcnt < vga_vpx_min then
 		pintar_ajuste <= '1';
 		if hcnt > 0 and hcnt < 35 then
 			rgb_ajuste <= "111000000";
@@ -171,15 +173,17 @@ bordes_escena: process (hcnt, vcnt)
 begin
 	pintar_pared <= '0';	
 	
-	if hcnt > 0 and hcnt < 280 then
-		if vcnt >=10 and vcnt <= 13 then --pared superior
+	if hcnt > vga_global_hpx_min and hcnt < vga_global_hpx_max then
+		if vcnt >= vga_vpx_min and 
+			vcnt <= (vga_vpx_min + tam_pared) then --pared superior
 			pintar_pared<='1';
-		elsif vcnt >=436 and vcnt <=439 then --pared inferior
+		elsif vcnt >= (vga_global_vpx_max - tam_pared) and 
+				vcnt <= (vga_global_vpx_max) then --pared inferior
 			pintar_pared<='1';
 		end if;
 	end if;
-	if hcnt = 140 then --linea central
-		if vcnt > 0 and vcnt(4 downto 2)="111" and vcnt <=439 then
+	if hcnt = linea_central then --linea central
+		if vcnt > 0 and vcnt(4 downto 2)="111" and vcnt <=vga_global_vpx_max then
 			pintar_pared<='1';
 		end if;
 	end if;
@@ -207,7 +211,7 @@ begin
 
 end process paddle_lr;
 ---------------------------------------------------------------------------
-colorear: process(hcnt,vcnt)
+colorear: process(hcnt,vcnt,pintar_ajuste, rgb_ajuste, pintar_pared, pintar_paddle)
 begin
 	if pintar_ajuste = '1' then       --- Carta de ajuste
 		rgb <= rgb_ajuste;

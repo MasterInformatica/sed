@@ -6,35 +6,57 @@ package tiposyconstantes is
 ---------
 -- VGA --
 ---------
+-- GLOBALES
 constant pixelH 	    : integer  :=  6; -- size X de un cuadrado en pixeles
 constant pixelV 	    : integer  := 10; -- size Y de un cuadrado en pixeles
-constant vga_hpx_min  : integer  := 10;
-constant vga_hpx_max  : integer  := 280 - pixelH;
-constant vga_vpx_min  : integer  := 9;
-constant vga_vpx_max  : integer  := 439 - pixelV;
+constant vga_global_hpx_min  : integer  := 0;
+constant vga_global_hpx_max  : integer  := 280;
+constant vga_global_vpx_min  : integer  := 0;
+constant vga_global_vpx_max  : integer  := 439;
 
+constant vga_cartaAjuste_vpx : integer  := 3;
 
 ----------
 -- GAME --
 ----------
-constant hpx_gap	      : integer  := pixelH * 2;
+-- Bordes
+constant tam_pared    : integer  := 3;
+
+-- VGA
+constant vga_hpx_min  : integer  := vga_global_hpx_min;
+constant vga_hpx_max  : integer  := vga_global_hpx_max - pixelH;
+constant vga_vpx_min  : integer  := vga_global_vpx_min + vga_cartaAjuste_vpx + tam_pared;
+constant vga_vpx_max  : integer  := vga_global_vpx_max - pixelV - tam_pared;
+
 -- PADDLE 
+constant hpx_gap	    : integer  := pixelH * 2;
 constant paddle_size  : integer	:= 5;
 constant paddle_hpx   : integer  := pixelH * 1;
 constant paddle_vpx   : integer  := pixelV * paddle_size;
-constant paddle_vmid  : integer  := ( ( ( vga_vpx_max - vga_vpx_min ) / pixelV ) / 2 ) * pixelV;
+constant paddle_vmid  : integer  := ((( vga_vpx_max - vga_vpx_min ) / pixelV ) / 2 ) * pixelV;
 
 --BALL
 constant ball_hpx     : integer  := pixelH;
 constant ball_vpx     : integer  := pixelV;
 
 
+
 -------------
 -- COLORES --
 -------------
-constant color_paddle  : std_logic_vector(8 downto 0) := "111111111";
-constant color_pared   : std_logic_vector(8 downto 0) := "111111111";
-constant color_bola    : std_logic_vector(8 downto 0) := "111000000";
+--DEF
+constant rgb_white     : std_logic_vector(8 downto 0) := "111111111";
+constant rgb_black     : std_logic_vector(8 downto 0) := "000000000";
+constant rgb_blue      : std_logic_vector(8 downto 0) := "111000000";
+constant rgb_green     : std_logic_vector(8 downto 0) := "000111000";
+constant rgb_red       : std_logic_vector(8 downto 0) := "000000111";
+constant rgb_pink      : std_logic_vector(8 downto 0) := "111000111";
+constant rgb_yellow    : std_logic_vector(8 downto 0) := "000111111";
+constant rgb_cian      : std_logic_vector(8 downto 0) := "111111000";
+--JUEGO
+constant color_paddle  : std_logic_vector(8 downto 0) := rgb_white;
+constant color_pared   : std_logic_vector(8 downto 0) := rgb_white;
+constant color_bola    : std_logic_vector(8 downto 0) := rgb_red;
 
 
 
@@ -76,7 +98,7 @@ end tiposyconstantes;
 
 
 
-package body tiposyconstantes is
 
- 
+
+package body tiposyconstantes is
 end tiposyconstantes;
