@@ -43,13 +43,13 @@ void Eint4567_ISR(void)
 
 	char c;
 	if(pulsado == 4){  //izq -> char I
-		key = (key +1)%160;
+		key = 1;// (key +1)%160;
 		Uart_SendByte0(key);
 		Uart_SendByte1(key);
 
 		//D8Led_symbol(1);
 	} else if(pulsado == 8) { //dcha -> char D
-		key = (key -1)%160;
+		key = 5;//(key -1)%160;
 
 		Uart_SendByte0(key);
 		Uart_SendByte1(key);
