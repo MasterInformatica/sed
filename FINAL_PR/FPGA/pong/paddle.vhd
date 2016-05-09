@@ -10,12 +10,12 @@ entity paddle is
            Reset_n : in  STD_LOGIC;
            baja : in  STD_LOGIC;
            sube : in  STD_LOGIC;
-           posicion : out integer range vga_vpx_min to vga_vpx_max
+           posicion : out integer
 			  );
 end paddle;
 
 architecture Behavioral of paddle is
-signal pos : integer range vga_vpx_min to vga_vpx_max;
+signal pos : integer := paddle_vmid;
 begin
 
 posicion <= pos;
@@ -24,10 +24,10 @@ move_paddle: process(clk,Reset_n,baja,sube)
 begin
 	if (Reset_n = '1') then
 		pos <= paddle_vmid;
-	elsif clk'event and clk = '0' then
-		if sube = '1' then
+	elsif clk'event and clk = '1' then
+		if sube = '1' and pos > paddle_vmin then
 			pos <= pos - pixelV;
-		elsif baja = '1' then
+		elsif baja = '1' and pos < paddle_vmax then
 			pos <= pos + pixelV;
 		else
 			pos <= pos;

@@ -13,10 +13,10 @@ entity vgacore is
 		clock    : in    std_logic;             -- clock
 		
 		-- Propios del modulo de pong
-		paddle_left_pos   : in   integer range vga_vpx_min  to vga_vpx_max;   
-	   paddle_right_pos  : in   integer range vga_vpx_min  to vga_vpx_max;
-		ball_h_pos        : in   integer range vga_hpx_min  to vga_hpx_max;
-		ball_v_pos        : in   integer range vga_vpx_min  to vga_vpx_max;
+		paddle_left_pos   : in   integer;-- range vga_vpx_min  to vga_vpx_max;   
+	   paddle_right_pos  : in   integer;-- range vga_vpx_min  to vga_vpx_max;
+		ball_h_pos        : in   integer;-- range vga_hpx_min  to vga_hpx_max;
+		ball_v_pos        : in   integer;-- range vga_vpx_min  to vga_vpx_max;
 		
 		-- Propios el vga
 		hsyncb   : inout std_logic;	                     -- horizontal (line) sync

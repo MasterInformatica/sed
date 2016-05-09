@@ -34,6 +34,8 @@ constant paddle_size  : integer	:= 5;
 constant paddle_hpx   : integer  := pixelH * 1;
 constant paddle_vpx   : integer  := pixelV * paddle_size;
 constant paddle_vmid  : integer  := ((( vga_vpx_max - vga_vpx_min ) / pixelV ) / 2 ) * pixelV;
+constant paddle_vmin  : integer  := vga_vpx_min + pixelV * ((paddle_size-1) / 2);
+constant paddle_vmax  : integer  := vga_vpx_max - pixelV * ((paddle_size-1) / 2);
 
 --BALL
 constant ball_hpx     : integer  := pixelH;
@@ -55,7 +57,7 @@ constant rgb_yellow    : std_logic_vector(8 downto 0) := "000111111";
 constant rgb_cian      : std_logic_vector(8 downto 0) := "111111000";
 --JUEGO
 constant color_paddle  : std_logic_vector(8 downto 0) := rgb_white;
-constant color_pared   : std_logic_vector(8 downto 0) := rgb_white;
+constant color_pared   : std_logic_vector(8 downto 0) := rgb_blue;
 constant color_bola    : std_logic_vector(8 downto 0) := rgb_red;
 
 
