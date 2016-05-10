@@ -178,10 +178,10 @@ begin
 	pintar_pared <= '0';	
 	
 	if hcnt > vga_global_hpx_min and hcnt < vga_global_hpx_max then
-		if vcnt > vga_vpx_min - tam_pared and 
+		if vcnt >= vga_vpx_min - tam_pared and 
 			vcnt < vga_vpx_min then --pared superior
 			pintar_pared<='1';
-		elsif vcnt >= (vga_global_vpx_max - tam_pared) and --pared inferior
+		elsif vcnt > (vga_global_vpx_max - tam_pared) and --pared inferior
 				vcnt <= (vga_global_vpx_max) then 
 			pintar_pared<='1';
 		end if;

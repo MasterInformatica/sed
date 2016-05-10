@@ -12,7 +12,7 @@ constant pixelV 	   		  : integer  := 20; -- size Y de un cuadrado en pixeles
 constant vga_global_hpx_min  : integer  := 0;
 constant vga_global_hpx_max  : integer  := 280;
 constant vga_global_vpx_min  : integer  := 0;
-constant vga_global_vpx_max  : integer  := 449;
+constant vga_global_vpx_max  : integer  := 450;
 
 constant tam_cartaAjuste : integer  := 3;
 
@@ -25,7 +25,7 @@ constant tam_pared    : integer  := 3;
 -- VGA
 constant vga_hpx_min  : integer  := vga_global_hpx_min;
 constant vga_hpx_max  : integer  := vga_global_hpx_max - pixelH;
-constant vga_vpx_min  : integer  := vga_global_vpx_min + tam_cartaAjuste + tam_pared;
+constant vga_vpx_min  : integer  := vga_global_vpx_min + tam_cartaAjuste + tam_pared+1;
 constant vga_vpx_max  : integer  := vga_global_vpx_max - tam_pared;
 
 -- PADDLE 
