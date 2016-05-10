@@ -39,7 +39,7 @@ constant paddle_vmax  : integer  := vga_vpx_max;-- - (pixelV * ((paddle_size-1) 
 
 --BALL
 constant ball_hpx     : integer  := pixelH;
-constant ball_vpx     : integer  := pixelV;
+constant ball_vpx     : integer  := pixelV / 2;
 
 
 

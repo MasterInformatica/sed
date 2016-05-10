@@ -61,6 +61,7 @@ signal rgb_ajuste    : std_logic_vector(8 downto 0);
 -- elementos de la escena
 signal pintar_pared   : std_logic;
 signal pintar_paddle  : std_logic;
+signal pintar_bola    : std_logic;
 
 
 -- Constantes
@@ -193,7 +194,7 @@ begin
 	end if;
 end process bordes_escena;
 ---------------------------------------------------------------------------
-paddle_lr: process (hcnt, vcnt)
+paddle_lr: process (hcnt, vcnt, paddle_right_up, paddle_right_bt, paddle_left_up, paddle_left_bt)
 begin
 	pintar_paddle <= '0';	
 	
@@ -215,7 +216,21 @@ begin
 
 end process paddle_lr;
 ---------------------------------------------------------------------------
-colorear: process(hcnt,vcnt,pintar_ajuste, rgb_ajuste, pintar_pared, pintar_paddle)
+bola: process (hcnt, vcnt, ball_h_pos, ball_v_pos)
+begin
+	pintar_bola <= '0';	
+
+	-- RIGHT
+	if hcnt >= ball_h_pos and hcnt <= (ball_h_pos + ball_hpx) then
+		if vcnt >= ball_v_pos and 
+			vcnt <= (ball_v_pos + ball_vpx)  then
+			pintar_bola <= '1';
+		end if;
+	end if;
+
+end process bola;
+---------------------------------------------------------------------------
+colorear: process(hcnt,vcnt,pintar_ajuste, rgb_ajuste, pintar_pared, pintar_paddle, pintar_bola)
 begin
 	if pintar_ajuste = '1' then       --- Carta de ajuste
 		rgb <= rgb_ajuste;
@@ -223,7 +238,8 @@ begin
 		rgb <= color_paddle;
 	elsif pintar_pared = '1' then     --- Paredes y linea central
 		rgb <= color_pared;
-	
+	elsif pintar_bola = '1' then     --- BOLA
+		rgb <= color_bola;
 	else                              --- Resto
 		rgb <= "000000000";   
 	end if;
