@@ -177,8 +177,8 @@ begin
 		if vcnt >= vga_vpx_min and 
 			vcnt <= (vga_vpx_min + tam_pared) then --pared superior
 			pintar_pared<='1';
-		elsif vcnt >= (vga_global_vpx_max - tam_pared) and 
-				vcnt <= (vga_global_vpx_max) then --pared inferior
+		elsif vcnt >= (vga_global_vpx_max - tam_pared) and --pared inferior
+				vcnt <= (vga_global_vpx_max) then 
 			pintar_pared<='1';
 		end if;
 	end if;
@@ -215,10 +215,11 @@ colorear: process(hcnt,vcnt,pintar_ajuste, rgb_ajuste, pintar_pared, pintar_padd
 begin
 	if pintar_ajuste = '1' then       --- Carta de ajuste
 		rgb <= rgb_ajuste;
-	elsif pintar_pared = '1' then     --- Paredes y linea central
-		rgb <= color_pared;
 	elsif  pintar_paddle = '1' then     --- Paddle
 		rgb <= color_paddle;
+	elsif pintar_pared = '1' then     --- Paredes y linea central
+		rgb <= color_pared;
+	
 	else                              --- Resto
 		rgb <= "000000000";   
 	end if;

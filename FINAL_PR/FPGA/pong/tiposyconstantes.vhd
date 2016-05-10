@@ -7,12 +7,12 @@ package tiposyconstantes is
 -- VGA --
 ---------
 -- GLOBALES
-constant pixelH 	    : integer  :=  6; -- size X de un cuadrado en pixeles
-constant pixelV 	    : integer  := 10; -- size Y de un cuadrado en pixeles
+constant pixelH 		        : integer  :=  6; -- size X de un cuadrado en pixeles
+constant pixelV 	   		  : integer  := 20; -- size Y de un cuadrado en pixeles
 constant vga_global_hpx_min  : integer  := 0;
 constant vga_global_hpx_max  : integer  := 280;
 constant vga_global_vpx_min  : integer  := 0;
-constant vga_global_vpx_max  : integer  := 439;
+constant vga_global_vpx_max  : integer  := 449;
 
 constant vga_cartaAjuste_vpx : integer  := 3;
 
@@ -33,9 +33,9 @@ constant hpx_gap	    : integer  := pixelH * 2;
 constant paddle_size  : integer	:= 5;
 constant paddle_hpx   : integer  := pixelH * 1;
 constant paddle_vpx   : integer  := pixelV * paddle_size;
-constant paddle_vmid  : integer  := ((( vga_vpx_max - vga_vpx_min ) / pixelV ) / 2 ) * pixelV;
-constant paddle_vmin  : integer  := vga_vpx_min + pixelV * ((paddle_size-1) / 2);
-constant paddle_vmax  : integer  := vga_vpx_max - pixelV * ((paddle_size-1) / 2);
+constant paddle_vmid  : integer  := vga_vpx_min + ((( vga_vpx_max - vga_vpx_min ) / pixelV ) / 2 ) * pixelV;
+constant paddle_vmin  : integer  := vga_vpx_min + (pixelV * ((paddle_size-1) / 2));
+constant paddle_vmax  : integer  := vga_vpx_max - (pixelV * ((paddle_size-1) / 2));
 
 --BALL
 constant ball_hpx     : integer  := pixelH;
