@@ -37,7 +37,7 @@ void Eint4567_init(void) {
 
 void Eint4567_ISR(void)
 {
-	while(button_no_pressed() != 0);
+	//while(button_no_pressed() != 0);
 
 	int pulsado = rEXTINTPND & 0xC;
 

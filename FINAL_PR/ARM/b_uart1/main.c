@@ -29,45 +29,26 @@ int Main(void){
 	keyboard_activar();
 
 	char c;
+	int k;
 	while(1){
-		/*c = Uart_Getch1();
-		Uart_SendByte0(c);
+		c = Uart_Getch0();
+		//Uart_SendByte1(c);
+
 		switch(c){
-		case 'L':
+		case 1:
 			led1_on();
 			led2_off();
+			k = 6;
+			Uart_SendByte1(k);
 			break;
-		case 'R':
+		case 5:
 			led1_off();
 			led2_on();
+			k = 4;
+			Uart_SendByte1(k);
 			break;
-		case '0':
-		case '1':
-		case '2':
-		case '3':
-		case '4':
-		case '5':
-		case '6':
-		case '7':
-		case '8':
-		case '9':
-			D8Led_symbol(c-'0');
-			led1_off();
-			led2_off();
-			break;
-		case 'A':
-		case 'B':
-		case 'C':
-		case 'D':
-		case 'E':
-		case 'F':
-			D8Led_symbol(c-'A'+10);
-			led1_off();
-			led2_off();
-			break;
-
 		}
-*/
+
 	};
 /*		*pt_str = Uart_Getch(); // leer caracter
 		Uart_SendByte(*pt_str); // enviar caracter
