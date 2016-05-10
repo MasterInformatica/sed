@@ -72,7 +72,8 @@ component paddle is
            Reset_n : in  STD_LOGIC;
            baja : in  STD_LOGIC;
            sube : in  STD_LOGIC;
-           posicion : out integer
+           posicion_arr : out integer;
+			  posicion_abj : out integer
 			  );
 end component;
  
@@ -96,8 +97,12 @@ component vgacore is
 		clock    : in    std_logic;             -- clock
 		
 		-- Propios del modulo de pong
-		paddle_left_pos   : in   integer ;--range vga_vpx_min  to vga_vpx_max;   
-	   paddle_right_pos  : in   integer ;--range vga_vpx_min  to vga_vpx_max;
+		paddle_left_up   : in   integer;-- range vga_vpx_min  to vga_vpx_max;   
+	   paddle_left_bt  : in   integer;-- range vga_vpx_min  to vga_vpx_max;
+		
+		paddle_right_up   : in   integer;-- range vga_vpx_min  to vga_vpx_max;   
+	   paddle_right_bt  : in   integer;-- range vga_vpx_min  to vga_vpx_max;
+		
 		ball_h_pos        : in   integer ;--range vga_hpx_min  to vga_hpx_max;
 		ball_v_pos        : in   integer ;--range vga_vpx_min  to vga_vpx_max;
 		
@@ -126,8 +131,10 @@ signal sube_2     : std_logic;
 
 -- VGA 
 
-signal pala_1_vpos : integer range vga_vpx_min to vga_vpx_max;
-signal pala_2_vpos : integer range vga_vpx_min to vga_vpx_max;
+signal pala_1_vpos_arr : integer ;
+signal pala_2_vpos_arr : integer ;
+signal pala_1_vpos_abj : integer ;
+signal pala_2_vpos_abj : integer ;
 
 ---------------------------- OLD -------------------------------------------------
 --juego
@@ -154,11 +161,11 @@ Reset_n <= Reset;
 --==========================PORT MAP====================================================
 --Control_Teclado: keyboard port map(clk_teclado,bit_teclado,teclaLeida,Ktecla);
 Nreloj_mov: divisor2 port map( velocidad,reset,clock,reloj_mov);
-Pala_1: paddle port map(clock,Reset_n,baja_1,sube_1,pala_1_vpos);
-Pala_2: paddle port map(clock,Reset_n,baja_2,sube_2,pala_2_vpos);
+Pala_1: paddle port map(clock,Reset_n,baja_1,sube_1,pala_1_vpos_arr,pala_1_vpos_abj);
+Pala_2: paddle port map(clock,Reset_n,baja_2,sube_2,pala_2_vpos_arr,pala_2_vpos_abj);
 UART_Teclado: keyboardUART port map(clock,Reset_n,rx,teclaLeida,Ktecla,tx,RxErr);
 
-Control_VGA: vgacore port map(reset,clock,pala_1_vpos,pala_2_vpos,20,20,hsyncb,vsyncb,rgb);
+Control_VGA: vgacore port map(reset,clock,pala_1_vpos_arr,pala_1_vpos_abj,pala_2_vpos_arr,pala_2_vpos_abj,20,20,hsyncb,vsyncb,rgb);
 --MyScore: score port map(reloj_mov,rstart,comido,LEDS2);
 --========================END PORT MAP===============================================
 

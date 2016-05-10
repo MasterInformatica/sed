@@ -14,7 +14,7 @@ constant vga_global_hpx_max  : integer  := 280;
 constant vga_global_vpx_min  : integer  := 0;
 constant vga_global_vpx_max  : integer  := 449;
 
-constant vga_cartaAjuste_vpx : integer  := 3;
+constant tam_cartaAjuste : integer  := 3;
 
 ----------
 -- GAME --
@@ -25,8 +25,8 @@ constant tam_pared    : integer  := 3;
 -- VGA
 constant vga_hpx_min  : integer  := vga_global_hpx_min;
 constant vga_hpx_max  : integer  := vga_global_hpx_max - pixelH;
-constant vga_vpx_min  : integer  := vga_global_vpx_min + vga_cartaAjuste_vpx + tam_pared;
-constant vga_vpx_max  : integer  := vga_global_vpx_max - pixelV - tam_pared;
+constant vga_vpx_min  : integer  := vga_global_vpx_min + tam_cartaAjuste + tam_pared;
+constant vga_vpx_max  : integer  := vga_global_vpx_max - tam_pared;
 
 -- PADDLE 
 constant hpx_gap	    : integer  := pixelH * 2;
@@ -34,8 +34,8 @@ constant paddle_size  : integer	:= 5;
 constant paddle_hpx   : integer  := pixelH * 1;
 constant paddle_vpx   : integer  := pixelV * paddle_size;
 constant paddle_vmid  : integer  := vga_vpx_min + ((( vga_vpx_max - vga_vpx_min ) / pixelV ) / 2 ) * pixelV;
-constant paddle_vmin  : integer  := vga_vpx_min + (pixelV * ((paddle_size-1) / 2));
-constant paddle_vmax  : integer  := vga_vpx_max - (pixelV * ((paddle_size-1) / 2));
+constant paddle_vmin  : integer  := vga_vpx_min;-- + (pixelV * ((paddle_size-1) / 2));
+constant paddle_vmax  : integer  := vga_vpx_max;-- - (pixelV * ((paddle_size-1) / 2));
 
 --BALL
 constant ball_hpx     : integer  := pixelH;
