@@ -13,8 +13,12 @@ entity vgacore is
 		clock    : in    std_logic;             -- clock
 		
 		-- Propios del modulo de pong
-		paddle_left_pos   : in   integer;-- range vga_vpx_min  to vga_vpx_max;   
-	   paddle_right_pos  : in   integer;-- range vga_vpx_min  to vga_vpx_max;
+		paddle_left_up   : in   integer;-- range vga_vpx_min  to vga_vpx_max;   
+	   paddle_left_bt  : in   integer;-- range vga_vpx_min  to vga_vpx_max;
+		
+		paddle_right_up   : in   integer;-- range vga_vpx_min  to vga_vpx_max;   
+	   paddle_right_bt  : in   integer;-- range vga_vpx_min  to vga_vpx_max;
+		
 		ball_h_pos        : in   integer;-- range vga_hpx_min  to vga_hpx_max;
 		ball_v_pos        : in   integer;-- range vga_vpx_min  to vga_vpx_max;
 		
@@ -195,16 +199,16 @@ begin
 	
 	-- LEFT
 	if hcnt > hpx_gap and hcnt < (hpx_gap + paddle_hpx) then
-		if vcnt > (paddle_left_pos - tam_pala_arriba) and 
-			vcnt < (paddle_left_pos + tam_pala_abajo) then
+		if vcnt >= paddle_left_up and 
+			vcnt <= paddle_left_bt then
 			pintar_paddle <= '1';
 		end if;
 	end if;
 
 	-- RIGHT
 	if hcnt > (vga_hpx_max - hpx_gap - paddle_hpx ) and hcnt < (vga_hpx_max - hpx_gap) then
-		if vcnt > (paddle_right_pos - tam_pala_arriba) and 
-			vcnt < (paddle_right_pos + tam_pala_abajo) then
+		if vcnt >= paddle_right_up and 
+			vcnt <= paddle_right_bt then
 			pintar_paddle <= '1';
 		end if;
 	end if;
