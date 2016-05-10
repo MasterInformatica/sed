@@ -149,7 +149,7 @@ begin
 	pintar_ajuste <= '0';
 	rgb_ajuste <= (others=>'0');
 
-	if vcnt > vga_global_hpx_min and vcnt < vga_vpx_min then
+	if vcnt > vga_global_hpx_min and vcnt < vga_global_hpx_min + tam_cartaAjuste then
 		pintar_ajuste <= '1';
 		if hcnt > 0 and hcnt < 35 then
 			rgb_ajuste <= "111000000";
@@ -178,8 +178,8 @@ begin
 	pintar_pared <= '0';	
 	
 	if hcnt > vga_global_hpx_min and hcnt < vga_global_hpx_max then
-		if vcnt >= vga_vpx_min and 
-			vcnt <= (vga_vpx_min + tam_pared) then --pared superior
+		if vcnt >= vga_vpx_min - tam_pared and 
+			vcnt <= vga_vpx_min then --pared superior
 			pintar_pared<='1';
 		elsif vcnt >= (vga_global_vpx_max - tam_pared) and --pared inferior
 				vcnt <= (vga_global_vpx_max) then 
