@@ -1,0 +1,64 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[latin1]{inputenc} 
+\usepackage[spanish]{babel}
+\decimalpoint
+\setlength{\parskip}{0.5\baselineskip} 
+\usepackage{fullpage}
+\usepackage[procnames]{listings}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[fleqn]{amsmath}
+\parindent 0in 
+\setlength{\mathindent}{0pt}
+\usepackage{float}
+\usepackage{hyperref}
+
+
+%% DEFINICIONES
+\newcommand{\TODO}[1]{{\huge \color{red} \textbf{TODO: }#1 }}
+\newcommand{\todo}[1]{{\large \color{red} \textbf{TODO: }#1 }}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+
+\definecolor{bluekeywords}{rgb}{0,0,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.64,0.08,0.08}
+\definecolor{xmlcomments}{rgb}{0.5,0.5,0.5}
+\definecolor{types}{rgb}{0.17,0.57,0.68}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document} 
+
+\input{Cascaras/title.tex}
+\tableofcontents
+
+
+\newpage{}
+\input{Capitulos/s1-introduccion.tex}
+\newpage{}
+\input{Capitulos/s2-camera.tex}
+
+
+\newpage{}
+\bibliographystyle{plain}
+\bibliography{references} 
+
+
+\end{document}
+
+
+
+%
+%
+%%%
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "./main.tex"
+%%% End:
+
