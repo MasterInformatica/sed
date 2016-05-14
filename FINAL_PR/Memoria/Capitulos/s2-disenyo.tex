@@ -1,23 +1,47 @@
 \section{Diseño}
 \label{21:sec:Disenyo}
 
+\subsection{Componentes del sistema}
+\label{s2:subsec:sistema-entero}
+A la hora de realizar el sistema, se ha decidido utilizar los siguientes
+componentes:
 \begin{itemize}
-\item Objetivos del sistema ¿Por qué? ¿Qué queremos que haga?. Esto puede
-  solaparse un poco con la primera sección, tener cuidado.
-\item Consideraciones tomadas a la hora de diseñar el sistema
-\item Descripción del sistema (por qué elementos va a estar formado, cómo
-  se van a comunicar). Diagramas uml, máquina de estado/red de petri,
-  ... (Hay un tema en el campus sobre esto).
+\item \emph{FGPA}, que como se ha comentado en la sección anterior, es la
+  encargada de realizar los cálculos del juego, interpretar las órdenes de
+  los usuarios, y mostrar el juego mediante un monitor VGA.
+\item \emph{Maletines ARM}, encargados de leer las órdenes de los
+  jugadores (mediante pulsaciones en el teclado matricial o los botones de
+  la placa) y transmitirlas a la FPGA mediante una UART. Como la FPGA
+  utilizada únicamente posee una UART, los maletines se pueden conectar en
+  serie, y transmitir los mensajes de uno hacia el siguiente hasta que
+  lleguen a la FPGA (ver sección~\ref{s3:subsec:maletines}). Además, la
+  FPGA transmite la información de puntuación a los maletines, los cuales
+  la muestran mediante sus \emph{Display 8-Segmentos}.
+\item \emph{Display 8-Segmentos}, utilizado para mostrar la información de
+  puntuación.
+\item \emph{Pulsadores y teclado matricial}, para que los jugadores
+  indiquen sus órdenes de movimiento al sistema.
+\item \emph{Monitor VGA}, utilizado para mostrar el juego.
 \end{itemize}
 
+En la subsección~\ref{s2:subsec:comportamiento} se muestra el
+comportamiento del sistema, mientras que en la
+subsección~\ref{s2:subsec:comunicacion} el diagrama de comunicación entre
+los componentes aquí descritos.
+\subsection{Comportamiento del sistema}
+\label{s2:subsec:comportamiento}
+Aquí habría que poner diagramas de comunicación, secuencia, máquina de
+estados, los que consideremos oportunos.
 
-Según he estado leyendo en las transparencias de clase, y en las
-transparencias de la presentación, hay que mostrar el modelado del
-proyecto, desde los casos de uso (i.e., qué va a hacer), diagramas de
-componentes, comunicación (mediante diagramas de actividades/componentes,
-por ejemplo), funcionamiento de los elementos mediante una máquina de
-estados, ....
 
+\subsection{Comunicación entre componentes}
+\label{s2:subsec:comunicacion}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1.0\textwidth]{images/secuencia.pdf}
+  \caption{Diagrama de secuencia entre los distintos componentes.}
+  \label{s2:fig:secuencia}
+\end{figure}
 
 
 %
