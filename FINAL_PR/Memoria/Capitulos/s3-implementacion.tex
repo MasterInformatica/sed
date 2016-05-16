@@ -40,33 +40,57 @@ implementación sobre la FPGA son:
 \item \emph{Módulo bola:} calcula en cada pulso del reloj del juego la
   nueva posición de la pelota. Además, recibe la información de las palas
   para calcular los rebotes con ellas, o si un jugador gana el partido
-  actual. Si es el caso, el módulo informa al módulo de puntuaciones para
-  registrar el evento.
+  actual. Si es el caso, el módulo informa al módulo controlador para que
+  anote e informe del cambio de puntuación.
 \item \emph{Módulo puntuación:} encargado de guardar la información de los
   partidos. Cuando un jugador consigue un tanto, se comunica con el módulo
   de la UART para enviar la información a los maletines.
-\item \emph{Módulo VGA:} a partir de la información del módulo bola, y de
-  los módulos de raquetas, dibuja en un monitor VGA el juego. \rev{Si da
-    tiempo, el diagrama de flujo que controla este módulo viene definido
-    en la figura bla bla bla}.
-\item \emph{Módulo controlador:} encargado de llevar la máquina de
-  estados principal del juego y comunica los diferentes módulos entre
-  sí.
+\item \emph{Módulo VGA:} a partir de la información del módulo bola y de
+  los módulos de raquetas, dibuja en un monitor VGA el juego.
+\item \emph{Módulo controlador:} encargado de llevar la máquina de estados
+  principal del juego y comunicar los diferentes módulos entre sí.
 \end{itemize}
 
 \subsubsection{Gestión de los relojes}
 \label{s3:subsubsec:clocking}
+Aunque el diseño y ejecución del juego sobre la FPGA tiene muchas ventajas
+(la mayoría relativas a la facilidad de realizar cálculos en paralelo), es
+necesario sincronizar cada uno de los módulos entre ellos. Además, el
+diseño elegido para la implementación hace que cada módulo utilice un reloj
+distinto. Los distintos relojes utilizados se muestran en la
+figura~\ref{s3:fig:componentes-fpga-clocking}, donde cada color refleja el
+reloj utilizado en los módulos que se indican.
 
-\todo{Escribir, haciendo referencia a la
-  figura~\ref{s3:fig:componentes-fpga-clocking}. Quizás aquí sea
-  interesante mencionar el tema de la sincronización y la necesidad de
-  utilizar biestables para mantener la diferencia entre relojes.}
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1.0\textwidth]{images/fpga_componentes_timing_v2.png}
+  \includegraphics[width=0.8\textwidth]{images/fpga_componentes_timing_v2.png}
   \caption{Distintos relojes utilizados.}
   \label{s3:fig:componentes-fpga-clocking}
 \end{figure}
+
+
+Más concretamente se ha decidido utilizar cuatro relojes sobre la FPGA,
+cada uno con un propósito distinto:
+\begin{itemize}
+\item \emph{Reloj principal (rosa):} reloj principal de la
+  placa. Proporciona un pulso cada 100 ns. Es utilizado para leer los datos
+  procesados en tiempo real por la UART e informar a las raquetas de su
+  nueva posición. Se ha decidido utilizar un reloj rápido ya que se
+  consigue reaccionar de manera más rápida a las pulsaciones del
+  jugador. Para no perder datos con el módulo de la UART (al tener
+  distintos relojes), la información es almacenada en un biestable hasta
+  que esta es leída.
+\item \emph{Reloj UART (naranja):} se trata del mismo reloj utilizado para
+  la transmisión con la UART en los maletines ARM.
+\item \emph{Reloj de juego (verde):} utilizado para calcular los
+  movimientos de la pelota. Se trata de una división del reloj principal
+  del juego, que al ser más lento permite visualizar los movimientos por la
+  pantalla y hacer que el jugador sea consciente de lo que ocurre y le dé
+  tiempo a reaccionar.
+\item \emph{Reloj VGA (azul):} necesario para transmitir por el
+  protocolo VGA. Según este protocolo, el reloj debe ir a 25MHz (un cuarto
+  del reloj principal del juego).
+\end{itemize}
 
 \subsection{Maletines ARM}
 \label{s3:subsec:maletines}
