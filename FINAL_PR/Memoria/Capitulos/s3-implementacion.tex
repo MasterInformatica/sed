@@ -94,29 +94,55 @@ cada uno con un propósito distinto:
 
 \subsection{Maletines ARM}
 \label{s3:subsec:maletines}
-\todo{Escribir esto, haciendo referencia a~\ref{s3:fig:FSM_maletin}. Si se
-  decide mover la imagen a~\ref{s2:subsec:sistema-entero}, inventarse que
-  poner. }\\
-\todo{Sería interesante explicar lo del tecldo, y lo que se  hace para
-  poder conectar varios maletines en serie.}
+% \todo{Escribir esto, haciendo referencia a~\ref{s3:fig:FSM_maletin}. Si se
+%   decide mover la imagen a~\ref{s2:subsec:sistema-entero}, inventarse que
+%   poner. }\\
+% \todo{Sería interesante explicar lo del tecldo, y lo que se  hace para
+%   poder conectar varios maletines en serie.}
 
-Todos los maletines ejecutan el mismo código, como ya se ha dicho
-anteriormente van conectados en serie mandando comandos de maletín a
-la FPGA y recibiendo las puntuaciones de la FPGA a los maletines. \\
+Como se ha dicho anteriormente, la FPGA utilizada solamente posee una
+conexión UART, por lo que el diseño elegido para los maletines es
+conectarlos en serie. Además, todos los maletines ejecutan el mismo código,
+encargado de transmitir la información de una UART hacia la otra. La
+figura~\ref{s3:fig:FSM_maletin} muestra el comportamiento de los maletines.
 
-El funcionamiento de los maletines ARM se puede apreciar en la
-figura~\ref{s3:fig:FSM_maletin}. La primera fase es configurar las
-interrupciones de los botones y el teclado matricial, se inicializan
-los display 8 segmentos y se configuran las UARTs. \\
+% Todos los maletines ejecutan el mismo código, como ya se ha dicho
+% anteriormente van conectados en serie mandando comandos de maletín a
+% la FPGA y recibiendo las puntuaciones de la FPGA a los maletines. \\
+
+% El funcionamiento de los maletines ARM se puede apreciar en la
+% figura~\ref{s3:fig:FSM_maletin}. La primera fase es configurar las
+% interrupciones de los botones y el teclado matricial, se inicializan
+% los display 8 segmentos y se configuran las UARTs. \\
 
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1.0\textwidth]{images/maletin_fsm.png}
+  \includegraphics[width=0.8\textwidth]{images/maletin_fsm.png}
   \caption{FSM describiendo el comportamiento de los maletines.}
   \label{s3:fig:FSM_maletin}
 \end{figure}
 
+
+Al iniciar las placas, lo primero ejecutado es la inicialización de la
+misma, las conexiones UARTs, activación de interrupciones y marcar los
+contadores de puntuación a 0. A continuación se entra en un bucle que va a
+controlar el juego. Si se recibe una interrupción de un pulsador o del
+teclado matricial, esta pulsación se procesa y se envía por la UART1 al
+siguiente elemento de la cadena (que puede ser otro maletín o la FPGA). Si
+se detecta la interrupción asociada a un puerto UART, pueden distinguirse
+dos casos:
+\begin{itemize}
+\item Interrupción en UART0. Indica que la información recibida proviene de
+  otro maletín. En este caso, se procesa la información para indicar que no
+  la ha generado el maletín, y se envía por la UART1 al siguiente elemento
+  de la cadena (que va a ser la FPGA en el caso de tener únicamente dos
+  maletines).
+\item Interrupción en UART1. Indica que la información recibida proviene o
+  bien de la FPGA, o bien la está retransmitiendo el otro maletín. La
+  información es procesada (información relativa a la puntuación), y
+  mostrada por los display 8-Segmentos.
+\end{itemize}
 
 
 
