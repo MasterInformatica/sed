@@ -32,21 +32,50 @@ se muestra con más detalle el funcionamiento del componente FPGA
 
 \subsection{Comportamiento del sistema}
 \label{s2:subsec:comportamiento}
-\todo{Aquí habría que hablar del comportamiento general del sistema, es
-  decir, de la máquina de estados que implementa, o de que hace el bicho, o
-  de cómo se controla. No se si se podría quizás juntar con la sección
-  siguiente y ampliarla, o mejor así. Quizás también se podría aprovechar
-  la figura~\ref{s3:fig:FSM_maletin} para mostrarla aquí, aunque faltaría
-  todo el tema de la fpga.}\\
+El núcleo del sistema es la FPGA que lleva todo el control del juego y
+los maletines ARM actúan de periféricos. 
 
-\todo{ Quizás lo más fácil es crear una máquina de estados (o red de Petri
-  para poder mostrar el paralelismo), y dejarlo tal cual está.}
+Entonces el comportamiento del sistema (resumido en la
+figura~\ref{s2:fig:comportamiento}) consiste en un búcle principal,
+siguiendo el ciclo del reloj de juego,
+donde se va calculando la situación del juego y este recibe
+modificaciones externas de manera distribuída que modifican los
+biestables que componen el escenario, en este caso la posición de las
+raquetas de cada jugador.  
+
+Por otro lado, la FPGA notifica a los maletines el estado del juego en
+cuanto a puntuaciones. Esta forma de abstraer el control de los
+jugadores de la lógica del juego nos permitiría por ejemplo sustituir
+el control por un PS2, como ya hemos indicado, e incluso realizar la
+comunicación por medio de un \todo{puerto red} por donde se recibe las
+indicaciones de movimiento y se manda la situación del juego. 
+
+Otro búcle del sistema es el de pintado VGA explicado en la
+sección~\ref{TTTT}.\todo{Seccion para la VGA!!}
+
+En los maletines ARM el sistema es mucho más sencillo (explicado en
+detalle en la sección~\ref{s3:subsec:maletines}) ambos actúan de igual
+manera. Los maletines creen ser el más cercano a la FPGA y actúan como
+jugador 1, pero el maletin más cercano convierte al jugador 1 en
+jugador 2. Este método permite conectar en serie cualquier cantidad de
+maletines y tendríamos un juego de N jugadores si fuese
+necesario\footnote{En la última sección~\ref{s4:sec:Conclusiones}
+  pueden verse detalles de como podría convertirse en un juego de
+  cuatro jugadores}, desde el punto de vista de la FPGA se trata de un único
+maletín o teclado en el que juegan todos los jugadores de manera simultánea. \\
+
+Este sistema podría mostrar la debilidad de un posible retardo en las
+acciones realizadas por el jugador del maletín más lejano pero esto se
+compensa tal y como se exlica en la sección~\ref{s3:subsubsec:clocking} al llevar
+diferentes relojes en cada parte del sistema, la recepción de comandos
+es mucho más rápida que el reloj de movimiento del juego así que por
+mucho que llegase un poco más tarde llegaría antes del siguiente ciclo
+de reloj de movimiento.
 
 \begin{figure}[h]
   \centering
-  \todo{Poner una FSM, o red de petri, o secuencia, o yo qué sé.}
-  \includegraphics[width=0.5\textwidth]{images/Todo.pdf}
-  \caption{Comportamiento del sistema.}
+  \includegraphics[width=1.0\textwidth]{images/sistema.png}
+  \caption{Diagrama de Actividad del sistema (sin VGA).}
   \label{s2:fig:comportamiento}
 \end{figure}
 
@@ -73,9 +102,9 @@ usada es diferente:
   utilizado permite conectar varios maletines en serie, por lo que el
   comportamiento general de los maletines es recibir la información por una
   UART, procesarla y reenviarla por la otra UART. Si la información es
-  recibida por la \rev{UART0}, se trata de otro maletín que envía información a la
-  FPGA, mientras que si se recibe por la \rev{UART1}, es la FPGA la que envía
-  información a los maletines.
+  recibida por la \rev{UART0}, se trata de otro maletín que envía
+  información a la FPGA, mientras que si se recibe por la \rev{UART1},
+  es la FPGA la que envía información a los maletines.
 \item \emph{FPGA - Maletín:} Comunicación mediante UART. Como la FPGA
   únicamente dispone de un puerto UART, la conexión de los maletines se
   hace en serie, siendo los maletines intermedios encargados de reenviar la
