@@ -10,28 +10,13 @@ del juego. La relación entre los distintos módulos se peude ver en la
 figura~\ref{s3:fig:componentes-fpga-a}. Además, para que el juego pueda
 funcionar a una velocidad adecuada, pero se pueda comunicar con los
 maletines, y además pintar en el monitor vga, cada módulo está controlado
-por su propio reloj, como se explica en la sección~\ref{s3:subsubsec:clocking}
-y se muestra en la figura~\ref{s3:fig:componentes-fpga-clocking}. 
+por su propio reloj, como se explica en la sección~\ref{s3:subsubsec:clocking}.
+%y se muestra en la figura~\ref{s3:fig:componentes-fpga-clocking}. 
 
 
 \begin{figure}[h]
-\todo{Revisar la parte del teclado, me he inventado un poco, y me he comido
-  el controlador}.\\
-\todo{No se si esto es muy pequeño y habría que separarlo, o incluso mover
-  la imagen de clocking a la sección correspondiente o no}
-\centering
-\begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=1.0\textwidth]{images/fpga_componentes.png}
-  \caption{Componentes implementados.}
-  \label{s3:fig:componentes-fpga-a}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=1.0\textwidth]{images/fpga_componentes_timing.png}
-  \caption{Distintos relojes utilizados.}
-  \label{s3:fig:componentes-fpga-clocking}
-\end{subfigure}
+  \includegraphics[width=1.0\textwidth]{images/fpga_componentes_v2.png}
 \caption{Diagrama de componentes implementados en la FPGA. }
 \label{s3:fig:componentes-fpga-a}
 \end{figure}
@@ -64,6 +49,9 @@ implementación sobre la FPGA son:
   los módulos de raquetas, dibuja en un monitor VGA el juego. \rev{Si da
     tiempo, el diagrama de flujo que controla este módulo viene definido
     en la figura bla bla bla}.
+\item \emph{Módulo controlador:} encargado de llevar la máquina de
+  estados principal del juego y comunica los diferentes módulos entre
+  sí.
 \end{itemize}
 
 \subsubsection{Gestión de los relojes}
@@ -73,6 +61,12 @@ implementación sobre la FPGA son:
   figura~\ref{s3:fig:componentes-fpga-clocking}. Quizás aquí sea
   interesante mencionar el tema de la sincronización y la necesidad de
   utilizar biestables para mantener la diferencia entre relojes.}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1.0\textwidth]{images/fpga_componentes_timing_v2.png}
+  \caption{Distintos relojes utilizados.}
+  \label{s3:fig:componentes-fpga-clocking}
+\end{figure}
 
 \subsection{Maletines ARM}
 \label{s3:subsec:maletines}
@@ -81,6 +75,16 @@ implementación sobre la FPGA son:
   poner. }\\
 \todo{Sería interesante explicar lo del tecldo, y lo que se  hace para
   poder conectar varios maletines en serie.}
+
+Todos los maletines ejecutan el mismo código, como ya se ha dicho
+anteriormente van conectados en serie mandando comandos de maletín a
+la FPGA y recibiendo las puntuaciones de la FPGA a los maletines. \\
+
+El funcionamiento de los maletines ARM se puede apreciar en la
+figura~\ref{s3:fig:FSM_maletin}. La primera fase es configurar las
+interrupciones de los botones y el teclado matricial, se inicializan
+los display 8 segmentos y se configuran las UARTs. \\
+
 
 \begin{figure}[h]
   \centering
