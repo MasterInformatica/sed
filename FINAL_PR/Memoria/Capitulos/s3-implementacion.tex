@@ -6,12 +6,12 @@
 \label{s3:subsec:fpga}
 Para la implementación del juego sobre la FPGA, se ha decidido implementar
 distintos módulos, conectados entre ellos, que permiten calcular el estado
-del juego. La relación entre los distintos módulos se peude ver en la
+del juego. La relación entre los distintos módulos se puede ver en la
 figura~\ref{s3:fig:componentes-fpga-a}. Además, para que el juego pueda
 funcionar a una velocidad adecuada, pero se pueda comunicar con los
-maletines, y además pintar en el monitor vga, cada módulo está controlado
+maletines, y además pintar en el monitor VGA, cada módulo está controlado
 por su propio reloj, como se explica en la sección~\ref{s3:subsubsec:clocking}.
-%y se muestra en la figura~\ref{s3:fig:componentes-fpga-clocking}. 
+y se muestra en la figura~\ref{s3:fig:componentes-fpga-clocking}. 
 
 
 \begin{figure}[h]
@@ -30,7 +30,7 @@ implementación sobre la FPGA son:
   información.
 \item \emph{Módulo teclado:} traduce la información recibida por la UART a
   comandos internos entendidos por el juego. Este diseño nos permite
-  desacoplar el módulo teclado de la UART, y cambiarlo por otros módulos
+  desacoplar el módulo teclado de la UART y cambiarlo por otros módulos
   que interpreten otros dispositivos de entrada, como puede ser un teclado
   PS2.
 \item \emph{Módulo raquetas:} contienen la información de la posición de
@@ -79,7 +79,7 @@ cada uno con un propósito distinto:
   consigue reaccionar de manera más rápida a las pulsaciones del
   jugador. Para no perder datos con el módulo de la UART (al tener
   distintos relojes), la información es almacenada en un biestable hasta
-  que esta es leída.
+  que ésta es leída.
 \item \emph{Reloj UART (naranja):} se trata del mismo reloj utilizado para
   la transmisión con la UART en los maletines ARM.
 \item \emph{Reloj de juego (verde):} utilizado para calcular los
