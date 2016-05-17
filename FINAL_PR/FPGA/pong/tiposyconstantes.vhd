@@ -45,6 +45,12 @@ constant ball_hpx     : integer  := pixelH;
 constant ball_vpx     : integer  := pixelV / 2;
 
 
+------------------
+-- MVTO. CHOQUE --
+------------------
+constant tramo1 : integer := 0;
+constant tramo2 : integer := 1;
+constant tramo3 : integer := 2;
 
 -------------
 -- COLORES --

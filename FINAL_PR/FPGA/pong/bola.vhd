@@ -31,6 +31,7 @@ signal pos_v : integer := vga_vpx_medio;
 
 signal gl_aux : std_logic;
 signal gr_aux : std_logic;
+signal internal_reset: std_logic;
 
 begin
 gol_left <= gl_aux;
@@ -39,7 +40,8 @@ gol_right <= gr_aux;
 ball_h_pos <= pos_h;
 ball_v_pos <= pos_v;
 
-
+internal_reset <= '1' when (gl_aux='1' or gr_aux='1')
+							 else '0';
 -- MOVIMIENTO
 movimiento: process(clock, reset, mvto_h, mvto_v, pos_h, pos_v)
 begin
@@ -48,8 +50,13 @@ begin
 		 pos_v <= vga_vpx_medio;
 	else 
 		if(clock'event and clock='1') then
-			pos_h <= pos_h + mvto_h;
-			pos_v <= pos_v + mvto_v;
+			if(internal_reset = '0') then
+				pos_h <= pos_h + mvto_h;
+				pos_v <= pos_v + mvto_v;
+			else
+				pos_h <= vga_hpx_medio;
+				pos_v <= vga_vpx_medio;
+			end if;
 		else
 			pos_h <= pos_h;
 			pos_v <= pos_v;
@@ -79,6 +86,7 @@ begin
 		-- Lateral con rebote
 		if( (pos_h + ball_hpx) = (vga_hpx_max - hpx_gap - paddle_hpx) and -- dcha
 			 (pos_v >= paddle_right_up) and (pos_v <= paddle_right_bt)) then 
+			 
 			mvto_h <= 0 - mvto_h;
 			gr_aux<='0';
 			gl_aux<='0';
