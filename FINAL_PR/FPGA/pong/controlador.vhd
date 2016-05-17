@@ -195,8 +195,8 @@ signal bola_v : integer;
 
 signal pause: std_logic :='1';
 signal rstart,start: std_logic :='0';
-signal velocidad: std_logic_vector(24 downto 0):= "0111111111111111111111110";
-signal kvelocidad: std_logic_vector(24 downto 0):= "0111111111111111111111110";
+signal velocidad: std_logic_vector(24 downto 0):= "0001111111111111111111110";
+signal kvelocidad: std_logic_vector(24 downto 0):= "0001111111111111111111110";
 --pantalla
 
 signal LEDS2 :   STD_LOGIC_VECTOR(20 downto 0);
