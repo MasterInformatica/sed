@@ -28,6 +28,9 @@ constant vga_hpx_max  : integer  := vga_global_hpx_max - pixelH;
 constant vga_vpx_min  : integer  := vga_global_vpx_min + tam_cartaAjuste + tam_pared+1;
 constant vga_vpx_max  : integer  := vga_global_vpx_max - tam_pared;
 
+constant vga_hpx_medio : integer := vga_hpx_min + (vga_hpx_max - vga_hpx_min)/2;
+constant vga_vpx_medio : integer := vga_vpx_min + (vga_vpx_max - vga_vpx_min)/2;
+
 -- PADDLE 
 constant hpx_gap	    : integer  := pixelH * 2;
 constant paddle_size  : integer	:= 5;

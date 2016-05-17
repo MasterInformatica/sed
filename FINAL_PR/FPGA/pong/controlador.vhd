@@ -105,14 +105,16 @@ component paddle is
 end component;
 
 component bola is
-	Port ( reset    : in    std_logic;
-			 clock    : in    std_logic; 
+		Port ( reset    : in    std_logic;
+			 clock    	 : in    std_logic; 
 		  	 paddle_left_up   : in   integer;
-			 paddle_left_bt  : in   integer;
-			 paddle_right_up   : in   integer;
+			 paddle_left_bt   : in   integer;
+			 paddle_right_up  : in   integer;
 			 paddle_right_bt  : in   integer;
-			 ball_h_pos        : out   integer;
-			 ball_v_pos        : out   integer
+			 ball_h_pos       : out   integer;
+			 ball_v_pos       : out   integer;
+			 gol_left 		   : out std_logic;
+			 gol_right			: out std_logic
 	);
 end component;
  
@@ -216,7 +218,7 @@ Pala_1: paddle port map(clock,Reset_n,baja_1,sube_1,pala_1_vpos_arr,pala_1_vpos_
 Pala_2: paddle port map(clock,Reset_n,baja_2,sube_2,pala_2_vpos_arr,pala_2_vpos_abj);
 UART_Teclado: keyboardUART port map(clock,Reset_n,teclaLeida,Ktecla,UART_dout,RxRdy);
 Bola_inst: bola port map( Reset_n, reloj_mov, pala_1_vpos_arr,  pala_1_vpos_abj,
-												     pala_2_vpos_arr,  pala_2_vpos_abj, bola_h, bola_v);
+												     pala_2_vpos_arr,  pala_2_vpos_abj, bola_h, bola_v, open, open);
 
 Control_VGA: vgacore port map(reset,clock,pala_1_vpos_arr,pala_1_vpos_abj,pala_2_vpos_arr,pala_2_vpos_abj,bola_h,bola_v,hsyncb,vsyncb,rgb);
 --MyScore: score port map(reloj_mov,rstart,,LEDS2);
