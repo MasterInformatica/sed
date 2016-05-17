@@ -57,15 +57,42 @@ end component;
 
 component keyboardUART is
 	  PORT (
-		 clko      : IN STD_LOGIC;
+		 clko     : IN STD_LOGIC;
 		 Reset_n   : IN STD_LOGIC;
-       UART_Rx   : IN STD_LOGIC;
 		 teclaLeida: in std_logic;
-       tecla     : out std_logic_vector(5 downto 0);
-		 UART_Tx   : OUT STD_LOGIC;
-		 RxErr     : OUT STD_LOGIC
+       tecla : out std_logic_vector(5 downto 0);
+		 leer : in std_logic_vector(7 downto 0);
+		 empieza : in std_logic
 	  );
 end component;
+
+  
+COMPONENT RS232 IS
+  GENERIC (
+		F 			: natural := 100000;
+		min_baud	: natural := 115200;
+		NDBits 	: natural := 8
+  );
+  PORT
+  (
+		clk	: in  STD_LOGIC;
+		reset	: in  STD_LOGIC;
+		Rx		: in  STD_LOGIC;
+		Tx		: out STD_LOGIC;
+
+		datoAEnviar	: in std_logic_vector(NDBits-1 downto 0);
+		enviarDato	: in std_logic;
+		TxBusy		: out std_logic;
+
+		datoRecibido	: out std_logic_vector(NDBits-1 downto 0);
+		RxErr				: out std_logic;		
+		RxRdy				: out std_logic
+  );
+END COMPONENT RS232;
+  
+
+
+
  
 component paddle is
     Port ( clk : in  STD_LOGIC;
@@ -128,6 +155,14 @@ end component;
 --============================END COMPONENTES========================================
 
 --===========================SIGNALS===============================================
+--- UART
+SIGNAL UART_din   : STD_LOGIC_VECTOR (7 DOWNTO 0);
+SIGNAL UART_wr_en : STD_LOGIC;
+SIGNAL TxBusy     : STD_LOGIC;
+SIGNAL UART_dout  : STD_LOGIC_VECTOR(7 DOWNTO 0);
+SIGNAL RxRdy      : STD_LOGIC;
+--SIGNAL RxErr      : STD_LOGIC;
+
 --relojes
 signal reloj_mov: std_logic;--reloj_game?
 signal reloj_vga: std_logic;--reloj de pantalla
@@ -179,12 +214,32 @@ Reset_n <= Reset;
 Nreloj_mov: divisor2 port map( velocidad,reset,clock,reloj_mov);
 Pala_1: paddle port map(clock,Reset_n,baja_1,sube_1,pala_1_vpos_arr,pala_1_vpos_abj);
 Pala_2: paddle port map(clock,Reset_n,baja_2,sube_2,pala_2_vpos_arr,pala_2_vpos_abj);
-UART_Teclado: keyboardUART port map(clock,Reset_n,rx,teclaLeida,Ktecla,tx,RxErr);
+UART_Teclado: keyboardUART port map(clock,Reset_n,teclaLeida,Ktecla,UART_dout,RxRdy);
 Bola_inst: bola port map( Reset_n, reloj_mov, pala_1_vpos_arr,  pala_1_vpos_abj,
 												     pala_2_vpos_arr,  pala_2_vpos_abj, bola_h, bola_v);
 
 Control_VGA: vgacore port map(reset,clock,pala_1_vpos_arr,pala_1_vpos_abj,pala_2_vpos_arr,pala_2_vpos_abj,bola_h,bola_v,hsyncb,vsyncb,rgb);
---MyScore: score port map(reloj_mov,rstart,comido,LEDS2);
+--MyScore: score port map(reloj_mov,rstart,,LEDS2);
+UART: RS232
+  GENERIC MAP( F => 100000,
+               min_baud => 115200,
+					NDBits => 8
+              )
+  PORT MAP
+  (
+		clk   => clock,
+		reset	=> Reset_n,
+		Rx		=> rx,
+		Tx		=> tx,
+
+		datoAEnviar	=> UART_din,
+		enviarDato	=> UART_wr_en,
+		TxBusy		=> TxBusy,
+
+		datoRecibido	=> UART_dout,
+		RxErr				=> RxErr,
+		RxRdy				=> RxRdy
+  );
 --========================END PORT MAP===============================================
 
 --========================Procesar Tecla Leida============================================ 
@@ -198,7 +253,7 @@ Control_VGA: vgacore port map(reset,clock,pala_1_vpos_arr,pala_1_vpos_abj,pala_2
 		teclaLeida<='1';
 		start<='1';
 		rstart<='1';
-		kvelocidad<="0111111111111111111111110";
+		kvelocidad<="0001111111111111111111110";
 	elsif (clock'event and clock='1') then
 			start<='0';
 			rstart<='0';
