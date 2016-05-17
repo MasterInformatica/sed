@@ -36,6 +36,7 @@ entity main is
 		vsyncb: out std_logic;	-- vertical (frame) sync
 		rgb: out std_logic_vector(8 downto 0); -- SALIDA a la pantalla
 		LEDS: out std_logic_vector(20 downto 0);
+		leds_barra: out std_logic_vector(9 downto 0);
 		
 		RxErr : OUT STD_LOGIC
 	);
@@ -195,9 +196,11 @@ signal bola_v : integer;
 
 signal pause: std_logic :='1';
 signal rstart,start: std_logic :='0';
-signal velocidad: std_logic_vector(24 downto 0):= "0001111111111111111111110";
-signal kvelocidad: std_logic_vector(24 downto 0):= "0001111111111111111111110";
+--signal velocidad: std_logic_vector(24 downto 0):= "0000001111111111111111110";
+--signal kvelocidad: std_logic_vector(24 downto 0):= "0000011111111111111111110";
 --pantalla
+
+constant speed : std_logic_vector(24 downto 0) := conv_std_logic_vector(1100000, 25);
 
 signal LEDS2 :   STD_LOGIC_VECTOR(20 downto 0);
 
@@ -211,9 +214,10 @@ signal clock2 : std_logic;
 begin
 clock2 <= clock;
 Reset_n <= Reset;
+leds_barra <= "00"&UART_dout;
 --==========================PORT MAP====================================================
 --Control_Teclado: keyboard port map(clk_teclado,bit_teclado,teclaLeida,Ktecla);
-Nreloj_mov: divisor2 port map( velocidad,reset,clock,reloj_mov);
+Nreloj_mov: divisor2 port map( speed,reset,clock,reloj_mov);
 Pala_1: paddle port map(clock,Reset_n,baja_1,sube_1,pala_1_vpos_arr,pala_1_vpos_abj);
 Pala_2: paddle port map(clock,Reset_n,baja_2,sube_2,pala_2_vpos_arr,pala_2_vpos_abj);
 UART_Teclado: keyboardUART port map(clock,Reset_n,teclaLeida,Ktecla,UART_dout,RxRdy);
@@ -246,7 +250,7 @@ UART: RS232
 
 --========================Procesar Tecla Leida============================================ 
 
- velocidad<=kvelocidad;
+
  LEDS<=LEDS2;
  cKey: process(reset,Ktecla, clock)--mueve la cabeza de la serpiente
  begin
@@ -255,11 +259,9 @@ UART: RS232
 		teclaLeida<='1';
 		start<='1';
 		rstart<='1';
-		kvelocidad<="0001111111111111111111110";
 	elsif (clock'event and clock='1') then
 			start<='0';
 			rstart<='0';
-			kvelocidad<=velocidad;
 			teclaLeida<='1';
 			if Ktecla(1) = '1' then --arr
 				sube_1 <= '1';

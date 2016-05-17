@@ -43,7 +43,7 @@ constant paddle_vmax  : integer  := vga_vpx_max;-- - (pixelV * ((paddle_size-1) 
 --BALL
 constant ball_hpx     : integer  := pixelH;
 constant ball_vpx     : integer  := pixelV / 2;
-
+constant EPS          : integer  := pixelV / 2;
 
 ------------------
 -- MVTO. CHOQUE --
@@ -86,13 +86,13 @@ constant color_bola    : std_logic_vector(8 downto 0) := rgb_red;
 --------------------------------------------------------------------------
 
 ---------------------------- UART control --------------------------------
-  constant ukeyboardAR1 : std_logic_vector(3 downto 0) := X"31";   --a
-  constant ukeyboardAB1 : std_logic_vector(3 downto 0) := X"32";   --d
-  constant ukeyboardAR2 : std_logic_vector(3 downto 0) := X"33";   --s
-  constant ukeyboardAB2 : std_logic_vector(3 downto 0) := X"34";   --w"
-  constant ukeyboardRESET : std_logic_vector(3 downto 0) := X"F"; --ESC
-  constant ukeyboardPAUSE : std_logic_vector(3 downto 0) := X"E"; --espacio
-  constant ukeyboardCRECE : std_logic_vector(3 downto 0) := X"D"; --espacio
+  constant ukeyboardAR1 : std_logic_vector(7 downto 0) := "00110001";   --a
+  constant ukeyboardAB1 : std_logic_vector(7 downto 0) := x"32";   --d
+  constant ukeyboardAR2 : std_logic_vector(7 downto 0) := x"33";   --s
+  constant ukeyboardAB2 : std_logic_vector(7 downto 0) := x"34";   --w"
+  constant ukeyboardRESET : std_logic_vector(7 downto 0) := X"0F"; --ESC
+  constant ukeyboardPAUSE : std_logic_vector(7 downto 0) := X"0E"; --espacio
+  constant ukeyboardCRECE : std_logic_vector(7 downto 0) := X"0D"; --espacio
 --------------------------------------------------------------------------  
 
 -------------------------- KeyBoard control ------------------------------

@@ -45,16 +45,16 @@ NET reset LOC=F15;
 
 #barra de leds placa extendida
 #
-#NET caca<0> LOC=L5;
-#NET caca<1> LOC=N2;
-#NET caca<2> LOC=M3;
-#NET caca<3> LOC=N1;
-#NET caca<4> LOC=T13;
-#NET caca<5> LOC=L15;
-#NET caca<6> LOC=J13;
-#NET caca<7> LOC=H15;
-#NET GPO1<8> LOC=J16;
-#NET RxErr LOC=J14;
+NET leds_barra<0> LOC=L5;
+#NET leds_barra<1> LOC=N2;
+NET leds_barra<2> LOC=M3;
+NET leds_barra<3> LOC=N1;
+NET leds_barra<4> LOC=T13;
+NET leds_barra<5> LOC=L15;
+NET leds_barra<6> LOC=J13;
+NET leds_barra<7> LOC=H15;
+NET leds_barra<8> LOC=J16;
+NET leds_barra<9> LOC=J14;
 
  
 

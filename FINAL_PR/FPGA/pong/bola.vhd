@@ -85,21 +85,85 @@ begin
 
 		-- Lateral con rebote
 		if( (pos_h + ball_hpx) = (vga_hpx_max - hpx_gap - paddle_hpx) and -- dcha
-			 (pos_v >= paddle_right_up) and (pos_v <= paddle_right_bt)) then 
-			 
+			 (pos_v >= paddle_right_up - EPS) and (pos_v <= paddle_right_bt + EPS)) then  
 			mvto_h <= 0 - mvto_h;
+			
+			if(pos_v <= paddle_right_up + pixelV) then --caso 1
+				if(mvto_v >= 0) then
+					mvto_v <= 4;
+				else
+					mvto_v <= -4;
+				end if;
+			elsif(pos_v <= (paddle_right_up + pixelV + pixelV)) then --caso 2
+				if(mvto_v >= 0) then
+					mvto_v <= 2;
+				else
+					mvto_v <= -2;
+				end if;
+			elsif(pos_v <= (paddle_right_up + pixelV + pixelV + pixelV)) then --caso 3
+				mvto_v <= mvto_v;
+			elsif(pos_v <= (paddle_right_up + pixelV + pixelV + pixelV + pixelV)) then --caso 4
+				if(mvto_v >= 0) then
+					mvto_v <= 2;
+				else
+					mvto_v <= -2;
+				end if;
+			else --if(pos_v <= (paddle_right_up + pixelV + pixelV + pixelV + pixelV + pixelV + EPS)) then --caso 5
+				if(mvto_v >= 0) then
+					mvto_v <= 4;
+				else
+					mvto_v <= -4;
+				end if;
+--			else --caso 6 (NUNCA)
+--				mvto_v <= mvto_v;
+			end if;
+			
 			gr_aux<='0';
 			gl_aux<='0';
 		elsif( (pos_h = (vga_hpx_min + paddle_hpx + hpx_gap)) and   --izq
-			 (pos_v >= paddle_left_up) and (pos_v <= paddle_left_bt)) then
-			mvto_h <= 0 - mvto_h;
+			 (pos_v >= paddle_left_up - EPS) and (pos_v <= paddle_left_bt + EPS)) then
+			 mvto_h <= 0 - mvto_h;
+
+
+
+			if(pos_v <= paddle_right_up + pixelV - EPS) then --caso 1
+				if(mvto_v >= 0) then
+					mvto_v <= 4;
+				else
+					mvto_v <= -4;
+				end if;
+			elsif(pos_v <= (paddle_right_up + pixelV + pixelV)) then --caso 2
+				if(mvto_v >= 0) then
+					mvto_v <= 2;
+				else
+					mvto_v <= -2;
+				end if;
+			elsif(pos_v <= (paddle_right_up + pixelV + pixelV + pixelV)) then --caso 3
+				mvto_v <= mvto_v;
+			elsif(pos_v <= (paddle_right_up + pixelV + pixelV + pixelV + pixelV)) then --caso 4
+				if(mvto_v >= 0) then
+					mvto_v <= 2;
+				else
+					mvto_v <= -2;
+				end if;
+			else --if(pos_v <= (paddle_right_up + pixelV + pixelV + pixelV + pixelV + pixelV + EPS)) then --caso 5
+				if(mvto_v >= 0) then
+					mvto_v <= 4;
+				else
+					mvto_v <= -4;
+				end if;
+--			else --caso 6 (NUNCA)
+--				mvto_v <= mvto_v;
+			end if;
+			
+			
 			gr_aux<='0';
 			gl_aux<='0';
-		elsif( pos_h > vga_hpx_max - hpx_gap) then
+		elsif( pos_h > vga_hpx_max - hpx_gap) then   --- gol dcha
 			mvto_h <= mvto_h;
 			gr_aux<='1';
 			gl_aux<='0';
-		elsif(pos_h <= vga_hpx_min + hpx_gap) then
+		elsif(pos_h <= vga_hpx_min + hpx_gap) then   --- gol izq
 			mvto_h <= mvto_h;
 			gr_aux<='0';
 			gl_aux<='1';
@@ -115,6 +179,5 @@ begin
 		gl_aux<=gl_aux;
 	end if;
 end process choque;
-
 end Behavioral;
 
