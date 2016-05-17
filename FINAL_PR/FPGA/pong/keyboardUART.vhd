@@ -65,19 +65,19 @@ procesarTecla : process(empieza, leer,auxtecla,termina,teclaLeida)
 		if teclaLeida='1' then
 			Ktecla<=(others=>'0');
 		elsif clko'event and clko = '1' and empieza = '1' then
-				if leer(3 downto 0) = ukeyboardARR then
+				if leer(3 downto 0) = ukeyboardAR1 then
 					Ktecla(1) <= '1';
 					Ktecla(0)<='0';
 					Ktecla(5 downto 2) <=(others=>'0');
-				elsif leer(3 downto 0) = ukeyboardDER then
+				elsif leer(3 downto 0) = ukeyboardAB1 then
 					Ktecla(2) <= '1';
 					Ktecla(1 downto 0)<=(others=>'0');
 					Ktecla(5 downto 3) <=(others=>'0');
-				elsif leer(3 downto 0) = ukeyboardABJ then
+				elsif leer(3 downto 0) = ukeyboardAR1 then
 					Ktecla(3) <= '1';
 					Ktecla(2 downto 0)<=(others=>'0');
 					Ktecla(5 downto 4) <=(others=>'0');
-				elsif leer(3 downto 0) = ukeyboardIZQ then
+				elsif leer(3 downto 0) = ukeyboardAB2 then
 					Ktecla(4) <= '1';
 					Ktecla(5)<='0';
 					Ktecla(3 downto 0) <=(others=>'0');

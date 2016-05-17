@@ -86,10 +86,10 @@ constant color_bola    : std_logic_vector(8 downto 0) := rgb_red;
 --------------------------------------------------------------------------
 
 ---------------------------- UART control --------------------------------
-  constant ukeyboardIZQ : std_logic_vector(3 downto 0) := X"4";   --a
-  constant ukeyboardDER : std_logic_vector(3 downto 0) := X"6";   --d
-  constant ukeyboardABJ : std_logic_vector(3 downto 0) := X"5";   --s
-  constant ukeyboardARR : std_logic_vector(3 downto 0) := X"1";   --w"
+  constant ukeyboardAR1 : std_logic_vector(3 downto 0) := X"31";   --a
+  constant ukeyboardAB1 : std_logic_vector(3 downto 0) := X"32";   --d
+  constant ukeyboardAR2 : std_logic_vector(3 downto 0) := X"33";   --s
+  constant ukeyboardAB2 : std_logic_vector(3 downto 0) := X"34";   --w"
   constant ukeyboardRESET : std_logic_vector(3 downto 0) := X"F"; --ESC
   constant ukeyboardPAUSE : std_logic_vector(3 downto 0) := X"E"; --espacio
   constant ukeyboardCRECE : std_logic_vector(3 downto 0) := X"D"; --espacio

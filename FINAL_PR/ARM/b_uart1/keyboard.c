@@ -68,7 +68,8 @@ void Keyboard_ISR(void)
 	/* Identificar la tecla */
 	int pulsado = key_read();
 
-		if (pulsado > 9){
+	Uart_SendByte1(pulsado+'0' );
+		/*if (pulsado > 9){
 			pulsado = pulsado - 10;
 
 			Uart_SendByte0(pulsado +'A');
@@ -78,9 +79,9 @@ void Keyboard_ISR(void)
 			Uart_SendByte0(pulsado +'0');
 			Uart_SendByte1(pulsado );
 		}
-
+*/
 	/* Esperar a se libere la tecla: consultar bit 1 del registro de datos del puerto G */
-	while (!(rPDATG & 0x2)){}
+	//while (!(rPDATG & 0x2)){}
 
 	/* Esperar trd mediante la funcion Delay() */
 	DelayMs(100);//trd=100ms

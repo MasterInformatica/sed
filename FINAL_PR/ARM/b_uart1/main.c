@@ -30,21 +30,25 @@ int Main(void){
 	char c;
 	int k;
 	while(1){
+
 		c = Uart_Getch0();
 		//Uart_SendByte1(c);
-
+		leds_off();
 		switch(c){
-		case 1:
+		case '1':
 			led1_on();
 			led2_off();
 			k = 6;
-			Uart_SendByte1(k);
+			Uart_SendByte1('3');
 			break;
-		case 5:
+		case '2':
 			led1_off();
 			led2_on();
 			k = 4;
-			Uart_SendByte1(k);
+			Uart_SendByte1('4');
+			break;
+		default:
+			leds_on();
 			break;
 		}
 
