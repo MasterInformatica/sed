@@ -27,10 +27,10 @@ use work.tiposyconstantes.all;
 entity score is
     Port ( clock : in  STD_LOGIC;
            reset : in  STD_LOGIC;
---           size : in  STD_LOGIC_VECTOR(18 downto 0);
-           comido : in  STD_LOGIC;
---           pausa : in  STD_LOGIC;
-           LED : out  STD_LOGIC_VECTOR(20 downto 0)
+			  gol_left: in std_logic;
+			  gol_right: in std_logic;
+           LED : out  STD_LOGIC_VECTOR(20 downto 0);
+			  salida: out std_logic_vector(7 downto 0)
 			 );
 end score;
 
@@ -42,74 +42,39 @@ begin
 a<=m0;
 b<=m1;
 c<=m2;
-
+salida <= conv_std_logic_vector(a,4) & conv_std_logic_vector(b,4);
 --========================PUNTOS=====================
 --====== CONTADOR de uno en uno
-process(clock, reset,comido)
+process(clock, reset,gol_left,gol_right,a,b,c,m1,m2,m0)
 begin
 	if reset='1' then
 		m0<=0;
 		m1<=0;
 		m2<=0;
 	elsif clock' event and clock='1' then
-		
-		if comido='1' then
-		if m0 /= 9 then
-				m0<= a + 1; 
-				m1<=b;
-				m2<=c;
-			elsif m1 /= 9 then
-				m0<=0;
-				m1<= b + 1;
-				m2<=c;
-			elsif m2 /= 9 then
-				m1<=0;
-				m0<=0;
-				m2<= c + 1;
-			else
-				m1<=0;
-				m0<=0;
-				m2<=0;
-		end if;
+		if gol_left='1' then
+			m0 <= a + 1;
+			m1 <= m1;
+		elsif gol_right='1' then
+			m0<=m0;
+			m1 <= b + 1;
 		else
-			m0<=a;
-			m1<=b;
-			m2<=c;
+			m0<=m0;
+			m1<=m1;
 		end if;
+		m2<=m2;
 	end if;
 
 end process;
 
 
---process(clock, reset,size,comido,pausa,puntos)
---begin
---	if reset='1' then
---		kpuntos<=0;
---	elsif clock'event and clock='1' then
---		if pausa='1' then
---			kpuntos<=puntos;
---		elsif comido='1' then
---			kpuntos<=puntos +10;
---		elsif size(15)='1' then
---			kpuntos<=puntos+4;
---		elsif size(11)='1' then
---			kpuntos<=puntos+3;
---		elsif size(7)='1' then
---			kpuntos<=puntos+2;
---		elsif size(3)='1' then
---			kpuntos<=puntos+1;
---		else
---			kpuntos<=puntos;
---		end if;
---	end if;
---end process;
 --====================FIN PUNTOS======================
---	   S0
+--	         S0
 --#		   ---
---#	    S5	|	|s1
+--#	  S5	|	|s1
 --#		    S6
 --#		   ---
---#	    S4	|	|S2
+--#    S4	|	|S2
 --#
 --#		   ---
 --#		   S3
@@ -127,7 +92,13 @@ begin
 		WHEN 7=>LED(6 downto 0)<="1110000";
 		WHEN 8=>LED(6 downto 0)<="1111111";
 		WHEN 9=>LED(6 downto 0)<="1111011";
-		WHEN OTHERS=>LED(6 downto 0)<="1111111";
+		WHEN 10=>LED(6 downto 0) <="1110111";
+		WHEN 11=>LED(6 downto 0) <="0011111";
+		WHEN 12=>LED(6 downto 0) <="1001110";
+		WHEN 13=>LED(6 downto 0) <="0111101";
+		WHEN 14=>LED(6 downto 0) <="1001111";
+		WHEN 15=>LED(6 downto 0) <="1000111";
+		WHEN OTHERS=>LED(6 downto 0)<="0000000";
 	END CASE;
 	CASE b IS
 		WHEN 0=>LED(13 downto 7)<="1111110";
@@ -140,7 +111,13 @@ begin
 		WHEN 7=>LED(13 downto 7)<="1110000";
 		WHEN 8=>LED(13 downto 7)<="1111111";
 		WHEN 9=>LED(13 downto 7)<="1111011";
-		WHEN OTHERS=>LED(13 downto 7)<="1111111";
+		WHEN 10=>LED(13 downto 7) <="1110111";
+		WHEN 11=>LED(13 downto 7) <="0011111";
+		WHEN 12=>LED(13 downto 7) <="1001110";
+		WHEN 13=>LED(13 downto 7) <="0111101";
+		WHEN 14=>LED(13 downto 7) <="1001111";
+		WHEN 15=>LED(13 downto 7) <="1000111";
+		WHEN OTHERS=>LED(13 downto 7)<="0000000";
 	END CASE;
 	CASE c IS
 		WHEN 0=>LED(20 downto 14)<="1111110";
@@ -153,7 +130,13 @@ begin
 		WHEN 7=>LED(20 downto 14)<="1110000";
 		WHEN 8=>LED(20 downto 14)<="1111111";
 		WHEN 9=>LED(20 downto 14)<="1111011";
-		WHEN OTHERS=>LED(20 downto 14)<="1111111";
+		WHEN 10=>LED(20 downto 14) <="1110111";
+		WHEN 11=>LED(20 downto 14) <="0011111";
+		WHEN 12=>LED(20 downto 14) <="1001110";
+		WHEN 13=>LED(20 downto 14) <="0111101";
+		WHEN 14=>LED(20 downto 14) <="1001111";
+		WHEN 15=>LED(20 downto 14) <="1000111";
+		WHEN OTHERS=>LED(20 downto 14)<="0000000";
 	END CASE;
 end process;
 --==================FIN 7 SEGMENTOS =========================

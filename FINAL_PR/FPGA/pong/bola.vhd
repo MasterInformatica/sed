@@ -18,7 +18,7 @@ entity bola is
 			 ball_v_pos       : out   integer;
 			 gol_left 		   : out std_logic;
 			 gol_right			: out std_logic
-	);
+			 );
 end bola;
 
 architecture Behavioral of bola is
