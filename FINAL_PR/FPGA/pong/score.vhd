@@ -30,7 +30,8 @@ entity score is
 			  gol_left: in std_logic;
 			  gol_right: in std_logic;
            LED : out  STD_LOGIC_VECTOR(20 downto 0);
-			  salida: out std_logic_vector(7 downto 0)
+			  salida: out std_logic_vector(7 downto 0);
+			  gol : out std_logic
 			 );
 end score;
 
@@ -55,12 +56,15 @@ begin
 		if gol_left='1' then
 			m0 <= a + 1;
 			m1 <= m1;
+			gol<='1';
 		elsif gol_right='1' then
 			m0<=m0;
 			m1 <= b + 1;
+			gol<='1';
 		else
 			m0<=m0;
 			m1<=m1;
+			gol<='0';
 		end if;
 		m2<=m2;
 	end if;

@@ -88,7 +88,8 @@ component score is
 			  gol_left: in std_logic;
 			  gol_right: in std_logic;
            LED : out  STD_LOGIC_VECTOR(20 downto 0);
-			  salida: out std_logic_vector(7 downto 0)
+			  salida: out std_logic_vector(7 downto 0);
+			  gol : out std_logic
 			 );
 end component;
 
@@ -199,12 +200,41 @@ signal LEDS2 :   STD_LOGIC_VECTOR(20 downto 0);
 SIGNAL Reset_n : STD_LOGIC;
 SIGNAL clko    : STD_LOGIC;
 signal clock2 : std_logic;
-signal aux : std_logic;
+signal aux : std_logic:='0';
 signal gol : std_logic;
+signal no_gol : std_logic;
 
 --=========================END SIGNALS=================================================
 
 begin
+UART_wr_en<=aux;
+bi_aux: process(reset,clock, gol,no_gol)
+begin
+	if(reset ='1') then
+		aux <= '0';
+	elsif(clock'event and clock='1' and gol='1') then
+		aux <= no_gol;
+	else
+		aux <= aux;
+	end if;
+end process bi_aux;
+
+
+bi_nogol: process(reset,clock, gol,no_gol)
+begin
+	if(reset = '1') then
+		no_gol <= '0';
+	elsif (clock'event and clock='1') then
+		no_gol <= not gol;
+	else 
+		no_gol <= no_gol;
+	end if;
+	
+end process bi_nogol;
+
+
+
+
 clock2 <= clock;
 Reset_n <= Reset;
 leds_barra <= "00"&UART_dout;
@@ -219,7 +249,7 @@ Bola_inst: bola port map( Reset_n, reloj_mov, pala_1_vpos_arr,  pala_1_vpos_abj,
 													  bola_h, bola_v, gol_left, gol_right);
 
 Control_VGA: vgacore port map(reset,clock,pala_1_vpos_arr,pala_1_vpos_abj,pala_2_vpos_arr,pala_2_vpos_abj,bola_h,bola_v,hsyncb,vsyncb,rgb);
-MyScore: score port map(reloj_mov,Reset_n,gol_left,gol_right,LEDS2,UART_din);
+MyScore: score port map(reloj_mov,Reset_n,gol_left,gol_right,LEDS2,UART_din,gol);
 UART: RS232
   GENERIC MAP( F => 100000,
                min_baud => 115200,
@@ -244,18 +274,10 @@ UART: RS232
 
 --========================Procesar Tecla Leida============================================ 
 
-gol<= '1' when(gol_right='1' or gol_left='1') else '0';
 
-sendUart: process(reset,gol,UART_wr_en) 
-begin
-	if reset = '1' then
-		UART_wr_en <= '0';
-	elsif (gol'event and gol='1') then 
-		UART_wr_en <= '1';
-	elsif (UART_wr_en ='1') then
-		UART_wr_en <= '0';
-	end if;
-end process sendUart;
+
+
+
 
  LEDS<=LEDS2;
  cKey: process(reset,Ktecla, clock)--mueve la cabeza de la serpiente
