@@ -200,6 +200,7 @@ SIGNAL Reset_n : STD_LOGIC;
 SIGNAL clko    : STD_LOGIC;
 signal clock2 : std_logic;
 signal aux : std_logic;
+signal gol : std_logic;
 
 --=========================END SIGNALS=================================================
 
@@ -243,8 +244,18 @@ UART: RS232
 
 --========================Procesar Tecla Leida============================================ 
 
-UART_wr_en<= '1' when(gol_right='1' or gol_left='1') else '0';
+gol<= '1' when(gol_right='1' or gol_left='1') else '0';
 
+sendUart: process(reset,gol,UART_wr_en) 
+begin
+	if reset = '1' then
+		UART_wr_en <= '0';
+	elsif (gol'event and gol='1') then 
+		UART_wr_en <= '1';
+	elsif (UART_wr_en ='1') then
+		UART_wr_en <= '0';
+	end if;
+end process sendUart;
 
  LEDS<=LEDS2;
  cKey: process(reset,Ktecla, clock)--mueve la cabeza de la serpiente
