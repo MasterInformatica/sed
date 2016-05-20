@@ -42,9 +42,6 @@ inline void Uart_TxEmpty0(void)
     while (!(rUTRSTAT0 & 0x4)); 	     // esperar a que el shifter de TX se vacie
 }
 
-
-
-
 char Uart_Getch0(void)
 {
     while (!(rUTRSTAT0 & 0x1));        // esperar a que el buffer contenga datos
@@ -122,7 +119,6 @@ void Uart_Printf1(char *fmt,...)
     va_end(ap);
 }
 
-
 void Uart0_Process(char c){
   int ps = (int) c;
   int ps_me = ps & 0x0F;
@@ -133,12 +129,18 @@ void Uart0_Process(char c){
 
 void Uart1_Process(char c){
   if(c == '1'){
+    led1_on();
+    led2_off();
     Uart_SendByte0('3');
   }else  if(c == '2'){
+    led1_off();
+    led2_on();
     Uart_SendByte0('4');
+  }else{
+    led1_on();
+    led2_on();
   }
 }
-
 
 void Uart_Process(void)
 {

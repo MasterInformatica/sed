@@ -30,46 +30,8 @@ int Main(void){
 	char c;
 	int k;
 	while(1){
-
-		c = Uart_Getch0();
-		//Uart_SendByte1(c);
-		leds_off();
-		switch(c){
-		case '1':
-			led1_on();
-			led2_off();
-			k = 6;
-			Uart_SendByte1('3');
-			break;
-		case '2':
-			led1_off();
-			led2_on();
-			k = 4;
-			Uart_SendByte1('4');
-			break;
-		default:
-			leds_on();
-			break;
-		}
-
-	};
-/*		*pt_str = Uart_Getch(); // leer caracter
-		Uart_SendByte(*pt_str); // enviar caracter
-		if (*pt_str == CR_char){ // retorno de carro?
-			if (pt_str != str) { // si cadena no vacia, mostrar
-				*(++pt_str) = '\0'; // terminar cadena antes
-				Uart_Printf("\n");
-				Uart_Printf(str);
-			}
-			Uart_Printf(str_send); // preparar siguiente
-			pt_str = str;
-		}
-		else if (++pt_str == str + 255){ // desbordamiento?
-			Uart_Printf(str_error); // avisar del desbordamiento
-			pt_str = str;
-		}
+	  Uart_Process();
 	}
-*/
 }
 
 
