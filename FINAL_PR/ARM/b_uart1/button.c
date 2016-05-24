@@ -44,16 +44,16 @@ void Eint4567_ISR(void)
 	char c;
 	if(pulsado == 4){  //izq -> char I
 		key = 1;// (key +1)%160;
-		Uart_SendByte0('1');
+	//	Uart_SendByte0('1');
 		Uart_SendByte1('1');
 
-		D8Led_symbol(1);
+	//	D8Led_symbol(1);
 	} else if(pulsado == 8) { //dcha -> char D
 		key = 5;//(key -1)%160;
 
-		Uart_SendByte0('2');
+	//	Uart_SendByte0('2');
 		Uart_SendByte1('2');
-		D8Led_symbol(2);
+	//	D8Led_symbol(2);
 	}
 
 	//Delay para eliminar rebotes

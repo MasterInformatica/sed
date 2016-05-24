@@ -119,23 +119,25 @@ void Uart_Printf1(char *fmt,...)
     va_end(ap);
 }
 
-void Uart0_Process(char c){
+void Uart1_Process(char c){
   int ps = (int) c;
   int ps_me = ps & 0x0F;
   D8Led_symbol(ps_me);
   ps = (ps >> 4);
-  Uart_SendByte1(ps);
+  Uart_SendByte0(ps);
+  led1_on();
+  led2_on();
 }
 
-void Uart1_Process(char c){
+void Uart0_Process(char c){
   if(c == '1'){
     led1_on();
     led2_off();
-    Uart_SendByte0('3');
+    Uart_SendByte1('3');
   }else  if(c == '2'){
     led1_off();
     led2_on();
-    Uart_SendByte0('4');
+    Uart_SendByte1('4');
   }else{
     led1_on();
     led2_on();
@@ -144,11 +146,11 @@ void Uart1_Process(char c){
 
 void Uart_Process(void)
 {
-  while(!(rUTRSTAT0 & 0x1) || !(rUTRSTAT1 & 0x1));
-  if(!(rUTRSTAT0 & 0x1)){
+  while(!(rUTRSTAT0 & 0x1) && !(rUTRSTAT1 & 0x1));
+  if((rUTRSTAT0 & 0x1)){
     Uart0_Process(RdURXH0());
   }
-  if(!(rUTRSTAT1 & 0x1)){
+  if((rUTRSTAT1 & 0x1)){
     Uart1_Process(RdURXH1());
   }
 }
