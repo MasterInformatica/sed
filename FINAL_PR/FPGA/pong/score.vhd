@@ -52,6 +52,7 @@ begin
 		m0<=0;
 		m1<=0;
 		m2<=0;
+		gol<='1';
 	elsif clock' event and clock='1' then
 		if gol_left='1' then
 			m0 <= a + 1;

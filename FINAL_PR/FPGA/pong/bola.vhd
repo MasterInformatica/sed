@@ -48,6 +48,7 @@ begin
 	if(reset = '1' ) then
 		 pos_h <= vga_hpx_medio;
 		 pos_v <= vga_vpx_medio;
+		 
 	else 
 		if(clock'event and clock='1') then
 			if(internal_reset = '0') then

@@ -30,17 +30,30 @@ begin
 		pos_abj <= paddle_vmin + (paddle_size * pixelV);
 	elsif clk'event and clk = '1' then
 		if sube = '1' and pos_arr > paddle_vmin then
-			pos_arr <= pos_arr - pixelV;
-			pos_abj <= pos_abj - pixelV;
+			pos_arr <= pos_arr - 3*pixelV;
+			pos_abj <= pos_abj - 3*pixelV;
 		elsif baja = '1' and pos_abj < paddle_vmax then
-			pos_arr <= pos_arr + pixelV;
-			pos_abj <= pos_abj + pixelV;
+			pos_arr <= pos_arr + 3*pixelV;
+			pos_abj <= pos_abj + 3*pixelV;
 		else
 			pos_arr <= pos_arr;
 			pos_abj <= pos_abj;
 		end if;
+		
+		-- comprobar si esta dentro
+		if(pos_arr < vga_vpx_min) then
+			pos_abj <= pos_abj + (vga_vpx_min - pos_arr);
+			pos_arr <= vga_vpx_min;
+		end if;
+		
+		if(pos_abj > vga_vpx_max) then
+			pos_arr <= pos_arr - (pos_abj - vga_vpx_max);
+			pos_abj <= vga_vpx_max;
+		end if;
 	end if;
 end process move_paddle;
+
+
 
 end Behavioral;
 

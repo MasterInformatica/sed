@@ -192,7 +192,8 @@ signal gol_right : std_logic;
 
 signal pause: std_logic :='1';
 signal rstart,start: std_logic :='0';
-constant speed : std_logic_vector(24 downto 0) := conv_std_logic_vector(1100000, 25);
+--constant speed : std_logic_vector(24 downto 0) := conv_std_logic_vector(1100000, 25);
+constant speed : std_logic_vector(24 downto 0) := conv_std_logic_vector(0900000, 25);
 
 signal LEDS2 :   STD_LOGIC_VECTOR(20 downto 0);
 
@@ -243,7 +244,7 @@ leds_barra <= "00"&UART_dout;
 Nreloj_mov: divisor2 port map( speed,reset,clock,reloj_mov);
 Pala_1: paddle port map(clock,Reset_n,baja_1,sube_1,pala_1_vpos_arr,pala_1_vpos_abj);
 Pala_2: paddle port map(clock,Reset_n,baja_2,sube_2,pala_2_vpos_arr,pala_2_vpos_abj);
-UART_Teclado: keyboardUART port map(clock,Reset_n,teclaLeida,Ktecla,UART_dout,RxRdy);
+UART_Teclado: keyboardUART port map(clock,Reset_n,teclaLeida,Ktecla,UART_dout,RxRdy);-------
 Bola_inst: bola port map( Reset_n, reloj_mov, pala_1_vpos_arr,  pala_1_vpos_abj,
 												     pala_2_vpos_arr,  pala_2_vpos_abj, 
 													  bola_h, bola_v, gol_left, gol_right);
@@ -284,13 +285,13 @@ UART: RS232
  begin
 	if reset='1' OR Ktecla(5) = '1' then--reset total
 		pause<='1';
-		teclaLeida<='1';
+		teclaLeida<='1';-------------------------------------------------
 		start<='1';
 		rstart<='1';
 	elsif (clock'event and clock='1') then
 			start<='0';
 			rstart<='0';
-			teclaLeida<='1';
+			teclaLeida<='1';----------------------------------------------
 			if Ktecla(1) = '1' then --arr
 				sube_1 <= '1';
 				baja_1 <= '0';
