@@ -1,0 +1,97 @@
+--------------------------------------------------------------------------------
+Release 14.1 Trace  (nt64)
+Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.
+
+C:\software\electronica\xilinx\14.1\ISE_DS\ISE\bin\nt64\unwrapped\trce.exe
+-intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml main.twx main.ncd -o main.twr
+main.pcf -ucf pines_teclado.ucf
+
+Design file:              main.ncd
+Physical constraint file: main.pcf
+Device,package,speed:     xc3s1000,ft256,-5 (PRODUCTION 1.39 2012-04-23)
+Report level:             verbose report
+
+Environment Variable      Effect 
+--------------------      ------ 
+NONE                      No environment variables were set
+--------------------------------------------------------------------------------
+
+INFO:Timing:2698 - No timing constraints found, doing default enumeration.
+INFO:Timing:3412 - To improve timing, see the Timing Closure User Guide (UG612).
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths 
+   option. All paths that are not constrained will be reported in the 
+   unconstrained paths section(s) of the report.
+INFO:Timing:3339 - The clock-to-out numbers in this timing report are based on 
+   a 50 Ohm transmission line loading model.  For the details of this model, 
+   and for more information on accounting for different loading conditions, 
+   please see the device datasheet.
+INFO:Timing:3390 - This architecture does not support a default System Jitter 
+   value, please add SYSTEM_JITTER constraint to the UCF to modify the Clock 
+   Uncertainty calculation.
+INFO:Timing:3389 - This architecture does not support 'Discrete Jitter' and 
+   'Phase Error' calculations, these terms will be zero in the Clock 
+   Uncertainty calculation.  Please make appropriate modification to 
+   SYSTEM_JITTER to account for the unsupported Discrete Jitter and Phase 
+   Error.
+
+
+
+Data Sheet report:
+-----------------
+All values displayed in nanoseconds (ns)
+
+Setup/Hold to clock clock
+------------+------------+------------+------------------+--------+
+            |Max Setup to|Max Hold to |                  | Clock  |
+Source      | clk (edge) | clk (edge) |Internal Clock(s) | Phase  |
+------------+------------+------------+------------------+--------+
+reset       |    6.726(R)|   -2.662(R)|clock_BUFGP       |   0.000|
+rx          |    4.603(R)|   -0.963(R)|clock_BUFGP       |   0.000|
+------------+------------+------------+------------------+--------+
+
+Clock clock to Pad
+-------------+------------+------------------+--------+
+             | clk (edge) |                  | Clock  |
+Destination  |   to PAD   |Internal Clock(s) | Phase  |
+-------------+------------+------------------+--------+
+RxErr        |    8.853(R)|clock_BUFGP       |   0.000|
+leds_barra<0>|    9.280(R)|clock_BUFGP       |   0.000|
+leds_barra<1>|    9.421(R)|clock_BUFGP       |   0.000|
+leds_barra<2>|    9.284(R)|clock_BUFGP       |   0.000|
+leds_barra<3>|    9.582(R)|clock_BUFGP       |   0.000|
+leds_barra<4>|   10.375(R)|clock_BUFGP       |   0.000|
+leds_barra<5>|    9.597(R)|clock_BUFGP       |   0.000|
+leds_barra<6>|    9.575(R)|clock_BUFGP       |   0.000|
+leds_barra<7>|    9.955(R)|clock_BUFGP       |   0.000|
+rgb<0>       |   21.247(R)|clock_BUFGP       |   0.000|
+rgb<1>       |   20.847(R)|clock_BUFGP       |   0.000|
+rgb<2>       |   22.241(R)|clock_BUFGP       |   0.000|
+rgb<3>       |   18.979(R)|clock_BUFGP       |   0.000|
+rgb<4>       |   19.280(R)|clock_BUFGP       |   0.000|
+rgb<5>       |   20.543(R)|clock_BUFGP       |   0.000|
+rgb<6>       |   19.331(R)|clock_BUFGP       |   0.000|
+rgb<7>       |   20.072(R)|clock_BUFGP       |   0.000|
+rgb<8>       |   21.003(R)|clock_BUFGP       |   0.000|
+tx           |    9.037(R)|clock_BUFGP       |   0.000|
+-------------+------------+------------------+--------+
+
+Clock to Setup on destination clock clock
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+clock          |   10.022|         |         |         |
+---------------+---------+---------+---------+---------+
+
+
+Analysis completed Fri May 27 17:14:56 2016 
+--------------------------------------------------------------------------------
+
+Trace Settings:
+-------------------------
+Trace Settings 
+
+Peak Memory Usage: 199 MB
+
+
+

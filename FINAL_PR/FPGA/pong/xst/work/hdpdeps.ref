@@ -1,0 +1,79 @@
+V3 46
+FL C:/hlocal/sed/FINAL_PR/FPGA/pong/bola.vhd 2016/05/27.17:09:50 P.15xf
+EN work/bola 1464362074 FL C:/hlocal/sed/FINAL_PR/FPGA/pong/bola.vhd \
+      PB ieee/std_logic_1164 1335251622 PB ieee/STD_LOGIC_UNSIGNED 1335251625 \
+      PB ieee/std_logic_arith 1335251623 PB ieee/NUMERIC_STD 1335251627 \
+      PB work/tiposyconstantes 1464362067
+AR work/bola/Behavioral 1464362075 \
+      FL C:/hlocal/sed/FINAL_PR/FPGA/pong/bola.vhd EN work/bola 1464362074
+FL C:/hlocal/sed/FINAL_PR/FPGA/pong/controlador.vhd 2016/05/27.17:14:17 P.15xf
+EN work/main 1464362082 FL C:/hlocal/sed/FINAL_PR/FPGA/pong/controlador.vhd \
+      PB ieee/std_logic_1164 1335251622 PB ieee/STD_LOGIC_UNSIGNED 1335251625 \
+      PB ieee/std_logic_arith 1335251623 PB ieee/NUMERIC_STD 1335251627 \
+      PB work/tiposyconstantes 1464362067
+AR work/main/Behavioral 1464362083 \
+      FL C:/hlocal/sed/FINAL_PR/FPGA/pong/controlador.vhd EN work/main 1464362082 \
+      CP divisor2 CP paddle CP keyboardUART CP bola CP vgacore CP score CP RS232
+FL C:/hlocal/sed/FINAL_PR/FPGA/pong/divisor2.vhd 2016/05/27.16:18:50 P.15xf
+EN work/divisor2 1464362068 FL C:/hlocal/sed/FINAL_PR/FPGA/pong/divisor2.vhd \
+      PB ieee/std_logic_1164 1335251622 PB ieee/STD_LOGIC_UNSIGNED 1335251625
+AR work/divisor2/divisor_arch 1464362069 \
+      FL C:/hlocal/sed/FINAL_PR/FPGA/pong/divisor2.vhd EN work/divisor2 1464362068
+FL C:/hlocal/sed/FINAL_PR/FPGA/pong/keyboardUART.vhd 2016/05/27.16:18:50 P.15xf
+EN work/keyboardUART 1464362072 \
+      FL C:/hlocal/sed/FINAL_PR/FPGA/pong/keyboardUART.vhd PB ieee/std_logic_1164 1335251622 \
+      PB work/tiposyconstantes 1464362067
+AR work/keyboardUART/Behavioral 1464362073 \
+      FL C:/hlocal/sed/FINAL_PR/FPGA/pong/keyboardUART.vhd EN work/keyboardUART 1464362072
+FL C:/hlocal/sed/FINAL_PR/FPGA/pong/paddle.vhd 2016/05/27.16:52:21 P.15xf
+EN work/paddle 1464362070 FL C:/hlocal/sed/FINAL_PR/FPGA/pong/paddle.vhd \
+      PB ieee/std_logic_1164 1335251622 PB ieee/STD_LOGIC_UNSIGNED 1335251625 \
+      PB ieee/std_logic_arith 1335251623 PB ieee/NUMERIC_STD 1335251627 \
+      PB work/tiposyconstantes 1464362067
+AR work/paddle/Behavioral 1464362071 \
+      FL C:/hlocal/sed/FINAL_PR/FPGA/pong/paddle.vhd EN work/paddle 1464362070
+FL C:/hlocal/sed/FINAL_PR/FPGA/pong/receive.vhd 2016/05/27.16:18:50 P.15xf
+EN work/receive 1464362064 FL C:/hlocal/sed/FINAL_PR/FPGA/pong/receive.vhd \
+      PB ieee/std_logic_1164 1335251622 PB ieee/NUMERIC_STD 1335251627
+AR work/receive/arch 1464362065 \
+      FL C:/hlocal/sed/FINAL_PR/FPGA/pong/receive.vhd EN work/receive 1464362064
+FL C:/hlocal/sed/FINAL_PR/FPGA/pong/RS232.vhd 2016/05/27.16:18:50 P.15xf
+EN work/RS232 1464362080 FL C:/hlocal/sed/FINAL_PR/FPGA/pong/RS232.vhd \
+      PB ieee/std_logic_1164 1335251622 PB ieee/std_logic_arith 1335251623 \
+      PB ieee/STD_LOGIC_UNSIGNED 1335251625
+AR work/RS232/rtl 1464362081 \
+      FL C:/hlocal/sed/FINAL_PR/FPGA/pong/RS232.vhd EN work/RS232 1464362080 \
+      CP timing CP transmit CP receive
+FL C:/hlocal/sed/FINAL_PR/FPGA/pong/score.vhd 2016/05/27.17:05:12 P.15xf
+EN work/score 1464362078 FL C:/hlocal/sed/FINAL_PR/FPGA/pong/score.vhd \
+      PB ieee/std_logic_1164 1335251622 PB ieee/STD_LOGIC_UNSIGNED 1335251625 \
+      PB ieee/std_logic_arith 1335251623 PB ieee/NUMERIC_STD 1335251627 \
+      PB work/tiposyconstantes 1464362067
+AR work/score/Behavioral 1464362079 \
+      FL C:/hlocal/sed/FINAL_PR/FPGA/pong/score.vhd EN work/score 1464362078
+FL C:/hlocal/sed/FINAL_PR/FPGA/pong/timing.vhd 2016/05/27.16:18:50 P.15xf
+EN work/timing 1464362060 FL C:/hlocal/sed/FINAL_PR/FPGA/pong/timing.vhd \
+      PB ieee/std_logic_1164 1335251622 PB ieee/NUMERIC_STD 1335251627 \
+      PB ieee/STD_LOGIC_UNSIGNED 1335251625 PB ieee/std_logic_arith 1335251623
+AR work/timing/timing 1464362061 \
+      FL C:/hlocal/sed/FINAL_PR/FPGA/pong/timing.vhd EN work/timing 1464362060
+FL C:/hlocal/sed/FINAL_PR/FPGA/pong/tiposyconstantes.vhd 2016/05/27.16:18:50 P.15xf
+PH work/tiposyconstantes 1464362066 \
+      FL C:/hlocal/sed/FINAL_PR/FPGA/pong/tiposyconstantes.vhd \
+      PB ieee/std_logic_1164 1335251622
+PB work/tiposyconstantes 1464362067 \
+      FL C:/hlocal/sed/FINAL_PR/FPGA/pong/tiposyconstantes.vhd \
+      PH work/tiposyconstantes 1464362066
+FL C:/hlocal/sed/FINAL_PR/FPGA/pong/transmit.vhd 2016/05/27.16:18:50 P.15xf
+EN work/transmit 1464362062 FL C:/hlocal/sed/FINAL_PR/FPGA/pong/transmit.vhd \
+      PB ieee/std_logic_1164 1335251622 PB ieee/NUMERIC_STD 1335251627
+AR work/transmit/arch 1464362063 \
+      FL C:/hlocal/sed/FINAL_PR/FPGA/pong/transmit.vhd EN work/transmit 1464362062
+FL C:/hlocal/sed/FINAL_PR/FPGA/pong/vga.vhd 2016/05/27.16:18:50 P.15xf
+EN work/vgacore 1464362076 FL C:/hlocal/sed/FINAL_PR/FPGA/pong/vga.vhd \
+      PB ieee/std_logic_1164 1335251622 PB ieee/STD_LOGIC_UNSIGNED 1335251625 \
+      PB ieee/std_logic_arith 1335251623 PB ieee/NUMERIC_STD 1335251627 \
+      PB work/tiposyconstantes 1464362067
+AR work/vgacore/vgacore_arch 1464362077 \
+      FL C:/hlocal/sed/FINAL_PR/FPGA/pong/vga.vhd EN work/vgacore 1464362076 \
+      CP divisor2
